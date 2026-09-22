@@ -1,0 +1,37 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vibe-link-app",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-08-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "rules": [{ "globs": ["**/*.wasm"], "type": "CompiledWasm", "fallthrough": false }],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "routes": [
+    { "pattern": "app.vibelinkth.com/*", "zone_name": "vibelinkth.com" },
+    { "pattern": "vibelinkth.com/go/*", "zone_name": "vibelinkth.com" },
+    { "pattern": "www.vibelinkth.com/go/*", "zone_name": "vibelinkth.com" },
+    { "pattern": "vibelinkth.com/.env", "zone_name": "vibelinkth.com" },
+    { "pattern": "vibelinkth.com/.env.production", "zone_name": "vibelinkth.com" },
+    { "pattern": "www.vibelinkth.com/.env", "zone_name": "vibelinkth.com" },
+    { "pattern": "www.vibelinkth.com/.env.production", "zone_name": "vibelinkth.com" }
+  ],
+  "vars": {
+    "APP_URL": "https://app.vibelinkth.com",
+    "SHORT_LINK_URL": "https://vibelinkth.com/go",
+    "AUTH_TRUST_HOST": "true",
+    "NEXT_PUBLIC_SITE_URL": "https://app.vibelinkth.com",
+    "EMAIL_FROM": "VibeLink <no-reply@vibelinkth.com>",
+    "EMAIL_REPLY_TO": "hello@vibelinkth.com",
+    "REQUIRE_EMAIL_VERIFICATION": "true",
+    "COMPANY_NAME": "VibeLink",
+    "COMPANY_ADDRESS": "กรุงเทพมหานคร ประเทศไทย",
+    "COMPANY_CONTACT_EMAIL": "hello@vibelinkth.com",
+    "ADMIN_EMAILS": "sattra.th@gmail.com,totoh.taponchai@shopee.com"
+  },
+  "observability": {
+    "enabled": true
+  }
+}
