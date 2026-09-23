@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
-import styles from "@/app/dev/dev-console.module.css";
+import styles from "@/app/ceo/dev-console.module.css";
 
 export function Collapsible({
   id,
@@ -43,7 +43,7 @@ export function Collapsible({
           {children}
         </div>
       ) : null}
-      <p className={styles.source}>Source · {source}</p>
+      <p className={styles.source}>Source ยท {source}</p>
     </section>
   );
 }

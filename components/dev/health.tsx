@@ -1,14 +1,14 @@
-import styles from "@/app/dev/dev-console.module.css";
+﻿import styles from "@/app/ceo/dev-console.module.css";
 
 export function HealthModule({ fetchedAt }: { fetchedAt: string }) {
   return (
     <div className={styles.card}>
       <div className={styles.cardHead}>
         <span className="ms">monitor_heart</span>
-        <h2>ระบบหลัก</h2>
+        <h2>เธฃเธฐเธเธเธซเธฅเธฑเธ</h2>
       </div>
       <p className={styles.cardSub}>
-        ระบบทำงานปกติ · แอป (Worker) และฐานข้อมูล (Neon) เชื่อมต่อและตอบสนอง
+        เธฃเธฐเธเธเธ—เธณเธเธฒเธเธเธเธ•เธด ยท เนเธญเธ (Worker) เนเธฅเธฐเธเธฒเธเธเนเธญเธกเธนเธฅ (Neon) เน€เธเธทเนเธญเธกเธ•เนเธญเนเธฅเธฐเธ•เธญเธเธชเธเธญเธ
       </p>
       <div className={styles.chips}>
         <span className={`${styles.chip} ${styles.chipOk}`}>
@@ -28,7 +28,7 @@ export function HealthModule({ fetchedAt }: { fetchedAt: string }) {
         </span>
       </div>
       <p className={styles.source}>
-        Source · Worker + Neon · <span className={styles.fresh}><span className="ms" aria-hidden>schedule</span> อัปเดตล่าสุด {fetchedAt}</span>
+        Source ยท Worker + Neon ยท <span className={styles.fresh}><span className="ms" aria-hidden>schedule</span> เธญเธฑเธเน€เธ”เธ•เธฅเนเธฒเธชเธธเธ” {fetchedAt}</span>
       </p>
     </div>
   );

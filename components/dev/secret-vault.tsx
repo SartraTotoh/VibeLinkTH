@@ -1,14 +1,14 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
-import styles from "@/app/dev/dev-console.module.css";
+import styles from "@/app/ceo/dev-console.module.css";
 
 export type VaultItem = { key: string; label: string; value: string };
 
 function mask(value: string) {
-  if (!value) return "— ยังไม่ตั้ง —";
-  if (value.length <= 10) return "••••••••";
-  return `${value.slice(0, 6)}••••••••${value.slice(-4)}`;
+  if (!value) return "โ€” เธขเธฑเธเนเธกเนเธ•เธฑเนเธ โ€”";
+  if (value.length <= 10) return "โ€ขโ€ขโ€ขโ€ขโ€ขโ€ขโ€ขโ€ข";
+  return `${value.slice(0, 6)}โ€ขโ€ขโ€ขโ€ขโ€ขโ€ขโ€ขโ€ข${value.slice(-4)}`;
 }
 
 async function copyText(text: string) {
@@ -59,10 +59,10 @@ export function SecretVault({ items }: { items: VaultItem[] }) {
         <span className="ms">key</span>
         <h2>Secret Vault</h2>
         <span className={`${styles.pill} ${ready === items.length ? styles.pillOn : styles.pillWarn}`}>
-          {ready}/{items.length} ตั้งแล้ว
+          {ready}/{items.length} เธ•เธฑเนเธเนเธฅเนเธง
         </span>
       </div>
-      <p className={styles.cardSub}>ค่าลับถูก mask เสมอ — กดรูปตาเพื่อดูทีละค่า กด copy เพื่อคัดลอก</p>
+      <p className={styles.cardSub}>เธเนเธฒเธฅเธฑเธเธ–เธนเธ mask เน€เธชเธกเธญ โ€” เธเธ”เธฃเธนเธเธ•เธฒเน€เธเธทเนเธญเธ”เธนเธ—เธตเธฅเธฐเธเนเธฒ เธเธ” copy เน€เธเธทเนเธญเธเธฑเธ”เธฅเธญเธ</p>
       <div className={styles.vault} style={{ marginTop: 12 }}>
       {items.map((item, i) => {
         const isOpen = revealed.has(item.key);
@@ -87,7 +87,7 @@ export function SecretVault({ items }: { items: VaultItem[] }) {
                 className={styles.ghostBtn}
                 onClick={() => toggle(item.key)}
                 disabled={!hasValue}
-                aria-label={isOpen ? "ซ่อนค่า" : "แสดงค่า"}
+                aria-label={isOpen ? "เธเนเธญเธเธเนเธฒ" : "เนเธชเธ”เธเธเนเธฒ"}
               >
                 <span className="ms">{isOpen ? "visibility_off" : "visibility"}</span>
               </button>
@@ -96,7 +96,7 @@ export function SecretVault({ items }: { items: VaultItem[] }) {
                 className={styles.ghostBtn}
                 onClick={() => onCopy(item.key, item.value)}
                 disabled={!hasValue}
-                aria-label="คัดลอก"
+                aria-label="เธเธฑเธ”เธฅเธญเธ"
               >
                 <span className="ms">{copied === item.key ? "check" : "content_copy"}</span>
               </button>
@@ -105,7 +105,7 @@ export function SecretVault({ items }: { items: VaultItem[] }) {
         );
       })}
       </div>
-      <p className={styles.source}>Source · Worker secrets ขณะรัน · ค่าจริงไม่ถูกบันทึกใน log</p>
+      <p className={styles.source}>Source ยท Worker secrets เธเธ“เธฐเธฃเธฑเธ ยท เธเนเธฒเธเธฃเธดเธเนเธกเนเธ–เธนเธเธเธฑเธเธ—เธถเธเนเธ log</p>
     </div>
   );
 }

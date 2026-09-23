@@ -1,4 +1,4 @@
-import styles from "@/app/dev/dev-console.module.css";
+﻿import styles from "@/app/ceo/dev-console.module.css";
 import { CopyButton } from "@/components/dev/copy-button";
 
 export function ConfigModule({
@@ -15,7 +15,7 @@ export function ConfigModule({
         <h2>Runtime config</h2>
         <span className={`${styles.pill} ${styles.pillOn}`}>live</span>
       </div>
-      <p className={styles.cardSub}>ค่าที่ Worker ใช้รันอยู่ตอนนี้ (ไม่รวมค่าลับ — อยู่ใน Secret Vault ด้านล่าง)</p>
+      <p className={styles.cardSub}>เธเนเธฒเธ—เธตเน Worker เนเธเนเธฃเธฑเธเธญเธขเธนเนเธ•เธญเธเธเธตเน (เนเธกเนเธฃเธงเธกเธเนเธฒเธฅเธฑเธ โ€” เธญเธขเธนเนเนเธ Secret Vault เธ”เนเธฒเธเธฅเนเธฒเธ)</p>
       <div style={{ marginTop: 12 }}>
         {config.map(([k, v]) => (
           <div className={styles.crow} key={k}>
@@ -25,14 +25,14 @@ export function ConfigModule({
             <code className={styles.crowVal} title={v}>
               {v}
             </code>
-            <CopyButton text={v} label={`คัดลอก ${k}`} />
+            <CopyButton text={v} label={`เธเธฑเธ”เธฅเธญเธ ${k}`} />
           </div>
         ))}
       </div>
       <p className={styles.source}>
-        Source · Worker env ขณะรัน ·{" "}
+        Source ยท Worker env เธเธ“เธฐเธฃเธฑเธ ยท{" "}
         <span className={styles.fresh}>
-          <span className="ms" aria-hidden>schedule</span> อ่านค่า {fetchedAt}
+          <span className="ms" aria-hidden>schedule</span> เธญเนเธฒเธเธเนเธฒ {fetchedAt}
         </span>
       </p>
     </div>

@@ -42,7 +42,7 @@ test("health check is ok", async ({ request }) => {
 });
 
 test("dev console is hidden from anonymous visitors", async ({ request }) => {
-  const res = await request.get("/dev");
+  const res = await request.get("/ceo");
   expect(res.status()).toBe(404);
 });
 

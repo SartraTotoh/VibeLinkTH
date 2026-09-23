@@ -1,7 +1,7 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
-import styles from "@/app/dev/dev-console.module.css";
+import styles from "@/app/ceo/dev-console.module.css";
 
 export function ZoneSection({
   id,
@@ -31,7 +31,7 @@ export function ZoneSection({
   }, [id]);
 
   return (
-    <section id={id} className={`${styles.zone} ${open ? styles.zoneOpen : ""}`} aria-label={`${title} — ${purpose}`}>
+    <section id={id} className={`${styles.zone} ${open ? styles.zoneOpen : ""}`} aria-label={`${title} โ€” ${purpose}`}>
       <button
         type="button"
         className={styles.zoneHead}

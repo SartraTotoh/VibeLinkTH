@@ -1,37 +1,37 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
-import styles from "@/app/dev/dev-console.module.css";
+import styles from "@/app/ceo/dev-console.module.css";
 
 type Mod = { id: string; label: string; zone: string; keys: string };
 
 const ZONES = [
-  { id: "zone-check", icon: "monitor_heart", label: "ตรวจ", en: "CHECK" },
-  { id: "zone-understand", icon: "insights", label: "เข้าใจ", en: "UNDERSTAND" },
-  { id: "zone-act", icon: "construction", label: "ลงมือ", en: "ACT" },
-  { id: "zone-control", icon: "settings", label: "ดูแล", en: "CONTROL" },
-  { id: "zone-reference", icon: "menu_book", label: "อ้างอิง", en: "REFERENCE" },
+  { id: "zone-check", icon: "monitor_heart", label: "เธ•เธฃเธงเธ", en: "CHECK" },
+  { id: "zone-understand", icon: "insights", label: "เน€เธเนเธฒเนเธ", en: "UNDERSTAND" },
+  { id: "zone-act", icon: "construction", label: "เธฅเธเธกเธทเธญ", en: "ACT" },
+  { id: "zone-control", icon: "settings", label: "เธ”เธนเนเธฅ", en: "CONTROL" },
+  { id: "zone-reference", icon: "menu_book", label: "เธญเนเธฒเธเธญเธดเธ", en: "REFERENCE" },
 ] as const;
 
 const MODULES: Mod[] = [
-  { id: "mod-exceptions", label: "สิ่งที่ต้องรู้", zone: "zone-check", keys: "exceptions alert stripe test dns pending ผิดปกติ" },
-  { id: "mod-health", label: "ระบบหลัก", zone: "zone-check", keys: "health worker db neon auth online" },
-  { id: "mod-resend", label: "Resend อีเมล", zone: "zone-check", keys: "resend email dns delivery domain" },
-  { id: "mod-overview", label: "ภาพรวม", zone: "zone-understand", keys: "overview stats users links clicks" },
-  { id: "mod-users", label: "ลูกค้า · CRM", zone: "zone-understand", keys: "crm funnel mrr export pin customer" },
-  { id: "mod-revenue", label: "รายได้ · เงิน", zone: "zone-understand", keys: "revenue mrr arpu payments money income" },
-  { id: "mod-support", label: "ค้นหา · ระงับ", zone: "zone-act", keys: "support lookup user link pause archive ระงับ" },
+  { id: "mod-exceptions", label: "เธชเธดเนเธเธ—เธตเนเธ•เนเธญเธเธฃเธนเน", zone: "zone-check", keys: "exceptions alert stripe test dns pending เธเธดเธ”เธเธเธ•เธด" },
+  { id: "mod-health", label: "เธฃเธฐเธเธเธซเธฅเธฑเธ", zone: "zone-check", keys: "health worker db neon auth online" },
+  { id: "mod-resend", label: "Resend เธญเธตเน€เธกเธฅ", zone: "zone-check", keys: "resend email dns delivery domain" },
+  { id: "mod-overview", label: "เธ เธฒเธเธฃเธงเธก", zone: "zone-understand", keys: "overview stats users links clicks" },
+  { id: "mod-users", label: "เธฅเธนเธเธเนเธฒ ยท CRM", zone: "zone-understand", keys: "crm funnel mrr export pin customer" },
+  { id: "mod-revenue", label: "เธฃเธฒเธขเนเธ”เน ยท เน€เธเธดเธ", zone: "zone-understand", keys: "revenue mrr arpu payments money income" },
+  { id: "mod-support", label: "เธเนเธเธซเธฒ ยท เธฃเธฐเธเธฑเธ", zone: "zone-act", keys: "support lookup user link pause archive เธฃเธฐเธเธฑเธ" },
   { id: "mod-config", label: "Runtime config", zone: "zone-control", keys: "config env vars runtime" },
-  { id: "mod-vault", label: "Secret Vault", zone: "zone-control", keys: "secret vault key reveal ค่าลับ" },
+  { id: "mod-vault", label: "Secret Vault", zone: "zone-control", keys: "secret vault key reveal เธเนเธฒเธฅเธฑเธ" },
   { id: "mod-deploy", label: "Deploy", zone: "zone-control", keys: "deploy commands cf wrangler" },
-  { id: "mod-checklist", label: "เช็กลิสต์เปิดตัว", zone: "zone-control", keys: "checklist launch stripe webhook" },
-  { id: "mod-governance", label: "ความเสี่ยง & audit", zone: "zone-control", keys: "governance risk audit pdpa rotate" },
-  { id: "mod-roadmap", label: "โฟกัสข้างหน้า", zone: "zone-reference", keys: "roadmap phase plans" },
-  { id: "mod-milestones", label: "วันที่สำคัญ", zone: "zone-reference", keys: "milestones anniversary dates" },
-  { id: "mod-links", label: "ลิงก์ด่วน", zone: "zone-reference", keys: "links dashboards stripe neon cloudflare resend" },
-  { id: "mod-design", label: "ธีม · Blink / Pank", zone: "zone-reference", keys: "design theme blink pank dark light สี color ธีม" },
-  { id: "mod-incident", label: "รายงาน · .env", zone: "zone-reference", keys: "incident report env sign-off รายงาน ไฟล์ลับ .env" },
-  { id: "mod-notes", label: "บันทึกเตือนใจ", zone: "zone-reference", keys: "notes warnings design" },
+  { id: "mod-checklist", label: "เน€เธเนเธเธฅเธดเธชเธ•เนเน€เธเธดเธ”เธ•เธฑเธง", zone: "zone-control", keys: "checklist launch stripe webhook" },
+  { id: "mod-governance", label: "เธเธงเธฒเธกเน€เธชเธตเนเธขเธ & audit", zone: "zone-control", keys: "governance risk audit pdpa rotate" },
+  { id: "mod-roadmap", label: "เนเธเธเธฑเธชเธเนเธฒเธเธซเธเนเธฒ", zone: "zone-reference", keys: "roadmap phase plans" },
+  { id: "mod-milestones", label: "เธงเธฑเธเธ—เธตเนเธชเธณเธเธฑเธ", zone: "zone-reference", keys: "milestones anniversary dates" },
+  { id: "mod-links", label: "เธฅเธดเธเธเนเธ”เนเธงเธ", zone: "zone-reference", keys: "links dashboards stripe neon cloudflare resend" },
+  { id: "mod-design", label: "เธเธตเธก ยท Blink / Pank", zone: "zone-reference", keys: "design theme blink pank dark light เธชเธต color เธเธตเธก" },
+  { id: "mod-incident", label: "เธฃเธฒเธขเธเธฒเธ ยท .env", zone: "zone-reference", keys: "incident report env sign-off เธฃเธฒเธขเธเธฒเธ เนเธเธฅเนเธฅเธฑเธ .env" },
+  { id: "mod-notes", label: "เธเธฑเธเธ—เธถเธเน€เธ•เธทเธญเธเนเธ", zone: "zone-reference", keys: "notes warnings design" },
 ];
 
 function reduced() {
@@ -102,18 +102,18 @@ export function DevNav() {
   }
 
   return (
-    <div className={styles.cmdbar} role="navigation" aria-label="กระโดดไปยังเนื้อหา">
+    <div className={styles.cmdbar} role="navigation" aria-label="เธเธฃเธฐเนเธ”เธ”เนเธเธขเธฑเธเน€เธเธทเนเธญเธซเธฒ">
       <div className={styles.cmdsearch}>
         <span className="ms" aria-hidden>search</span>
         <input
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="ค้นหา: mrr, secret, deploy…"
-          aria-label="ค้นหาโมดูล"
+          placeholder="เธเนเธเธซเธฒ: mrr, secret, deployโ€ฆ"
+          aria-label="เธเนเธเธซเธฒเนเธกเธ”เธนเธฅ"
         />
         {q ? (
-          <div className={styles.cmdresults} role="listbox" aria-label="ผลค้นหา">
+          <div className={styles.cmdresults} role="listbox" aria-label="เธเธฅเธเนเธเธซเธฒ">
             {results.length > 0 ? (
               results.map((r) => (
                 <button
@@ -134,7 +134,7 @@ export function DevNav() {
                 </button>
               ))
             ) : (
-              <span className={styles.cmdempty}>ไม่พบ “{query}”</span>
+              <span className={styles.cmdempty}>เนเธกเนเธเธ โ€{query}โ€</span>
             )}
           </div>
         ) : null}
