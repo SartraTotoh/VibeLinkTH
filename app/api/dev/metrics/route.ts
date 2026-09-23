@@ -3,6 +3,8 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { isAdmin } from "@/lib/admin";
 import { PLAN_MRR } from "@/lib/funnel";
+import { rateLimit, clientIp } from "@/lib/rate-limit";
+import { recordSecurityAttempt } from "@/lib/security";
 
 const DAY = 86400_000;
 const DAYS = 30;
@@ -40,9 +42,14 @@ export type Metrics = {
   };
 };
 
-export async function GET() {
+export async function GET(req: Request) {
   const session = await auth();
   if (!isAdmin(session?.user?.email)) {
+    await recordSecurityAttempt({
+      path: "/api/dev/metrics",
+      ip: clientIp(req),
+      reason: "unauthorized dev access",
+    });
     return NextResponse.json({ error: "not found" }, { status: 404 });
   }
 

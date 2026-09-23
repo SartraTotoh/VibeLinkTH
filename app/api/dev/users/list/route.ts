@@ -3,6 +3,8 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { isAdmin } from "@/lib/admin";
 import { maskEmail } from "@/lib/privacy";
+import { rateLimit, clientIp } from "@/lib/rate-limit";
+import { recordSecurityAttempt } from "@/lib/security";
 import type { CrmUser } from "@/lib/mock-users";
 
 const DAY = 86400_000;
@@ -10,6 +12,11 @@ const DAY = 86400_000;
 export async function GET(req: Request) {
   const session = await auth();
   if (!isAdmin(session?.user?.email)) {
+    await recordSecurityAttempt({
+      path: "/api/dev/users/list",
+      ip: clientIp(req),
+      reason: "unauthorized dev access",
+    });
     return NextResponse.json({ error: "not found" }, { status: 404 });
   }
 

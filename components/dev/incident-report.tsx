@@ -71,6 +71,55 @@ export function IncidentReportModule() {
       <div className={styles.hairline} style={{ marginTop: 16 }} />
 
       <div className={styles.cardHead} style={{ marginTop: 14 }}>
+        <span className="ms">fact_check</span>
+        <h2>บันทึกภายใน — PDPA Breach Assessment</h2>
+        <span className={`${styles.pill} ${styles.pillOn}`}>no-notification</span>
+      </div>
+      <span className={styles.secLabel}>Internal Memo · 23 ก.ย. 2569</span>
+      <div className={styles.stack}>
+        <div className={styles.kv}>
+          <div>
+            <b>สรุปการประเมิน</b>
+            <span style={{ color: "#a1a1aa" }}>
+              จากหลักฐาน Verification Log — payload ที่หลุดคือ HTML landing page (~126.6 KB)
+              ไม่ใช่ข้อมูลส่วนบุคคล (PII) หรือ credential → ไม่เข้าเกณฑ์การละเมิดข้อมูลส่วนบุคคล
+              ที่ต้องแจ้ง สคส. ภายใน 72 ชม. ตามมาตรา 37
+            </span>
+          </div>
+        </div>
+        <div className={styles.kv}>
+          <div>
+            <b>เหตุผล</b>
+            <span style={{ color: "#a1a1aa" }}>
+              ไม่มี PII ใน payload (ไม่มี email/ชื่อ/ที่อยู่/ข้อมูลการเงินของผู้ใช้) · ค่าลับจริง
+              (Neon/Stripe/AUTH_SECRET/Resend) ไม่เคยถูกอ่านผ่านเส้นทางนี้ · เป็น “ช่องโหว่ที่อุดแล้ว”
+              ไม่ใช่การรั่วที่พิสูจน์แล้ว
+            </span>
+          </div>
+        </div>
+        <div className={styles.kv}>
+          <div>
+            <b>ผลการประเมิน</b>
+            <span style={{ color: "#a1a1aa" }}>
+              ไม่ต้องแจ้งเหตุต่อคณะกรรมการคุ้มครองข้อมูลส่วนบุคคล (PDPC) · คงมาตรการแก้ไขเดิม
+              (guard route · rotate AUTH_SECRET · rotate Neon/Stripe) ต่อไป
+            </span>
+          </div>
+        </div>
+        <div className={styles.kv}>
+          <div>
+            <b>การเก็บหลักฐานเพื่อ Compliance</b>
+            <span style={{ color: "#a1a1aa" }}>
+              เอกสารฉบับนี้ + Verification Log (www/.env → 200 HTML 126.6 KB, apex/app → 404) +
+              AuditLog ถือเป็นบันทึก due diligence เก็บไว้ใน Mission Control / GovernanceModule
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div className={styles.hairline} style={{ marginTop: 16 }} />
+
+      <div className={styles.cardHead} style={{ marginTop: 14 }}>
         <span className="ms">pending_actions</span>
         <h2>ค้างรอคำสั่งคุณ</h2>
         <span className={`${styles.pill} ${styles.pillWarn}`}>action needed</span>
@@ -102,7 +151,8 @@ export function IncidentReportModule() {
           <div>
             <b>4 · PDPA breach assessment</b>
             <span style={{ color: "#a1a1aa" }}>
-              ให้คนกฎหมายประเมินอย่างเป็นทางการ + ตรวจหน้าที่แจ้งเหตุ
+              ประเมินแล้ว — payload เป็น HTML หน้า landing ไม่มี PII → ไม่เข้าเกณฑ์ต้องแจ้ง สคส. (ดู
+              บันทึกภายใน PDPA ด้านบน) · ยังคงมาตรการเดิมไว้
             </span>
           </div>
         </div>

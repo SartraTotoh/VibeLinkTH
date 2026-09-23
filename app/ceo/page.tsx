@@ -15,6 +15,7 @@ import { UsersCrm } from "@/components/dev/users-crm";
 import { RevenueModule } from "@/components/dev/revenue";
 import { SupportModule } from "@/components/dev/support";
 import { ConfigModule } from "@/components/dev/config";
+import { SecurityFeedModule } from "@/components/dev/security-feed";
 import { SecretVault } from "@/components/dev/secret-vault";
 import { DeployModule } from "@/components/dev/deploy";
 import { ApprovalModule } from "@/components/dev/approval";
@@ -85,13 +86,19 @@ export default async function DevPage() {
   const session = await auth();
   if (!isAdmin(session?.user?.email)) notFound();
 
-  const [userCount, linkCount, eventCount, activeSubs, planGroups, resend] = await Promise.all([
+  const [userCount, linkCount, eventCount, activeSubs, planGroups, resend, recentSec] = await Promise.all([
     prisma.user.count(),
     prisma.link.count(),
     prisma.linkEvent.count(),
     prisma.subscription.count({ where: { status: "ACTIVE" } }),
     prisma.user.groupBy({ by: ["plan"], _count: { _all: true } }),
     getResendDomainStatus(),
+    prisma.auditLog.count({
+      where: {
+        subjectType: "SECURITY",
+        createdAt: { gte: new Date(Date.now() - 24 * 60 * 60 * 1000) },
+      },
+    }),
   ]);
 
   const sk = process.env.STRIPE_SECRET_KEY ?? "";
@@ -121,6 +128,17 @@ export default async function DevPage() {
   });
 
   const exceptions: DevException[] = [];
+
+  if (recentSec > 0) {
+    exceptions.push({
+      key: "security-sentinel",
+      tone: "warn",
+      icon: "shield",
+      title: `มีเหตุการณ์ต้องสงสัย ${recentSec} ครั้งใน 24 ชม.`,
+      detail: "มีผู้ถูกบล็อกที่เส้นทางไฟล์ลับ/คอนโซล — ดู Security Sentinel เพื่อหาต้นทาง",
+      target: "#mod-security-sentinel",
+    });
+  }
 
   if (stripeMode === "—") {
     exceptions.push({
@@ -265,6 +283,7 @@ export default async function DevPage() {
           defaultOpen
         >
           <ExceptionsModule exceptions={exceptions} fetchedAt={fetchedAt} />
+          <SecurityFeedModule />
           <HealthModule fetchedAt={fetchedAt} />
           <ResendModule resend={resend} fetchedAt={fetchedAt} />
         </ZoneSection>

@@ -19,11 +19,12 @@ const RISKS: Risk[] = [
     status: "action needed",
     note: "ครึ่งฝั่งแอปทำแล้ว (AUTH_SECRET rotate แล้ว) · ค้าง: purge cache, roll Neon, roll Stripe test keys",
   },
-  {
+{
     priority: "critical",
     issue: "ประเมินเหตุการณ์ข้อมูลส่วนบุคคลตาม PDPA",
-    response: "breach assessment อย่างเป็นทางการ + ปรึกษาคนกฎหมายเรื่องหน้าที่แจ้งเหตุ",
-    status: "action needed",
+    response: "breach assessment + พิสูจน์ payload ไม่มี PII",
+    status: "partial",
+    note: "memo ยืนยัน: payload เป็น HTML landing ~126.6 KB ไม่มี PII → ไม่เข้าเกณฑ์แจ้ง สคส. 72 ชม. · เก็บหลักฐานไว้ใน Incident Report",
   },
   {
     priority: "high",

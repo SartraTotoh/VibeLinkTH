@@ -5,6 +5,8 @@ import { prisma } from "@/lib/prisma";
 import { isAdmin } from "@/lib/admin";
 import { maskEmail } from "@/lib/privacy";
 import { writeAudit } from "@/lib/audit";
+import { rateLimit, clientIp } from "@/lib/rate-limit";
+import { recordSecurityAttempt } from "@/lib/security";
 
 const patchSchema = z.object({
   slug: z.string().min(1).max(60),
@@ -14,6 +16,11 @@ const patchSchema = z.object({
 export async function GET(req: Request) {
   const session = await auth();
   if (!isAdmin(session?.user?.email)) {
+    await recordSecurityAttempt({
+      path: "/api/dev/links",
+      ip: clientIp(req),
+      reason: "unauthorized dev access",
+    });
     return NextResponse.json({ error: "not found" }, { status: 404 });
   }
 
@@ -54,6 +61,11 @@ export async function GET(req: Request) {
 export async function PATCH(req: Request) {
   const session = await auth();
   if (!isAdmin(session?.user?.email)) {
+    await recordSecurityAttempt({
+      path: "/api/dev/links",
+      ip: clientIp(req),
+      reason: "unauthorized dev access",
+    });
     return NextResponse.json({ error: "not found" }, { status: 404 });
   }
 

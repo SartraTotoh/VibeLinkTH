@@ -5,10 +5,16 @@ import { isAdmin } from "@/lib/admin";
 import { verifyPin } from "@/lib/privacy";
 import { rateLimit, clientIp } from "@/lib/rate-limit";
 import { writeAudit } from "@/lib/audit";
+import { recordSecurityAttempt } from "@/lib/security";
 
 export async function POST(req: Request) {
   const session = await auth();
   if (!isAdmin(session?.user?.email)) {
+    await recordSecurityAttempt({
+      path: "/api/dev/users/export",
+      ip: clientIp(req),
+      reason: "unauthorized dev access",
+    });
     return NextResponse.json({ error: "not found" }, { status: 404 });
   }
 
