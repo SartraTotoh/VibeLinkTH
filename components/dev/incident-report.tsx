@@ -5,39 +5,39 @@ export function IncidentReportModule() {
     <section id="mod-incident" className={styles.card}>
       <div className={styles.cardHead}>
         <span className="ms">feature_search</span>
-        <h2>เธฃเธฒเธขเธเธฒเธเน€เธซเธ•เธธเธเธฒเธฃเธ“เน โ€” เธเนเธญเธเนเธซเธงเนเนเธเธฅเนเธฅเธฑเธ (.env)</h2>
-        <span className={`${styles.pill} ${styles.pillWarn}`}>เธฃเธญ sign-off</span>
+        <h2>รายงานเหตุการณ์ — ช่องโหว่ไฟล์ลับ (.env)</h2>
+        <span className={`${styles.pill} ${styles.pillWarn}`}>รอ sign-off</span>
       </div>
       <p className={styles.cardSub}>
-        เธ•เธฃเธงเธเธเธเธฃเธฐเธซเธงเนเธฒเธ hardening Phase 1 (22 เธ.เธข. 2569) โ€” เน€เธชเนเธเธ—เธฒเธเธ•เธฃเธเธเธญเธเนเธเธฅเนเธฅเธฑเธ (.env,
-        .env.production) เธเธเนเธ”เน€เธกเธเธซเธฅเธฑเธเธเนเธฒเธ เธ•เนเธญเธเธขเธทเธเธขเธฑเธเธงเนเธฒเธเนเธญเธกเธนเธฅเธเธฃเธดเธเนเธกเนเน€เธเธขเธ–เธนเธเธญเนเธฒเธ
+        ตรวจพบระหว่าง hardening Phase 1 (22 ก.ย. 2569) — เส้นทางตรงของไฟล์ลับ (.env,
+        .env.production) บนโดเมนหลังบ้าน ต้องยืนยันว่าข้อมูลจริงไม่เคยถูกอ่าน
       </p>
 
-      <span className={styles.secLabel}>เธชเธฃเธธเธเน€เธซเธ•เธธเธเธฒเธฃเธ“เน</span>
+      <span className={styles.secLabel}>สรุปเหตุการณ์</span>
       <div className={styles.stack}>
         <div className={styles.kv}>
           <div>
-            <b>เน€เธเธดเธ”เธญเธฐเนเธฃเธเธถเนเธ</b>
+            <b>เกิดอะไรขึ้น</b>
             <span style={{ color: "#a1a1aa" }}>
-              URL เธ•เธฃเธ เน เธเธญเธเนเธเธฅเนเธฅเธฑเธเธเธเน€เธงเนเธเธ–เธนเธเน€เธเธดเธ”เนเธซเนเน€เธเนเธฒเธ–เธถเธเนเธ”เนเธ•เธฒเธกเธ—เธคเธฉเธเธต โ€” เธ•เนเธญเธเธญเธธเธ”เนเธฅเธฐเธเธดเธชเธนเธเธเนเธงเนเธฒเนเธกเนเธกเธตเธเธฒเธฃเธฃเธฑเนเธงเธเธฃเธดเธ
+              URL ตรง ๆ ของไฟล์ลับบนเว็บถูกเปิดให้เข้าถึงได้ตามทฤษฎี — ต้องอุดและพิสูจน์ว่าไม่มีการรั่วจริง
             </span>
           </div>
         </div>
         <div className={styles.kv}>
           <div>
-            <b>เธซเธฅเธฑเธเธเธฒเธเธ—เธตเนเธ•เธฃเธงเธเนเธฅเนเธง</b>
+            <b>หลักฐานที่ตรวจแล้ว</b>
             <span style={{ color: "#a1a1aa" }}>
-              www/.env โ’ HTTP 200 เนเธ•เนเธเธทเธ HTML เธซเธเนเธฒ landing (prototype ~126.6 KB) เนเธกเนเนเธเนเนเธเธฅเนเธเธฃเธดเธ ยท{" "}
-              vibelinkth.com/.env เนเธฅเธฐ app.vibelinkth.com/.env โ’ 404
+              www/.env → HTTP 200 แต่คืน HTML หน้า landing (prototype ~126.6 KB) ไม่ใช่ไฟล์จริง ·{" "}
+              vibelinkth.com/.env และ app.vibelinkth.com/.env → 404
             </span>
           </div>
         </div>
         <div className={styles.kv}>
           <div>
-            <b>เธเธฅเธเธฃเธฐเธ—เธ</b>
+            <b>ผลกระทบ</b>
             <span style={{ color: "#a1a1aa" }}>
-              เธเธฒเธเธเธฒเธฃ verify เนเธกเนเธเธเธงเนเธฒเธเนเธฒเธฅเธฑเธเธเธฃเธดเธ (Neon, Stripe, AUTH_SECRET, Resend) เธฃเธฑเนเธงเธญเธญเธเธ—เธฒเธเธเนเธญเธเธเธตเน
-              โ€” เธ–เธทเธญเน€เธเนเธ โ€เธเนเธญเธเนเธซเธงเนเธ—เธตเนเธญเธธเธ”เนเธฅเนเธงโ€ เนเธกเนเนเธเน โ€เธเธฒเธฃเธฃเธฑเนเธงเธ—เธตเนเธเธดเธชเธนเธเธเนเนเธฅเนเธงโ€
+              จากการ verify ไม่พบว่าค่าลับจริง (Neon, Stripe, AUTH_SECRET, Resend) รั่วออกทางช่องนี้
+              — ถือเป็น “ช่องโหว่ที่อุดแล้ว” ไม่ใช่ “การรั่วที่พิสูจน์แล้ว”
             </span>
           </div>
         </div>
@@ -47,23 +47,23 @@ export function IncidentReportModule() {
 
       <div className={styles.cardHead} style={{ marginTop: 14 }}>
         <span className="ms">task_alt</span>
-        <h2>เธ—เธณเนเธฅเนเธง</h2>
+        <h2>ทำแล้ว</h2>
         <span className={`${styles.pill} ${styles.pillOn}`}>done</span>
       </div>
       <div className={styles.stack} style={{ marginTop: 10 }}>
         <div className={styles.kv}>
           <div>
-            <b>Guard route เนเธเธฅเนเธฅเธฑเธ</b>
+            <b>Guard route ไฟล์ลับ</b>
             <span style={{ color: "#a1a1aa" }}>
-              เน€เธเธดเนเธก 4 route เนเธ wrangler.jsonc (.env/.env.production ร— vibelinkth.com/www) โ’ เน€เธเนเธฒ
-              Worker เธเธทเธ 404 ยท deploy เนเธฅเนเธง
+              เพิ่ม 4 route ใน wrangler.jsonc (.env/.env.production × vibelinkth.com/www) → เข้า
+              Worker คืน 404 · deploy แล้ว
             </span>
           </div>
         </div>
         <div className={styles.kv}>
           <div>
             <b>Rotate AUTH_SECRET</b>
-            <span style={{ color: "#a1a1aa" }}>เนเธฃเน€เธ•เธเธฑเธเนเธฅเนเธง 1 เธเธฃเธฑเนเธ (เธ”เธนเนเธ GovernanceModule)</span>
+            <span style={{ color: "#a1a1aa" }}>โรเตชันแล้ว 1 ครั้ง (ดูใน GovernanceModule)</span>
           </div>
         </div>
       </div>
@@ -72,45 +72,45 @@ export function IncidentReportModule() {
 
       <div className={styles.cardHead} style={{ marginTop: 14 }}>
         <span className="ms">pending_actions</span>
-        <h2>เธเนเธฒเธเธฃเธญเธเธณเธชเธฑเนเธเธเธธเธ“</h2>
+        <h2>ค้างรอคำสั่งคุณ</h2>
         <span className={`${styles.pill} ${styles.pillWarn}`}>action needed</span>
       </div>
       <div className={styles.stack} style={{ marginTop: 10 }}>
         <div className={styles.kv}>
           <div>
-            <b>1 ยท Purge edge cache</b>
+            <b>1 · Purge edge cache</b>
             <span style={{ color: "#a1a1aa" }}>
-              เธ—เธตเน Cloudflare (เธซเธฃเธทเธญเธฃเธญเธเนเธ s-maxage ~28 เธ.เธข. 2569) เนเธฅเนเธงเธเธถเธเธฅเธ guard route เธ—เธฑเนเธ 4 เนเธ”เน
+              ที่ Cloudflare (หรือรอพ้น s-maxage ~28 ก.ย. 2569) แล้วจึงลบ guard route ทั้ง 4 ได้
             </span>
           </div>
         </div>
         <div className={styles.kv}>
           <div>
-            <b>2 ยท Reset / rotate Neon DB credential</b>
+            <b>2 · Reset / rotate Neon DB credential</b>
             <span style={{ color: "#a1a1aa" }}>
-              เธ•เธฑเนเธเธเนเธฒ DATABASE_URL + DATABASE_URL_UNPOOLED เนเธซเธกเนเธ—เธตเน Workers
+              ตั้งค่า DATABASE_URL + DATABASE_URL_UNPOOLED ใหม่ที่ Workers
             </span>
           </div>
         </div>
         <div className={styles.kv}>
           <div>
-            <b>3 ยท Roll Stripe test keys</b>
-            <span style={{ color: "#a1a1aa" }}>เธชเธฃเนเธฒเธ key เนเธซเธกเนเนเธ Stripe Dashboard เนเธฅเนเธงเธญเธฑเธเน€เธ”เธ• secret</span>
+            <b>3 · Roll Stripe test keys</b>
+            <span style={{ color: "#a1a1aa" }}>สร้าง key ใหม่ใน Stripe Dashboard แล้วอัปเดต secret</span>
           </div>
         </div>
         <div className={styles.kv}>
           <div>
-            <b>4 ยท PDPA breach assessment</b>
+            <b>4 · PDPA breach assessment</b>
             <span style={{ color: "#a1a1aa" }}>
-              เนเธซเนเธเธเธเธเธซเธกเธฒเธขเธเธฃเธฐเน€เธกเธดเธเธญเธขเนเธฒเธเน€เธเนเธเธ—เธฒเธเธเธฒเธฃ + เธ•เธฃเธงเธเธซเธเนเธฒเธ—เธตเนเนเธเนเธเน€เธซเธ•เธธ
+              ให้คนกฎหมายประเมินอย่างเป็นทางการ + ตรวจหน้าที่แจ้งเหตุ
             </span>
           </div>
         </div>
       </div>
 
       <p className={styles.source}>
-        Sign-off ยท เธฃเธตเธงเธดเธงเธฃเธฒเธขเธเธฒเธเธเธตเนเธ—เธตเน Mission Control เนเธฅเนเธงเธชเธฑเนเธเน€เธเธฅเธตเธขเธฃเน 4 เธฃเธฒเธขเธเธฒเธฃเธเนเธฒเธเธเธ โ€” เน€เธกเธทเนเธญเธเธฃเธ
-        เน€เธเธฅเธตเนเธขเธเธชเธ–เธฒเธเธฐเน€เธเนเธ cleared เนเธ”เน ยท Source: wrangler.jsonc + verification log + GovernanceModule
+        Sign-off · รีวิวรายงานนี้ที่ Mission Control แล้วสั่งเคลียร์ 4 รายการข้างบน — เมื่อครบ
+        เปลี่ยนสถานะเป็น cleared ได้ · Source: wrangler.jsonc + verification log + GovernanceModule
       </p>
     </section>
   );

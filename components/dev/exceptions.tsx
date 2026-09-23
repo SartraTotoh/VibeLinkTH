@@ -23,10 +23,10 @@ export function ExceptionsModule({
     <div className={`${styles.card} ${anyBad ? styles.cardWarn : ""}`}>
       <div className={styles.cardHead}>
         <span className="ms">{anyBad ? "error" : "task_alt"}</span>
-        <h2>เธชเธดเนเธเธ—เธตเนเธ•เนเธญเธเธฃเธนเนเธเนเธญเธเธ—เธณเธเธฒเธ</h2>
+        <h2>สิ่งที่ต้องรู้ก่อนทำงาน</h2>
         {exceptions.length > 0 ? (
           <span className={`${styles.pill} ${anyBad ? styles.pillWarn : ""}`}>
-            {exceptions.length} เธฃเธฒเธขเธเธฒเธฃ
+            {exceptions.length} รายการ
           </span>
         ) : null}
       </div>
@@ -35,8 +35,8 @@ export function ExceptionsModule({
         <div className={styles.exRow}>
           <span className={`ms ${styles.exIcon}`} style={{ color: "#9aef80" }} aria-hidden>check_circle</span>
           <span className={styles.exBody}>
-            <b>เธ—เธธเธเธญเธขเนเธฒเธเธเธเธ•เธด</b>
-            <i>เนเธกเนเธกเธตเธฃเธฒเธขเธเธฒเธฃเธ—เธตเนเธ•เนเธญเธเธ•เธฑเธ”เธชเธดเธเนเธ</i>
+            <b>ทุกอย่างปกติ</b>
+            <i>ไม่มีรายการที่ต้องตัดสินใจ</i>
           </span>
           <span className={`${styles.pill} ${styles.pillOn}`}>ok</span>
         </div>
@@ -65,9 +65,9 @@ export function ExceptionsModule({
       )}
 
       <p className={styles.source}>
-        Source ยท เธเธณเธเธงเธ“เธชเธ”เธเธฒเธ Worker env + Resend + DB ยท{" "}
+        Source · คำนวณสดจาก Worker env + Resend + DB ·{" "}
         <span className={styles.fresh}>
-          <span className="ms" aria-hidden>schedule</span> เธ•เธฃเธงเธเธฅเนเธฒเธชเธธเธ” {fetchedAt}
+          <span className="ms" aria-hidden>schedule</span> ตรวจล่าสุด {fetchedAt}
         </span>
       </p>
     </div>

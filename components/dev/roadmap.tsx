@@ -3,22 +3,22 @@ import styles from "@/app/ceo/dev-console.module.css";
 
 const PHASES: { phase: string; items: string[] }[] = [
   {
-    phase: "Phase 2 โ€” เน€เธ•เธดเธเนเธ•",
+    phase: "Phase 2 — เติบโต",
     items: [
       "API + API keys + webhooks",
-      "เธ—เธตเธก/เธญเธเธเนเธเธฃ + roles",
-      "เธฃเธญเธเธฃเธฑเธ LINE / TikTok / Shopee / Lazada + deep link",
+      "ทีม/องค์กร + roles",
+      "รองรับ LINE / TikTok / Shopee / Lazada + deep link",
       "link-in-bio",
       "Referral / affiliate, promo codes",
       "Audit log, A/B testing",
     ],
   },
   {
-    phase: "Phase 3 โ€” Scale/Ops",
+    phase: "Phase 3 — Scale/Ops",
     items: [
-      "Aggregate analytics เธเนเธฒเธ Queues + R2/D1 (เธฅเธ”เธ เธฒเธฃเธฐ DB เธ•เนเธญเธเธฅเธดเธ)",
+      "Aggregate analytics ผ่าน Queues + R2/D1 (ลดภาระ DB ต่อคลิก)",
       "Cost monitoring",
-      "เธเธฑเธ abuse / เธชเนเธเธกเน€เธเธดเธเธฃเธฐเธเธ",
+      "กัน abuse / สแปมเชิงระบบ",
       "Status page + incident process",
     ],
   },
@@ -29,17 +29,17 @@ export function RoadmapModule() {
     <Collapsible
       id="mod-roadmap"
       icon="map"
-      title="เนเธเธเธฑเธชเธเนเธฒเธเธซเธเนเธฒ"
+      title="โฟกัสข้างหน้า"
       tag="planned"
-      source="เธ•เธเธฅเธเธเธฑเธเน€เธเนเธฒเธเธญเธ โ€” เนเธเนเนเธเนเธเนเธเนเธ”"
+      source="ตกลงกับเจ้าของ — แก้ไขในโค้ด"
     >
-      <p className={styles.cardSub}>Phase 0 เน€เธชเธฃเนเธเนเธฅเนเธง ยท Phase 1 เธเธณเธฅเธฑเธเธ—เธณ ยท Phase 2โ€“3 เธฃเธญเธญเธเธธเธกเธฑเธ•เธด</p>
+      <p className={styles.cardSub}>Phase 0 เสร็จแล้ว · Phase 1 กำลังทำ · Phase 2–3 รออนุมัติ</p>
       <div className={styles.stack} style={{ marginTop: 12 }}>
         {PHASES.map((r) => (
           <div className={styles.kv} key={r.phase}>
             <div>
               <b>{r.phase}</b>
-              <span style={{ color: "#a1a1aa" }}>{r.items.join(" ยท ")}</span>
+              <span style={{ color: "#a1a1aa" }}>{r.items.join(" · ")}</span>
             </div>
           </div>
         ))}

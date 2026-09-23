@@ -1,0 +1,26 @@
+# Normalize line endings and encoding for all text files.
+* text=auto eol=lf
+
+# Lock text encodings to UTF-8 (mojibake guard).
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.mjs text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.sql text eol=lf
+*.prisma text eol=lf
+*.ps1 text eol=lf
+
+# Binary assets stay untouched.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.pdf binary

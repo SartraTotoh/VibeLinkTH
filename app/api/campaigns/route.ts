@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { hasHardSig, sanitizeObject } from "@/lib/charset";
 
 export async function GET() {
   const session = await auth();
@@ -49,10 +50,26 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "ข้อมูลไม่ถูกต้อง" }, { status: 400 });
   }
 
-  const name = (body.name ?? "").trim();
-  const source = (body.source ?? "").trim();
-  const medium = (body.medium ?? "").trim();
-  const content = (body.content ?? "").trim() || null;
+  const unbroken = {
+    name: body.name ?? "",
+    source: body.source ?? "",
+    medium: body.medium ?? "",
+    content: body.content ?? null,
+    linkId: body.linkId ?? null,
+  };
+  const cleanedBody = sanitizeObject(unbroken);
+  if ([cleanedBody.name, cleanedBody.source, cleanedBody.medium]
+    .some((v) => typeof v === "string" && hasHardSig(v))) {
+    return NextResponse.json(
+      { error: "ข้อมูลมีอักขระที่เข้ารหัสผิด (mojibake) — กรุณากรอกใหม่" },
+      { status: 400 },
+    );
+  }
+
+  const name = (cleanedBody.name ?? "").trim();
+  const source = (cleanedBody.source ?? "").trim();
+  const medium = (cleanedBody.medium ?? "").trim();
+  const content = (cleanedBody.content ?? "").trim() || null;
   if (!name || !source || !medium) {
     return NextResponse.json(
       { error: "กรอกชื่อแคมเปญ (name) แหล่งที่มา (source) และช่องทาง (medium) ให้ครบ" },
@@ -61,9 +78,9 @@ export async function POST(req: Request) {
   }
 
   let linkId: string | null = null;
-  if (body.linkId) {
+  if (cleanedBody.linkId) {
     const link = await prisma.link.findFirst({
-      where: { id: body.linkId, userId: session.user.id },
+      where: { id: String(cleanedBody.linkId), userId: session.user.id },
       select: { id: true },
     });
     if (!link) {

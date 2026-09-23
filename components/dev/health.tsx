@@ -5,10 +5,10 @@ export function HealthModule({ fetchedAt }: { fetchedAt: string }) {
     <div className={styles.card}>
       <div className={styles.cardHead}>
         <span className="ms">monitor_heart</span>
-        <h2>เธฃเธฐเธเธเธซเธฅเธฑเธ</h2>
+        <h2>ระบบหลัก</h2>
       </div>
       <p className={styles.cardSub}>
-        เธฃเธฐเธเธเธ—เธณเธเธฒเธเธเธเธ•เธด ยท เนเธญเธ (Worker) เนเธฅเธฐเธเธฒเธเธเนเธญเธกเธนเธฅ (Neon) เน€เธเธทเนเธญเธกเธ•เนเธญเนเธฅเธฐเธ•เธญเธเธชเธเธญเธ
+        ระบบทำงานปกติ · แอป (Worker) และฐานข้อมูล (Neon) เชื่อมต่อและตอบสนอง
       </p>
       <div className={styles.chips}>
         <span className={`${styles.chip} ${styles.chipOk}`}>
@@ -28,7 +28,7 @@ export function HealthModule({ fetchedAt }: { fetchedAt: string }) {
         </span>
       </div>
       <p className={styles.source}>
-        Source ยท Worker + Neon ยท <span className={styles.fresh}><span className="ms" aria-hidden>schedule</span> เธญเธฑเธเน€เธ”เธ•เธฅเนเธฒเธชเธธเธ” {fetchedAt}</span>
+        Source · Worker + Neon · <span className={styles.fresh}><span className="ms" aria-hidden>schedule</span> อัปเดตล่าสุด {fetchedAt}</span>
       </p>
     </div>
   );

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import styles from "@/app/ceo/dev-console.module.css";
 
-export function CopyButton({ text, label = "เธเธฑเธ”เธฅเธญเธ" }: { text: string; label?: string }) {
+export function CopyButton({ text, label = "คัดลอก" }: { text: string; label?: string }) {
   const [done, setDone] = useState(false);
 
   async function onCopy() {

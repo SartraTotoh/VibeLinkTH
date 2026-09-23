@@ -4,6 +4,7 @@ import { useState, type ChangeEvent, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import type { Lang } from "@/lib/i18n";
 import type { CampaignItem, AnalyticsPayload } from "./types";
+import { FileCharsetGuard } from "@/components/charset/file-charset-guard";
 import styles from "./tabs.module.css";
 
 const fmt = (n: number) => n.toLocaleString("en-US");
@@ -114,6 +115,7 @@ export function CampaignsTab({ initialCampaigns, perf, lang }: Props) {
           <label className="field">
             <span>{lang === "th" ? "ชื่อแคมเปญ" : "Campaign name"}</span>
             <input value={form.name} onChange={set("name")} placeholder="โปรโมชัน 9.9" required maxLength={80} />
+            <FileCharsetGuard value={form.name} field={lang === "th" ? "ชื่อแคมเปญ" : "Campaign name"} />
           </label>
           <label className="field">
             <span>utm_source</span>

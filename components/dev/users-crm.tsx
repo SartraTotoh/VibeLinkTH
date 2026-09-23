@@ -54,7 +54,7 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
       );
       const j = await res.json().catch(() => null);
       if (!res.ok) {
-        setError(j?.error ?? "เนเธซเธฅเธ”เนเธกเนเธชเธณเน€เธฃเนเธ");
+        setError(j?.error ?? "โหลดไม่สำเร็จ");
         return;
       }
       setUsers(j.users ?? []);
@@ -70,7 +70,7 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
           : null,
       );
     } catch {
-      setError("เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”");
+      setError("เกิดข้อผิดพลาด");
     } finally {
       setLoading(false);
     }
@@ -115,7 +115,7 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
       });
       if (!res.ok) {
         const data = await res.json().catch(() => null);
-        setPinError(data?.error ?? "เธ—เธณเธฃเธฒเธขเธเธฒเธฃเนเธกเนเธชเธณเน€เธฃเนเธ");
+        setPinError(data?.error ?? "ทำรายการไม่สำเร็จ");
         return;
       }
       const blob = await res.blob();
@@ -127,7 +127,7 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
       setPin("");
       setPinOpen(false);
     } catch {
-      setPinError("เน€เธเธดเธ”เธเนเธญเธเธดเธ”เธเธฅเธฒเธ”");
+      setPinError("เกิดข้อผิดพลาด");
     } finally {
       setPinBusy(false);
     }
@@ -138,25 +138,25 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
   return (
     <div>
       {overview ? (
-        <div className={styles.chips} style={{ marginBottom: 12 }} aria-label="เธ เธฒเธเธฃเธงเธกเธฅเธนเธเธเนเธฒ">
+        <div className={styles.chips} style={{ marginBottom: 12 }} aria-label="ภาพรวมลูกค้า">
           <span className={styles.chip}>
             <span className="ms" aria-hidden>group</span>
-            <small>เธ—เธฑเนเธเธซเธกเธ”</small>
+            <small>ทั้งหมด</small>
             <b>{fmtNum(overview.totalUsers)}</b>
           </span>
           <span className={styles.chip}>
             <span className="ms" aria-hidden>verified</span>
-            <small>เธขเธทเธเธขเธฑเธเนเธฅเนเธง</small>
+            <small>ยืนยันแล้ว</small>
             <b>{fmtNum(overview.verified)}</b>
           </span>
           <span className={styles.chip}>
             <span className="ms" aria-hidden>person_add</span>
-            <small>เนเธซเธกเน 7 เธงเธฑเธ</small>
+            <small>ใหม่ 7 วัน</small>
             <b>{fmtNum(overview.new7d)}</b>
           </span>
           <span className={styles.chip}>
             <span className="ms" aria-hidden>calendar_month</span>
-            <small>เนเธซเธกเน 30 เธงเธฑเธ</small>
+            <small>ใหม่ 30 วัน</small>
             <b>{fmtNum(overview.new30d)}</b>
           </span>
         </div>
@@ -167,11 +167,11 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
           type="search"
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="เธเนเธเธซเธฒเธญเธตเน€เธกเธฅ / เธเธทเนเธญโ€ฆ"
-          aria-label="เธเนเธเธซเธฒเธเธนเนเนเธเน"
+          placeholder="ค้นหาอีเมล / ชื่อ…"
+          aria-label="ค้นหาผู้ใช้"
         />
-        <select value={plan} onChange={(e) => changePlan(e.target.value)} aria-label="เธเธฃเธญเธเนเธเนเธเน€เธเธ">
-          <option value="ALL">เธ—เธธเธเนเธเนเธเน€เธเธ</option>
+        <select value={plan} onChange={(e) => changePlan(e.target.value)} aria-label="กรองแพ็กเกจ">
+          <option value="ALL">ทุกแพ็กเกจ</option>
           <option value="FREE">Free</option>
           <option value="CREATOR">Creator</option>
           <option value="CREATOR_PLUS">Plus</option>
@@ -179,15 +179,15 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
         <select
           value={pageSize}
           onChange={(e) => changePageSize(Number(e.target.value))}
-          aria-label="เธเธณเธเธงเธเธ•เนเธญเธซเธเนเธฒ"
+          aria-label="จำนวนต่อหน้า"
         >
           {PAGE_SIZES.map((ps) => (
             <option key={ps} value={ps}>
-              {ps}/เธซเธเนเธฒ
+              {ps}/หน้า
             </option>
           ))}
         </select>
-        <button type="submit" className={styles.ghostBtn} style={{ width: "auto", padding: "0 16px", height: 38 }} aria-label="เธเนเธเธซเธฒ">
+        <button type="submit" className={styles.ghostBtn} style={{ width: "auto", padding: "0 16px", height: 38 }} aria-label="ค้นหา">
           <span className="ms">search</span>
         </button>
         <button
@@ -200,22 +200,22 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
           }}
         >
           <span className="ms">lock</span>
-          <span style={{ fontSize: 12, fontWeight: 700 }}>Export เน€เธ•เนเธก (PIN)</span>
+          <span style={{ fontSize: 12, fontWeight: 700 }}>Export เต็ม (PIN)</span>
         </button>
       </form>
       <p className={styles.cardSub} style={{ margin: "0 0 12px" }}>
-        เธญเธตเน€เธกเธฅเธ–เธนเธเธเนเธญเธเน€เธเธทเนเธญเธเนเธญเธเธเธฑเธ PDPA ยท เธเนเธญเธกเธนเธฅเธเธฃเธดเธเธเธฃเธเน€เธเธเธฒเธฐเนเธเนเธเธฅเน export เธเธถเนเธเธ•เนเธญเธเนเธเน PIN 6 เธซเธฅเธฑเธ
+        อีเมลถูกซ่อนเพื่อป้องกัน PDPA · ข้อมูลจริงครบเฉพาะในไฟล์ export ซึ่งต้องใช้ PIN 6 หลัก
       </p>
 
       {pinOpen ? (
         <div className={styles.kv} style={{ borderColor: "rgba(185,255,44,.3)" }}>
           <form onSubmit={exportFull} style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", width: "100%" }}>
-            <b style={{ fontSize: 13 }}>เธเธฃเธญเธ PIN 6 เธซเธฅเธฑเธเน€เธเธทเนเธญเธ”เธฒเธงเธเนเนเธซเธฅเธ”เธเนเธญเธกเธนเธฅเน€เธ•เนเธก</b>
+            <b style={{ fontSize: 13 }}>กรอก PIN 6 หลักเพื่อดาวน์โหลดข้อมูลเต็ม</b>
             <input
               type="password"
               value={pin}
               onChange={(e) => setPin(e.target.value.replace(/\D/g, "").slice(0, 6))}
-              placeholder="โ€ขโ€ขโ€ขโ€ขโ€ขโ€ข"
+              placeholder="••••••"
               inputMode="numeric"
               autoComplete="off"
               required
@@ -242,7 +242,7 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
         </div>
       ) : null}
 
-      {loading ? <p className={styles.cardSub}>เธเธณเธฅเธฑเธเนเธซเธฅเธ”โ€ฆ</p> : null}
+      {loading ? <p className={styles.cardSub}>กำลังโหลด…</p> : null}
       {error ? <p style={{ color: "#ff9b9b", fontSize: 13 }}>{error}</p> : null}
 
       {!loading && !error ? (
@@ -251,12 +251,12 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
             <table className={styles.table}>
               <thead>
                 <tr>
-                  <th>เธเธนเนเนเธเน</th>
-                  <th>เนเธเธ</th>
-                  <th>เธขเธทเธเธขเธฑเธ</th>
-                  <th>เธฅเธดเธเธเน</th>
-                  <th>เธเธฅเธดเธ</th>
-                  <th>เธชเธกเธฑเธเธฃ</th>
+                  <th>ผู้ใช้</th>
+                  <th>แผน</th>
+                  <th>ยืนยัน</th>
+                  <th>ลิงก์</th>
+                  <th>คลิก</th>
+                  <th>สมัคร</th>
                 </tr>
               </thead>
               <tbody>
@@ -271,7 +271,7 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
                         {u.displayName ? <div style={{ fontSize: 11, color: "#8e8e96" }}>{u.displayName}</div> : null}
                       </td>
                       <td>{u.plan}</td>
-                      <td>{u.emailVerified ? "โ“" : "โ€”"}</td>
+                      <td>{u.emailVerified ? "✓" : "—"}</td>
                       <td>{u.linkCount}</td>
                       <td>{fmtNum(u.clickCount)}</td>
                       <td>{fmtDate(u.createdAt)}</td>
@@ -279,9 +279,9 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
                     {openId === u.id ? (
                       <tr>
                         <td colSpan={6} style={{ color: "#a1a1aa", fontSize: 12 }}>
-                          id: <span className={styles.cellMono}>{u.id}</span> ยท เธชเธกเธฒเธเธดเธ:{" "}
-                          {u.subscription ? `${u.subscription.plan} (${u.subscription.status})` : "โ€”"} ยท
-                          เธขเธทเธเธขเธฑเธเน€เธกเธทเนเธญ: {u.emailVerified ? fmtDate(u.emailVerified) : "โ€”"}
+                          id: <span className={styles.cellMono}>{u.id}</span> · สมาชิก:{" "}
+                          {u.subscription ? `${u.subscription.plan} (${u.subscription.status})` : "—"} ·
+                          ยืนยันเมื่อ: {u.emailVerified ? fmtDate(u.emailVerified) : "—"}
                         </td>
                       </tr>
                     ) : null}
@@ -289,7 +289,7 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
                 ))}
                 {users.length === 0 ? (
                   <tr>
-                    <td colSpan={6} style={{ textAlign: "center", color: "#71717a" }}>เนเธกเนเธเธเธเนเธญเธกเธนเธฅ</td>
+                    <td colSpan={6} style={{ textAlign: "center", color: "#71717a" }}>ไม่พบข้อมูล</td>
                   </tr>
                 ) : null}
               </tbody>
@@ -297,14 +297,14 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
           </div>
           <div className={styles.pager}>
             <span>
-              เธ—เธฑเนเธเธซเธกเธ” {fmtNum(total)} เธฃเธฒเธข ยท เธซเธเนเธฒ {Math.min(page, totalPages)} เธเธฒเธ {totalPages}
+              ทั้งหมด {fmtNum(total)} ราย · หน้า {Math.min(page, totalPages)} จาก {totalPages}
             </span>
             <span style={{ display: "inline-flex", gap: 6 }}>
               <button type="button" className={styles.ghostBtn} style={{ width: "auto", padding: "0 14px", height: 34 }} disabled={page <= 1} onClick={() => changePage(page - 1)}>
-                โ เธเนเธญเธเธซเธเนเธฒ
+                ← ก่อนหน้า
               </button>
               <button type="button" className={styles.ghostBtn} style={{ width: "auto", padding: "0 14px", height: 34 }} disabled={page >= totalPages} onClick={() => changePage(page + 1)}>
-                เธ–เธฑเธ”เนเธ โ’
+                ถัดไป →
               </button>
             </span>
           </div>
@@ -312,12 +312,12 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
       ) : null}
 
       <p className={styles.source} style={{ marginTop: 12 }}>
-        Source ยท NeonDB เธเนเธฒเธ /api/dev/users/list (เธเนเธญเธกเธนเธฅเธเธฃเธดเธเน€เธ—เนเธฒเธเธฑเนเธ โ€” mock เธเธดเธ”เธญเธขเธนเน) ยท
+        Source · NeonDB ผ่าน /api/dev/users/list (ข้อมูลจริงเท่านั้น — mock ปิดอยู่) ·
         {fetchedAt ? (
           <>
             {" "}
             <span className={styles.fresh}>
-              <span className="ms" aria-hidden>schedule</span> เธ•เธฃเธงเธเธฅเนเธฒเธชเธธเธ” {fetchedAt}
+              <span className="ms" aria-hidden>schedule</span> ตรวจล่าสุด {fetchedAt}
             </span>
           </>
         ) : null}

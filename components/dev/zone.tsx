@@ -31,7 +31,7 @@ export function ZoneSection({
   }, [id]);
 
   return (
-    <section id={id} className={`${styles.zone} ${open ? styles.zoneOpen : ""}`} aria-label={`${title} โ€” ${purpose}`}>
+    <section id={id} className={`${styles.zone} ${open ? styles.zoneOpen : ""}`} aria-label={`${title} — ${purpose}`}>
       <button
         type="button"
         className={styles.zoneHead}

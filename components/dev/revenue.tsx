@@ -10,7 +10,7 @@ function fmtMoney(n: number) {
 
 function Spark({ values, w = 132, h = 30 }: { values: number[]; w?: number; h?: number }) {
   if (values.length < 2 || values.every((v) => v === 0)) {
-    return <span className={styles.sparkEmpty}>โ€”</span>;
+    return <span className={styles.sparkEmpty}>—</span>;
   }
   const min = Math.min(...values);
   const max = Math.max(...values);
@@ -30,12 +30,12 @@ function Spark({ values, w = 132, h = 30 }: { values: number[]; w?: number; h?: 
 }
 
 function Trend({ deltaPct, isNew }: { deltaPct: number | null; isNew?: boolean }) {
-  if (isNew) return <span className={`${styles.trend} ${styles.trendGood}`}>เน€เธเธดเนเธกเนเธ 30 เธงเธฑเธเธเธตเน</span>;
-  if (deltaPct == null) return <span className={styles.trendMuted}>โ€” เธขเธฑเธเนเธกเนเธกเธตเธเนเธงเธเธเนเธญเธเธซเธเนเธฒ</span>;
+  if (isNew) return <span className={`${styles.trend} ${styles.trendGood}`}>เพิ่มใน 30 วันนี้</span>;
+  if (deltaPct == null) return <span className={styles.trendMuted}>— ยังไม่มีช่วงก่อนหน้า</span>;
   const up = deltaPct >= 0;
   return (
     <span className={up ? styles.trendGood : styles.trendBad}>
-      {up ? "โ‘" : "โ“"} {Math.abs(deltaPct).toLocaleString("th-TH", { maximumFractionDigits: 1 })}%
+      {up ? "↑" : "↓"} {Math.abs(deltaPct).toLocaleString("th-TH", { maximumFractionDigits: 1 })}%
     </span>
   );
 }
@@ -61,7 +61,7 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
           <span className="ms">payments</span>
           <h2>Revenue Performance</h2>
         </div>
-        <p className={styles.cardSub}>เธเธณเธฅเธฑเธเนเธซเธฅเธ”โ€ฆ</p>
+        <p className={styles.cardSub}>กำลังโหลด…</p>
       </div>
     );
   }
@@ -75,7 +75,7 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
         </div>
         <p className={styles.confirmNote} style={{ marginTop: 8 }}>
           <span className="ms" aria-hidden>error_outline</span>
-          เนเธซเธฅเธ”เธเนเธญเธกเธนเธฅเนเธกเนเธชเธณเน€เธฃเนเธ โ€” เธ•เธฃเธงเธ connection เนเธฅเนเธงเธฅเธญเธเนเธซเธกเน
+          โหลดข้อมูลไม่สำเร็จ — ตรวจ connection แล้วลองใหม่
         </p>
       </div>
     );
@@ -89,9 +89,9 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
     insights.push({
       tone: "info",
       icon: "radar",
-      title: "เธขเธฑเธเนเธกเนเธกเธตเธเนเธญเธกเธนเธฅเธเธฒเธฃเน€เธเนเธฒเธเธก",
-      body: "View / Click เธ•เธฑเธงเน€เธฅเธเธเธฐเน€เธฃเธดเนเธกเธเธขเธฑเธเน€เธกเธทเนเธญเธกเธตเธเธนเนเนเธเนเธเธฃเธดเธเน€เธเนเธฒเธฅเธดเธเธเน",
-      action: "เน€เธเธดเธ” Links โ’",
+      title: "ยังไม่มีข้อมูลการเข้าชม",
+      body: "View / Click ตัวเลขจะเริ่มขยับเมื่อมีผู้ใช้จริงเข้าลิงก์",
+      action: "เปิด Links →",
       zone: "zone-reference",
     });
   }
@@ -100,8 +100,8 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
       tone: "warn",
       icon: "radar",
       title: "Tracking Gap",
-      body: "เธกเธต Click/Purchase เนเธฅเนเธง เนเธ•เน View/Unique เธขเธฑเธเนเธกเนเธ–เธนเธเน€เธเนเธ โ€” เธขเธฑเธเธงเธฑเธ” Conversion เน€เธ•เนเธก funnel เนเธกเนเนเธ”เน",
-      action: "เน€เธเธดเธ” Support โ’",
+      body: "มี Click/Purchase แล้ว แต่ View/Unique ยังไม่ถูกเก็บ — ยังวัด Conversion เต็ม funnel ไม่ได้",
+      action: "เปิด Support →",
       zone: "zone-act",
     });
   }
@@ -109,12 +109,12 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
     insights.push({
       tone: f.convClickPurchase >= 75 ? "good" : "info",
       icon: "trending_up",
-      title: `Click โ’ Purchase = ${f.convClickPurchase}%`,
+      title: `Click → Purchase = ${f.convClickPurchase}%`,
       body:
         f.convClickPurchase >= 100
-          ? "เธ—เธธเธเธเธฅเธดเธเธ—เธตเนเธ•เธฒเธกเนเธ”เนเธเธฅเธฒเธขเน€เธเนเธเธเธฒเธฃเธเธทเนเธญ โ€” เธขเธฑเธเธ•เนเธญเธเธเธฒเธฃ Traffic เน€เธเธดเนเธกเน€เธเธทเนเธญเธขเธทเธเธขเธฑเธ"
-          : "เธกเธต Purchase เน€เธเธดเธ”เธเธถเนเธเธเธฃเธดเธ เนเธเธฐเธเธณเธ•เธดเธ”เธ•เธฒเธก View เน€เธเธทเนเธญเธเธดเธ”เธเนเธญเธเนเธซเธงเนเธเธญเธ Conversion",
-      action: "เน€เธเธดเธ” Analytics โ’",
+          ? "ทุกคลิกที่ตามได้กลายเป็นการซื้อ — ยังต้องการ Traffic เพิ่มเพื่อยืนยัน"
+          : "มี Purchase เกิดขึ้นจริง แนะนำติดตาม View เพื่อปิดช่องโหว่ของ Conversion",
+      action: "เปิด Analytics →",
       zone: "zone-reference",
     });
   }
@@ -122,8 +122,8 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
     insights.push({
       tone: "warn",
       icon: "trending_down",
-      title: "เธเธธเธ”เธฃเธฑเนเธงเธซเธฅเธฑเธ Click",
-      body: `${f.clicks} เธเธฅเธดเธ โ’ ${f.purchases} เธเธฒเธฃเธเธทเนเธญ (${f.convClickPurchase}%) โ€” เน€เธเนเธเธซเธเนเธฒ destination เธงเนเธฒเธเธณเธฃเธฐเธชเธณเน€เธฃเนเธเนเธซเธก`,
+      title: "จุดรั่วหลัง Click",
+      body: `${f.clicks} คลิก → ${f.purchases} การซื้อ (${f.convClickPurchase}%) — เช็คหน้า destination ว่าชำระสำเร็จไหม`,
     });
   }
 
@@ -142,8 +142,8 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
 
       <div className={styles.revKpis}>
         <div className={styles.revKpi}>
-          <small>MRR ยท เธฃเธฒเธขเน€เธ”เธทเธญเธ</small>
-          <b>เธฟ{fmtMoney(k.mrr)}</b>
+          <small>MRR · รายเดือน</small>
+          <b>฿{fmtMoney(k.mrr)}</b>
           <span className={styles.revTrendRow}>
             <Trend deltaPct={k.mrrDeltaPct} isNew={k.mrrIsNew} />
           </span>
@@ -154,16 +154,16 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
           <b>{k.paidUsers.toLocaleString("th-TH")}</b>
           <span className={styles.revTrendRow}>
             {k.paidDelta > 0 ? (
-              <span className={styles.trendGood}>+{k.paidDelta} เน€เธเธดเนเธกเนเธ 30 เธงเธฑเธเธเธตเน</span>
+              <span className={styles.trendGood}>+{k.paidDelta} เพิ่มใน 30 วันนี้</span>
             ) : (
-              <span className={styles.trendMuted}>{k.paidUsers > 0 ? "เนเธกเนเธกเธตเน€เธเธดเนเธกเนเธ 30 เธงเธฑเธ" : "เธขเธฑเธเนเธกเนเธกเธตเธเธนเนเธเนเธฒเธข"}</span>
+              <span className={styles.trendMuted}>{k.paidUsers > 0 ? "ไม่มีเพิ่มใน 30 วัน" : "ยังไม่มีผู้จ่าย"}</span>
             )}
           </span>
           <Spark values={m.series.map((d) => d.mrr)} />
         </div>
         <div className={styles.revKpi}>
           <small>ARPU</small>
-          <b>เธฟ{fmtMoney(k.arpu)}</b>
+          <b>฿{fmtMoney(k.arpu)}</b>
           <span className={styles.revTrendRow}>
             <Trend deltaPct={k.arpuDeltaPct} />
           </span>
@@ -181,26 +181,26 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
               <small>{f.uniqueViews.toLocaleString("th-TH")} unique</small>
             </div>
             <div className={styles.fconn}>
-              <span className={styles.farrow}>โ’</span>
-              <small>{f.convViewClick != null ? `${f.convViewClick}%` : "โ€”"}</small>
+              <span className={styles.farrow}>→</span>
+              <small>{f.convViewClick != null ? `${f.convViewClick}%` : "—"}</small>
             </div>
             <div className={styles.fstep}>
               <b>Click</b>
               <strong>{f.clicks.toLocaleString("th-TH")}</strong>
-              <small>เธเนเธญเธเธ—เธฒเธเน€เธเนเธฒเธฅเธดเธเธเน</small>
+              <small>ช่องทางเข้าลิงก์</small>
             </div>
             <div className={styles.fconn}>
-              <span className={styles.farrow}>โ’</span>
-              <small>{f.convClickPurchase != null ? `${f.convClickPurchase}%` : "โ€”"}</small>
+              <span className={styles.farrow}>→</span>
+              <small>{f.convClickPurchase != null ? `${f.convClickPurchase}%` : "—"}</small>
             </div>
             <div className={styles.fstep}>
               <b>Purchase</b>
               <strong>{f.purchases.toLocaleString("th-TH")}</strong>
-              <small>เนเธเนเธเน€เธเธ ACTIVE</small>
+              <small>แพ็กเกจ ACTIVE</small>
             </div>
           </div>
           <p className={styles.revNote}>
-            Funnel เธชเธฐเธชเธกเธ—เธฑเนเธเธซเธกเธ” ยท เธญเธฑเธเน€เธ”เธ• {fetchedAt}
+            Funnel สะสมทั้งหมด · อัปเดต {fetchedAt}
           </p>
         </section>
 
@@ -213,8 +213,8 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
                   <span className="ms">check_circle</span>
                 </span>
                 <span className={styles.insightBody}>
-                  <b>เนเธกเนเธกเธตเธเธธเธ”เธ•เธดเธ”เธเธฑเธ”</b>
-                  <small>เธ—เธธเธเธชเธ–เธฒเธเธฐเธญเธขเธนเนเนเธเน€เธเธ“เธ‘เนเธ—เธตเนเธเธฒเธ”เนเธงเน</small>
+                  <b>ไม่มีจุดติดขัด</b>
+                  <small>ทุกสถานะอยู่ในเกณฑ์ที่คาดไว้</small>
                 </span>
               </li>
             ) : (
@@ -258,10 +258,10 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
             ))}
           </ul>
           <p className={styles.revNote}>
-            {m.totalUsers.toLocaleString("th-TH")} users เธ—เธฑเนเธเธซเธกเธ” ยท{" "}
+            {m.totalUsers.toLocaleString("th-TH")} users ทั้งหมด ·{" "}
             {k.paidUsers > 0
-              ? `${Math.round((k.paidUsers / m.totalUsers) * 100).toLocaleString("th-TH", { maximumFractionDigits: 0 })}% เธเนเธฒเธขเน€เธเธดเธ (${k.paidUsers} เนเธ ${m.totalUsers})`
-              : "เธขเธฑเธเนเธกเนเธกเธตเธเธนเนเธเนเธฒเธขเน€เธเธดเธ"}
+              ? `${Math.round((k.paidUsers / m.totalUsers) * 100).toLocaleString("th-TH", { maximumFractionDigits: 0 })}% จ่ายเงิน (${k.paidUsers} ใน ${m.totalUsers})`
+              : "ยังไม่มีผู้จ่ายเงิน"}
           </p>
         </section>
 
@@ -269,7 +269,7 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
           <h3 className={styles.secLabel}>Revenue Mix</h3>
           <ul className={styles.bars}>
             {m.revenueMix.length === 0 ? (
-              <li className={styles.revNote} style={{ margin: "0 0 8px" }}>เธขเธฑเธเนเธกเนเธกเธตเธฃเธฒเธขเนเธ”เนเนเธขเธเธ•เธฒเธกเนเธเนเธเน€เธเธ</li>
+              <li className={styles.revNote} style={{ margin: "0 0 8px" }}>ยังไม่มีรายได้แยกตามแพ็กเกจ</li>
             ) : (
               m.revenueMix.map((p) => (
                 <li key={p.plan} className={styles.barRow}>
@@ -277,13 +277,13 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
                   <span className={styles.barTrack} aria-hidden>
                     <i style={{ width: `${Math.max(2, p.pct)}%` }} />
                   </span>
-                  <span className={styles.barNum}>เธฟ{fmtMoney(p.amount)}</span>
+                  <span className={styles.barNum}>฿{fmtMoney(p.amount)}</span>
                 </li>
               ))
             )}
           </ul>
           <p className={styles.revNote}>
-            MRR เธฟ{fmtMoney(k.mrr)}/เน€เธ”เธทเธญเธ ยท Creator ร— เธฟ199 เธ•เนเธญเธเธนเนเธเนเธฒเธข ยท Plus เธขเธฑเธเนเธกเนเธ•เธฑเนเธเธฃเธฒเธเธฒ
+            MRR ฿{fmtMoney(k.mrr)}/เดือน · Creator × ฿199 ต่อผู้จ่าย · Plus ยังไม่ตั้งราคา
           </p>
         </section>
       </div>
@@ -293,18 +293,18 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
           <h3 className={styles.secLabel}>Revenue Sources</h3>
           <ul className={styles.kvList}>
             {m.revenueMix.length === 0 ? (
-              <li className={styles.revNote}>เธขเธฑเธเนเธกเนเธกเธตเนเธเนเธเน€เธเธเธ—เธตเนเธเธฒเธขเนเธ”เน</li>
+              <li className={styles.revNote}>ยังไม่มีแพ็กเกจที่ขายได้</li>
             ) : (
               m.revenueMix.map((p) => (
                 <li key={p.plan} className={styles.kvRow}>
                   <span>{p.label}</span>
-                  <b>เธฟ{fmtMoney(p.amount)}</b>
+                  <b>฿{fmtMoney(p.amount)}</b>
                 </li>
               ))
             )}
             <li className={styles.kvRow}>
-              <span>เธฃเธงเธกเธ•เนเธญเน€เธ”เธทเธญเธ</span>
-              <b>เธฟ{fmtMoney(k.mrr)}</b>
+              <span>รวมต่อเดือน</span>
+              <b>฿{fmtMoney(k.mrr)}</b>
             </li>
           </ul>
         </section>
@@ -313,24 +313,24 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
           <h3 className={styles.secLabel}>Retention</h3>
           <div className={styles.retGrid}>
             <div className={styles.retBlock}>
-              <b>{m.retention.d7.pct != null ? `${m.retention.d7.pct}%` : "โ€”"}</b>
+              <b>{m.retention.d7.pct != null ? `${m.retention.d7.pct}%` : "—"}</b>
               <small>D7</small>
-              <span>{m.retention.d7.total > 0 ? `${m.retention.d7.active} เนเธ ${m.retention.d7.total} เธเธฅเธฑเธเธกเธฒ` : "Not enough data"}</span>
+              <span>{m.retention.d7.total > 0 ? `${m.retention.d7.active} ใน ${m.retention.d7.total} กลับมา` : "Not enough data"}</span>
             </div>
             <div className={styles.retBlock}>
-              <b>{m.retention.d30.pct != null ? `${m.retention.d30.pct}%` : "โ€”"}</b>
+              <b>{m.retention.d30.pct != null ? `${m.retention.d30.pct}%` : "—"}</b>
               <small>D30</small>
-              <span>{m.retention.d30.total > 0 ? `${m.retention.d30.active} เนเธ ${m.retention.d30.total} เธเธฅเธฑเธเธกเธฒ` : "Not enough data"}</span>
+              <span>{m.retention.d30.total > 0 ? `${m.retention.d30.active} ใน ${m.retention.d30.total} กลับมา` : "Not enough data"}</span>
             </div>
           </div>
-          <p className={styles.revNote}>cohort เธ•เธฒเธกเธญเธฒเธขเธธเธเธฑเธเธเธต ยท เธขเธฑเธเนเธกเนเธกเธต cohort เธเธฃเธเน€เธเธ“เธ‘เนเธเธเธเธงเนเธฒเธกเธตเธเธนเนเนเธเนเน€เธเธดเธ 7/30 เธงเธฑเธ</p>
+          <p className={styles.revNote}>cohort ตามอายุบัญชี · ยังไม่มี cohort ครบเกณฑ์จนกว่ามีผู้ใช้เกิน 7/30 วัน</p>
         </section>
       </div>
 
       <p className={styles.source}>
-        Source ยท NeonDB เธเนเธฒเธ /api/dev/metrics (เธเนเธญเธกเธนเธฅเธเธฃเธดเธเน€เธ—เนเธฒเธเธฑเนเธ) ยท เธฃเธฒเธเธฒ CREATOR เธฟ199 (lib/funnel PLAN_MRR) ยท{" "}
+        Source · NeonDB ผ่าน /api/dev/metrics (ข้อมูลจริงเท่านั้น) · ราคา CREATOR ฿199 (lib/funnel PLAN_MRR) ·{" "}
         <span className={styles.fresh}>
-          <span className="ms" aria-hidden>schedule</span> เนเธซเธฅเธ”เนเธฅเนเธง {fetchedAt}
+          <span className="ms" aria-hidden>schedule</span> โหลดแล้ว {fetchedAt}
         </span>
       </p>
     </div>

@@ -5,10 +5,10 @@ export function ChecklistModule({ items }: { items: [string, string][] }) {
     <div className={styles.card}>
       <div className={styles.cardHead}>
         <span className="ms">checklist</span>
-        <h2>เน€เธเนเธเธฅเธดเธชเธ•เนเน€เธเธดเธ”เธ•เธฑเธง</h2>
+        <h2>เช็กลิสต์เปิดตัว</h2>
         <span className={`${styles.pill} ${styles.pillWarn}`}>manual</span>
       </div>
-      <p className={styles.cardSub}>{items.length} เธเธฑเนเธ โ€” เธ—เธณเนเธ dashboard เธ เธฒเธขเธเธญเธเธ•เธฒเธกเธฅเธณเธ”เธฑเธ</p>
+      <p className={styles.cardSub}>{items.length} ขั้น — ทำใน dashboard ภายนอกตามลำดับ</p>
       <ol className={styles.ordered} start={1}>
         {items.map(([title, desc]) => (
           <li key={title}>
@@ -17,7 +17,7 @@ export function ChecklistModule({ items }: { items: [string, string][] }) {
           </li>
         ))}
       </ol>
-      <p className={styles.source}>Source ยท เธฃเธฒเธขเธเธฒเธฃ manual โ€” เธญเธฑเธเน€เธ”เธ•เน€เธกเธทเนเธญเน€เธชเธฃเนเธเธ—เธตเธฅเธฐเธเนเธญ ยท เธเธงเธฒเธกเธเธทเธเธซเธเนเธฒเนเธกเนเนเธ”เนเธเธฑเธเธ—เธถเธเนเธเธฃเธฐเธเธ</p>
+      <p className={styles.source}>Source · รายการ manual — อัปเดตเมื่อเสร็จทีละข้อ · ความคืบหน้าไม่ได้บันทึกในระบบ</p>
     </div>
   );
 }

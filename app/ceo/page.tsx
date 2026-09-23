@@ -17,6 +17,7 @@ import { SupportModule } from "@/components/dev/support";
 import { ConfigModule } from "@/components/dev/config";
 import { SecretVault } from "@/components/dev/secret-vault";
 import { DeployModule } from "@/components/dev/deploy";
+import { ApprovalModule } from "@/components/dev/approval";
 import { ChecklistModule } from "@/components/dev/checklist";
 import { GovernanceModule } from "@/components/dev/governance";
 import { RoadmapModule } from "@/components/dev/roadmap";
@@ -308,6 +309,7 @@ export default async function DevPage() {
         >
           <ConfigModule config={config} fetchedAt={fetchedAt} />
           <SecretVault items={vaultItems} />
+          <ApprovalModule />
           <DeployModule steps={DEPLOY_STEPS} />
           <ChecklistModule items={CHECKLIST} />
           <GovernanceModule />

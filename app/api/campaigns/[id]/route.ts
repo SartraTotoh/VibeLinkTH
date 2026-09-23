@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { hasHardSig, sanitizeObject } from "@/lib/charset";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -31,20 +32,40 @@ export async function PATCH(req: Request, { params }: Params) {
   }
 
   const data: Record<string, unknown> = {};
-  if (body.name !== undefined) data.name = (body.name ?? "").trim() || undefined;
-  if (body.source !== undefined) data.source = (body.source ?? "").trim() || undefined;
-  if (body.medium !== undefined) data.medium = (body.medium ?? "").trim() || undefined;
-  if (body.content !== undefined) data.content = (body.content ?? "").trim() || null;
-  if (body.linkId !== undefined) {
-    if (body.linkId) {
+  let unbroken: Record<string, unknown> = {};
+  try {
+    unbroken = sanitizeObject({
+      name: body.name,
+      source: body.source,
+      medium: body.medium,
+      content: body.content,
+      linkId: body.linkId,
+    });
+  } catch {
+    return NextResponse.json({ error: "ข้อมูลไม่ถูกต้อง" }, { status: 400 });
+  }
+  const badText = [unbroken.name, unbroken.source, unbroken.medium]
+    .some((v) => typeof v === "string" && hasHardSig(v));
+  if (badText) {
+    return NextResponse.json(
+      { error: "ข้อมูลมีอักขระที่เข้ารหัสผิด (mojibake) — กรุณากรอกใหม่" },
+      { status: 400 },
+    );
+  }
+  if (unbroken.name !== undefined) data.name = String(unbroken.name ?? "").trim() || undefined;
+  if (unbroken.source !== undefined) data.source = String(unbroken.source ?? "").trim() || undefined;
+  if (unbroken.medium !== undefined) data.medium = String(unbroken.medium ?? "").trim() || undefined;
+  if (unbroken.content !== undefined) data.content = String(unbroken.content ?? "").trim() || null;
+  if (unbroken.linkId !== undefined) {
+    if (unbroken.linkId) {
       const link = await prisma.link.findFirst({
-        where: { id: body.linkId, userId: session.user.id },
+        where: { id: String(unbroken.linkId), userId: session.user.id },
         select: { id: true },
       });
       if (!link) {
         return NextResponse.json({ error: "ไม่พบลิงก์ที่เลือก" }, { status: 400 });
       }
-      data.linkId = link.id;
+      data.linkId = String(unbroken.linkId);
     } else {
       data.linkId = null;
     }

@@ -43,7 +43,7 @@ export function Collapsible({
           {children}
         </div>
       ) : null}
-      <p className={styles.source}>Source ยท {source}</p>
+      <p className={styles.source}>Source · {source}</p>
     </section>
   );
 }

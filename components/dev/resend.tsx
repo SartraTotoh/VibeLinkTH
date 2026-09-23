@@ -14,27 +14,27 @@ export function ResendModule({
   const allVerified = records.length > 0 && verifiedCount === records.length;
 
   const dnsState = resend.sendOnly
-    ? { done: true, icon: "verified", sub: "เธขเธทเธเธขเธฑเธเธเธฃเธเนเธ dashboard" }
+    ? { done: true, icon: "verified", sub: "ยืนยันครบใน dashboard" }
     : allVerified
       ? { done: true, icon: "dns", sub: `${verifiedCount} records` }
-      : { done: false, icon: "autorenew", sub: "เธฃเธญเธเธฒเธฃเธขเธทเธเธขเธฑเธ" };
+      : { done: false, icon: "autorenew", sub: "รอการยืนยัน" };
 
   const tone = !resend.configured
-    ? "เธขเธฑเธเนเธกเนเน€เธเธทเนเธญเธกเธเนเธฒ secret"
+    ? "ยังไม่เชื่อมค่า secret"
     : resend.error
-      ? `โ  ${resend.error}`
+      ? `⚠ ${resend.error}`
       : resend.sendOnly
-        ? "เธเธตเธขเนเนเธเธ send-only (least privilege) โ€” เนเธ”เน€เธกเธเธขเธทเธเธขเธฑเธเธเธฃเธเนเธ dashboard เธเธญเธ Resend"
-        : `เธเธฃเนเธญเธกเนเธเน ยท DNS เธขเธทเธเธขเธฑเธเนเธฅเนเธง ${verifiedCount}/${records.length}`;
+        ? "คีย์แบบ send-only (least privilege) — โดเมนยืนยันครบใน dashboard ของ Resend"
+        : `พร้อมใช้ · DNS ยืนยันแล้ว ${verifiedCount}/${records.length}`;
 
   return (
     <div className={styles.card}>
       <div className={styles.cardHead}>
         <span className="ms">mark_email_read</span>
-        <h2>Resend ยท เธญเธตเน€เธกเธฅ</h2>
+        <h2>Resend · อีเมล</h2>
         {resend.configured ? (
           <span className={`${styles.pill} ${resend.error ? styles.pillWarn : styles.pillOn}`}>
-            {resend.error ? "เธกเธตเธเธฑเธเธซเธฒ" : resend.sendOnly ? "send-only" : "เธเธฃเนเธญเธก"}
+            {resend.error ? "มีปัญหา" : resend.sendOnly ? "send-only" : "พร้อม"}
           </span>
         ) : null}
       </div>
@@ -45,7 +45,7 @@ export function ResendModule({
             <span className="ms">{resend.configured ? "check" : "hourglass_empty"}</span>
           </span>
           <b>Domain added</b>
-          <small>{resend.configured ? resend.name ?? "vibelinkth.com" : "เธขเธฑเธเนเธกเนเน€เธเธทเนเธญเธก"}</small>
+          <small>{resend.configured ? resend.name ?? "vibelinkth.com" : "ยังไม่เชื่อม"}</small>
         </div>
         <div className={allVerified ? styles.connector : styles.connectorIdle} />
         <div className={`${styles.step} ${dnsState.done ? styles.stepDone : ""}`}>
@@ -61,7 +61,7 @@ export function ResendModule({
             <span className="ms">send</span>
           </span>
           <b>Smoke test</b>
-          <small>เธชเนเธเธญเธตเน€เธกเธฅเธ—เธ”เธชเธญเธเธเธฃเธดเธ</small>
+          <small>ส่งอีเมลทดสอบจริง</small>
         </div>
       </div>
 
@@ -86,7 +86,7 @@ export function ResendModule({
                   <td className={styles.cellMono}>{r.type}</td>
                   <td className={styles.cellMono}>{r.name}</td>
                   <td className={styles.cellMono} title={r.value}>
-                    {r.value.length > 42 ? `${r.value.slice(0, 42)}โ€ฆ` : r.value}
+                    {r.value.length > 42 ? `${r.value.slice(0, 42)}…` : r.value}
                   </td>
                   <td>{r.ttl}</td>
                   <td>
@@ -95,7 +95,7 @@ export function ResendModule({
                     </span>
                   </td>
                   <td>
-                    <CopyButton text={r.value} label={`เธเธฑเธ”เธฅเธญเธ ${r.type} ${r.name}`} />
+                    <CopyButton text={r.value} label={`คัดลอก ${r.type} ${r.name}`} />
                   </td>
                 </tr>
               ))}
@@ -104,18 +104,18 @@ export function ResendModule({
         </div>
       ) : resend.sendOnly ? null : (
         <p className={styles.cardSub} style={{ margin: "12px 0 0" }}>
-          เธขเธฑเธเนเธกเนเธกเธตเธเนเธญเธกเธนเธฅ DNS records
+          ยังไม่มีข้อมูล DNS records
         </p>
       )}
 
       <div className={styles.hairline} style={{ marginTop: 14 }} />
 
       <p className={styles.source} style={{ marginTop: 12 }}>
-        Source ยท Resend API เธชเธ” ยท{" "}
+        Source · Resend API สด ·{" "}
         <span className={styles.fresh}>
-          <span className="ms" aria-hidden>schedule</span> เธญเธฑเธเน€เธ”เธ•เธฅเนเธฒเธชเธธเธ” {fetchedAt}
+          <span className="ms" aria-hidden>schedule</span> อัปเดตล่าสุด {fetchedAt}
         </span>{" "}
-        ยท เน€เธเธดเธ”เน€เธเธดเนเธกเน€เธ•เธดเธกเธ—เธตเน{" "}
+        · เปิดเพิ่มเติมที่{" "}
         <a className={styles.freshLink} href="https://resend.com/domains" target="_blank" rel="noreferrer noopener">
           Resend Domains <span className="ms" aria-hidden>open_in_new</span>
         </a>

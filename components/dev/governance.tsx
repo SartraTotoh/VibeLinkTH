@@ -14,54 +14,54 @@ type Risk = {
 const RISKS: Risk[] = [
   {
     priority: "critical",
-    issue: "เธขเธทเธเธขเธฑเธ rotate/revoke credentials เธ—เธตเนเน€เธเธขเธซเธฅเธธเธ”",
-    response: "เธ•เธฃเธงเธเธงเนเธฒ key เน€เธเนเธฒเธ–เธนเธ revoke เธเธฃเธดเธ ยท เธ•เธฃเธงเธ logs ยท เน€เธเนเธเธซเธฅเธฑเธเธเธฒเธ",
+    issue: "ยืนยัน rotate/revoke credentials ที่เคยหลุด",
+    response: "ตรวจว่า key เก่าถูก revoke จริง · ตรวจ logs · เก็บหลักฐาน",
     status: "action needed",
-    note: "เธเธฃเธถเนเธเธเธฑเนเธเนเธญเธเธ—เธณเนเธฅเนเธง (AUTH_SECRET rotate เนเธฅเนเธง) ยท เธเนเธฒเธ: purge cache, roll Neon, roll Stripe test keys",
+    note: "ครึ่งฝั่งแอปทำแล้ว (AUTH_SECRET rotate แล้ว) · ค้าง: purge cache, roll Neon, roll Stripe test keys",
   },
   {
     priority: "critical",
-    issue: "เธเธฃเธฐเน€เธกเธดเธเน€เธซเธ•เธธเธเธฒเธฃเธ“เนเธเนเธญเธกเธนเธฅเธชเนเธงเธเธเธธเธเธเธฅเธ•เธฒเธก PDPA",
-    response: "breach assessment เธญเธขเนเธฒเธเน€เธเนเธเธ—เธฒเธเธเธฒเธฃ + เธเธฃเธถเธเธฉเธฒเธเธเธเธเธซเธกเธฒเธขเน€เธฃเธทเนเธญเธเธซเธเนเธฒเธ—เธตเนเนเธเนเธเน€เธซเธ•เธธ",
+    issue: "ประเมินเหตุการณ์ข้อมูลส่วนบุคคลตาม PDPA",
+    response: "breach assessment อย่างเป็นทางการ + ปรึกษาคนกฎหมายเรื่องหน้าที่แจ้งเหตุ",
     status: "action needed",
   },
   {
     priority: "high",
-    issue: "DPA เธเธฑเธ sub-processors",
-    response: "เธเธฑเธ”เธ—เธณ/เธ•เธฃเธงเธ Data Processing Agreement เธเธฑเธ Neon ยท Resend ยท Stripe ยท Cloudflare",
+    issue: "DPA กับ sub-processors",
+    response: "จัดทำ/ตรวจ Data Processing Agreement กับ Neon · Resend · Stripe · Cloudflare",
     status: "pending",
   },
   {
     priority: "high",
-    issue: "เนเธขเธ staging เธเธฑเธ production payment",
-    response: "เธซเธฅเธตเธเน€เธฅเธตเนเธขเธเธ—เธ”เธชเธญเธเน€เธเธดเธเธเธฃเธดเธเนเธ prod โ€” เธเธฑเธเธเธธเธเธฑเธ money path เธเนเธฒเธเธ”เนเธงเธขเธกเธนเธฅเธเนเธฒ เธฟ0 เนเธฅเนเธง",
+    issue: "แยก staging กับ production payment",
+    response: "หลีกเลี่ยงทดสอบเงินจริงใน prod — ปัจจุบัน money path ผ่านด้วยมูลค่า ฿0 แล้ว",
     status: "partial",
   },
   {
     priority: "high",
     issue: "Privacy Policy / ToS / Refund Policy",
-    response: "เน€เธเธขเนเธเธฃเนเนเธซเนเธชเธญเธ”เธเธฅเนเธญเธเธเธฑเธเธเธฒเธฃเน€เธเธดเธ”เธฃเธฑเธเธเธณเธฃเธฐเน€เธเธดเธเธเธฃเธดเธ",
+    response: "เผยแพร่ให้สอดคล้องกับการเปิดรับชำระเงินจริง",
     status: "pending",
   },
   {
     priority: "medium",
-    issue: "เธฅเธ” single-operator / bus factor",
-    response: "second reviewer ยท runbook ยท least privilege ยท MFA",
+    issue: "ลด single-operator / bus factor",
+    response: "second reviewer · runbook · least privilege · MFA",
     status: "pending",
   },
   {
     priority: "medium",
     issue: "Rotation policy",
-    response: "เธฃเธญเธเธซเธกเธธเธ PIN / backup code / secrets + เธ—เธเธ—เธงเธเธชเธดเธ—เธเธดเนเธเธฃเธฐเธเธณเธฃเธญเธ",
+    response: "รอบหมุน PIN / backup code / secrets + ทบทวนสิทธิ์ประจำรอบ",
     status: "pending",
-    note: "AUTH_SECRET เน€เธเธข rotate เนเธฅเนเธง 1 เธเธฃเธฑเนเธ",
+    note: "AUTH_SECRET เคย rotate แล้ว 1 ครั้ง",
   },
   {
     priority: "medium",
     issue: "Auditability",
-    response: "เธเธฑเธเธ—เธถเธ who / what / when / result เธเธญเธเธเธฒเธฃเน€เธเธฅเธตเนเธขเธเนเธเธฅเธเธชเธณเธเธฑเธ",
+    response: "บันทึก who / what / when / result ของการเปลี่ยนแปลงสำคัญ",
     status: "doing",
-    note: "audit log เธ—เธณเธเธฒเธเนเธฅเนเธงเธชเธณเธซเธฃเธฑเธ link status change + full PII export",
+    note: "audit log ทำงานแล้วสำหรับ link status change + full PII export",
   },
 ];
 
@@ -101,11 +101,11 @@ export function GovernanceModule() {
     <div className={styles.card}>
       <div className={styles.cardHead}>
         <span className="ms">gpp_bad</span>
-        <h2>เธเธงเธฒเธกเน€เธชเธตเนเธขเธ & เธเธฒเธฃเน€เธขเธตเธขเธงเธขเธฒ</h2>
+        <h2>ความเสี่ยง & การเยียวยา</h2>
         <span className={`${styles.pill} ${styles.pillWarn}`}>governance</span>
       </div>
       <p className={styles.cardSub}>
-        เธเธฒเธเธเธฒเธฃเธเธฃเธฐเน€เธกเธดเธเธเธงเธฒเธกเน€เธชเธตเนเธขเธเธ”เนเธฒเธ security / privacy / เธเธฒเธฃเธเธถเนเธเธเธฒเธเธเน€เธ”เธตเธขเธง โ€” เน€เธฃเธตเธขเธเธ•เธฒเธกเธเธงเธฒเธกเธชเธณเธเธฑเธ
+        จากการประเมินความเสี่ยงด้าน security / privacy / การพึ่งพาคนเดียว — เรียงตามความสำคัญ
       </p>
 
       <div className={styles.stack} style={{ marginTop: 14 }}>
@@ -143,22 +143,22 @@ export function GovernanceModule() {
         <h2>Audit log</h2>
         <span className={`${styles.pill} ${styles.pillOn}`}>live</span>
       </div>
-      <p className={styles.cardSub}>เนเธเธฃเธ—เธณเธญเธฐเนเธฃเน€เธกเธทเนเธญเนเธซเธฃเน เธเธฅเน€เธเนเธเธญเธขเนเธฒเธเนเธฃ</p>
+      <p className={styles.cardSub}>ใครทำอะไรเมื่อไหร่ ผลเป็นอย่างไร</p>
 
       {logs === null ? (
-        <p className={styles.cardSub}>เธเธณเธฅเธฑเธเนเธซเธฅเธ”โ€ฆ</p>
+        <p className={styles.cardSub}>กำลังโหลด…</p>
       ) : logs.length === 0 ? (
-        <p className={styles.cardSub}>เธขเธฑเธเนเธกเนเธกเธตเธฃเธฒเธขเธเธฒเธฃ</p>
+        <p className={styles.cardSub}>ยังไม่มีรายการ</p>
       ) : (
         <div className={styles.tableWrap} style={{ marginTop: 12 }}>
           <table className={styles.table}>
             <thead>
               <tr>
-                <th>เน€เธกเธทเนเธญเนเธซเธฃเน</th>
-                <th>เนเธเธฃ</th>
-                <th>เธ—เธณเธญเธฐเนเธฃ</th>
-                <th>เธเธฑเธ</th>
-                <th>เธเธฅเธฅเธฑเธเธเน</th>
+                <th>เมื่อไหร่</th>
+                <th>ใคร</th>
+                <th>ทำอะไร</th>
+                <th>กับ</th>
+                <th>ผลลัพธ์</th>
               </tr>
             </thead>
             <tbody>
@@ -167,7 +167,7 @@ export function GovernanceModule() {
                   <td className={styles.cellMono}>{fmtTime(l.createdAt)}</td>
                   <td className={styles.cellMono}>{l.actorEmail}</td>
                   <td className={styles.cellMono}>{l.action}</td>
-                  <td className={styles.cellMono}>{l.subjectRef ?? "โ€”"}</td>
+                  <td className={styles.cellMono}>{l.subjectRef ?? "—"}</td>
                   <td>
                     <span className={`${styles.pill} ${l.result === "success" ? styles.pillOn : styles.pillWarn}`}>
                       {l.result}
@@ -181,7 +181,7 @@ export function GovernanceModule() {
       )}
 
       <p className={styles.source}>
-        Source ยท AuditLog (NeonDB) + เธเธฒเธฃเธเธฃเธฐเน€เธกเธดเธเธเธงเธฒเธกเน€เธชเธตเนเธขเธเธเธฃเธฐเธเธณเนเธเธฃเธเธเธฒเธฃ ยท เธ•เธฒเธฃเธฒเธเธเธตเนเธฃเธตเน€เธเธฃเธเน€เธกเธทเนเธญเน€เธเธดเธ”เธซเธเนเธฒ
+        Source · AuditLog (NeonDB) + การประเมินความเสี่ยงประจำโครงการ · ตารางนี้รีเฟรชเมื่อเปิดหน้า
       </p>
     </div>
   );
