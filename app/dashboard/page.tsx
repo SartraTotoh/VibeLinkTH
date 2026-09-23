@@ -237,6 +237,10 @@ export default async function DashboardPage() {
             <span className="ms">settings</span>
             {t(lang, "nav.settings")}
           </Link>
+          <Link href="/support" className="mini-btn" title={t(lang, "nav.support")}>
+            <span className="ms">help</span>
+            {t(lang, "nav.support")}
+          </Link>
           <SignOutButton label={lang === "th" ? "ออกจากระบบ" : "Sign out"} />
         </div>
       </nav>

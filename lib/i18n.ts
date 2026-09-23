@@ -8,6 +8,7 @@ const th = {
   "nav.dev": "Dev",
   "nav.login": "เข้าสู่ระบบ",
   "nav.home": "กลับหน้าแรก",
+  "nav.support": "ช่วยเหลือ",
 
   "dash.title": "หน้าควบคุมลิงก์",
   "dash.plan": "แพ็กเกจ",
@@ -223,6 +224,7 @@ const en: Record<StrKey, string> = {
   "nav.dev": "Dev",
   "nav.login": "Log in",
   "nav.home": "Back home",
+  "nav.support": "Support",
 
   "dash.title": "Link dashboard",
   "dash.plan": "Plan",

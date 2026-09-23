@@ -20,6 +20,8 @@ const MODULES: Mod[] = [
   { id: "mod-overview", label: "ภาพรวม", zone: "zone-understand", keys: "overview stats users links clicks" },
   { id: "mod-users", label: "ลูกค้า · CRM", zone: "zone-understand", keys: "crm funnel mrr export pin customer" },
   { id: "mod-revenue", label: "รายได้ · เงิน", zone: "zone-understand", keys: "revenue mrr arpu payments money income" },
+  { id: "mod-support-chat", label: "แชทช่วยเหลือ", zone: "zone-act", keys: "support chat inbox ticket ข้อความ สมาชิก response แอดมิน" },
+  { id: "mod-support-rules", label: "กฎ Auto Message", zone: "zone-act", keys: "rules auto reply faq keyword ตั้งค่าระบบอัตโนมัติ keyword" },
   { id: "mod-support", label: "ค้นหา · ระงับ", zone: "zone-act", keys: "support lookup user link pause archive ระงับ" },
   { id: "mod-config", label: "Runtime config", zone: "zone-control", keys: "config env vars runtime" },
   { id: "mod-vault", label: "Secret Vault", zone: "zone-control", keys: "secret vault key reveal ค่าลับ" },

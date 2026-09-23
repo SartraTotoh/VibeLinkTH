@@ -16,7 +16,7 @@ export function middleware(req: NextRequest) {
     req.cookies.has("authjs.session-token") ||
     req.cookies.has("__Secure-authjs.session-token");
 
-  if (!hasSession && (pathname.startsWith("/dashboard") || pathname.startsWith("/settings"))) {
+  if (!hasSession && (pathname.startsWith("/dashboard") || pathname.startsWith("/settings") || pathname.startsWith("/support"))) {
     const loginUrl = new URL("/login", req.url);
     loginUrl.searchParams.set("next", pathname);
     return NextResponse.redirect(loginUrl);

@@ -14,6 +14,8 @@ import { OverviewModule } from "@/components/dev/overview";
 import { UsersCrm } from "@/components/dev/users-crm";
 import { RevenueModule } from "@/components/dev/revenue";
 import { SupportModule } from "@/components/dev/support";
+import { SupportChatModule } from "@/components/dev/support-chat";
+import { RulesManagerModule } from "@/components/dev/rules-manager";
 import { ConfigModule } from "@/components/dev/config";
 import { SecurityFeedModule } from "@/components/dev/security-feed";
 import { SecretVault } from "@/components/dev/secret-vault";
@@ -86,20 +88,24 @@ export default async function DevPage() {
   const session = await auth();
   if (!isAdmin(session?.user?.email)) notFound();
 
-  const [userCount, linkCount, eventCount, activeSubs, planGroups, resend, recentSec] = await Promise.all([
-    prisma.user.count(),
-    prisma.link.count(),
-    prisma.linkEvent.count(),
-    prisma.subscription.count({ where: { status: "ACTIVE" } }),
-    prisma.user.groupBy({ by: ["plan"], _count: { _all: true } }),
-    getResendDomainStatus(),
-    prisma.auditLog.count({
-      where: {
-        subjectType: "SECURITY",
-        createdAt: { gte: new Date(Date.now() - 24 * 60 * 60 * 1000) },
-      },
-    }),
-  ]);
+  const [userCount, linkCount, eventCount, activeSubs, planGroups, resend, recentSec, openSupportTickets] =
+    await Promise.all([
+      prisma.user.count(),
+      prisma.link.count(),
+      prisma.linkEvent.count(),
+      prisma.subscription.count({ where: { status: "ACTIVE" } }),
+      prisma.user.groupBy({ by: ["plan"], _count: { _all: true } }),
+      getResendDomainStatus(),
+      prisma.auditLog.count({
+        where: {
+          subjectType: "SECURITY",
+          createdAt: { gte: new Date(Date.now() - 24 * 60 * 60 * 1000) },
+        },
+      }),
+      prisma.supportTicket.count({
+        where: { status: "OPEN", needsAdmin: true },
+      }),
+    ]);
 
   const sk = process.env.STRIPE_SECRET_KEY ?? "";
   const stripeMode = sk.startsWith("sk_live")
@@ -137,6 +143,17 @@ export default async function DevPage() {
       title: `มีเหตุการณ์ต้องสงสัย ${recentSec} ครั้งใน 24 ชม.`,
       detail: "มีผู้ถูกบล็อกที่เส้นทางไฟล์ลับ/คอนโซล — ดู Security Sentinel เพื่อหาต้นทาง",
       target: "#mod-security-sentinel",
+    });
+  }
+
+  if (openSupportTickets > 0) {
+    exceptions.push({
+      key: "support-inbox",
+      tone: "warn",
+      icon: "chat",
+      title: `แชทช่วยเหลือรอตอบ ${openSupportTickets} เธรด`,
+      detail: "สมาชิกส่งคำถามที่ auto-reply ตอบไม่ได้แล้ว — ไปตอบที่ห้องแชท",
+      target: "#mod-support-chat",
     });
   }
 
@@ -315,6 +332,8 @@ export default async function DevPage() {
           question="ต้องทำอะไร?"
           defaultOpen={false}
         >
+          <SupportChatModule initialUnread={openSupportTickets} />
+          <RulesManagerModule />
           <SupportModule />
         </ZoneSection>
 

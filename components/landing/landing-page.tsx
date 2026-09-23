@@ -26,11 +26,14 @@ export function LandingPage() {
         <div className="navLinks">
           <Link href="#features">ฟีเจอร์</Link>
           <Link href="#pricing">แพ็กเกจ</Link>
-          <Link href="#help">Help Center</Link>
+          <Link href="/support">Help Center</Link>
         </div>
-        <Link className="button secondary" href="/login">
-          เข้าสู่ระบบ
-        </Link>
+<Link className="button secondary" href="/login">
+            เข้าสู่ระบบ
+          </Link>
+          <Link className="button secondary" href="/support">
+            ช่วยเหลือ
+          </Link>
       </nav>
 
       <section className="hero">
