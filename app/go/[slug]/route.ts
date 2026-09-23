@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { rateLimit, clientIp } from "@/lib/rate-limit";
+import { findCampaignFor } from "@/lib/campaign-attribution";
 
 const MOBILE_RE = /Mobile|Android|iPhone/i;
 const TABLET_RE = /iPad|Tablet/i;
@@ -48,12 +49,20 @@ export async function GET(req: Request, { params }: { params: Promise<{ slug: st
     return NextResponse.redirect(`${appUrl}/?link=not-found`, 302);
   }
 
+  const campaigns = await prisma.campaign.findMany({
+    where: { userId: link.userId, linkId: link.id },
+    select: { id: true, name: true },
+    take: 5,
+  });
+  const attributed = findCampaignFor(link.destinationUrl, campaigns);
+
   const ua = parseUA(req.headers.get("user-agent"));
   await prisma.linkEvent.create({
     data: {
       type: "CLICK",
       userId: link.userId,
       linkId: link.id,
+      campaignId: attributed.campaignId,
       referrer: req.headers.get("referer"),
       device: ua.device,
       browser: ua.browser,
