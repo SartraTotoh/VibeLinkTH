@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { hasHardSig, sanitizeObject } from "@/lib/charset";
 import { limitsOf } from "@/lib/plans";
 import { getActivePlan } from "@/lib/subscription";
 import { detectPlatform, isValidSlug, normalizeDestination, randomSlug } from "@/lib/links";
@@ -22,6 +23,14 @@ export async function POST(req: Request) {
   const parsed = createSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json({ error: "ข้อมูลไม่ถูกต้อง" }, { status: 400 });
+  }
+
+  const cleaned = sanitizeObject(parsed.data);
+  if (hasHardSig(String(cleaned.title ?? "")) || hasHardSig(String(cleaned.destinationUrl ?? ""))) {
+    return NextResponse.json(
+      { error: "ข้อมูลมีอักขระที่เข้ารหัสผิด (mojibake) — กรุณากรอกใหม่" },
+      { status: 400 },
+    );
   }
 
   const destinationUrl = normalizeDestination(parsed.data.destinationUrl);

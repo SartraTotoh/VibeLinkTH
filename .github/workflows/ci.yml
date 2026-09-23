@@ -25,6 +25,7 @@ jobs:
       - run: npx prisma generate
       - run: npm run typecheck
       - run: npm run test:unit
+      - run: npm run check:charset
       - run: npm run build
 
   e2e:

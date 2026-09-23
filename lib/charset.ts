@@ -8,7 +8,8 @@
 // Detection rules mirror scripts/check-charset.mjs:
 //   - hard signature : C1 controls (U+0080–U+009F) or Euro (U+20AC) in text
 //   - genuine roundtrip : encode(text, cp874) decodes strictly to different
-//     text that still contains Thai (or a Thai-flanked "ยท" separator)
+//     text that still contains Thai, or a Thai-flanked "\u0E22\u0E17" (the
+//     windows-874 double-encoded middle-dot) rendered as a separator
 // Healthy Thai like "ลบ"/"แผน" round-trips to non-Thai junk and is ignored.
 
 const CP874 = new Map<number, number>();

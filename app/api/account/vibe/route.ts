@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { hasHardSig, sanitizeObject } from "@/lib/charset";
 
 const SLUG_RE = /^[a-z0-9][a-z0-9-]{2,29}$/;
 
@@ -24,6 +25,15 @@ export async function PATCH(req: Request) {
     }
     data[key] = raw.trim();
   }
+
+  const cleaned = sanitizeObject(data);
+  if (["displayName", "vibeTitle", "vibeBio"].some((k) => typeof cleaned[k] === "string" && hasHardSig(cleaned[k]))) {
+    return NextResponse.json(
+      { error: "ข้อมูลมีอักขระที่เข้ารหัสผิด (mojibake) — กรุณากรอกใหม่" },
+      { status: 400 },
+    );
+  }
+  Object.assign(data, cleaned);
 
   let vibeSlug: string | null = null;
   if (data.vibeSlug !== undefined && data.vibeSlug !== "") {

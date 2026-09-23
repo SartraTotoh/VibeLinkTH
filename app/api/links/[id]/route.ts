@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { hasHardSig, sanitizeObject } from "@/lib/charset";
 import { limitsOf } from "@/lib/plans";
 import { getActivePlan } from "@/lib/subscription";
 import { isValidSlug, normalizeDestination } from "@/lib/links";
@@ -47,6 +48,14 @@ export async function PATCH(req: Request, { params }: Params) {
   const parsed = patchSchema.safeParse(body);
   if (!parsed.success || Object.keys(parsed.data).length === 0) {
     return NextResponse.json({ error: "ข้อมูลไม่ถูกต้อง" }, { status: 400 });
+  }
+
+  const cleaned = sanitizeObject(parsed.data);
+  if (hasHardSig(String(cleaned.title ?? "")) || hasHardSig(String(cleaned.destinationUrl ?? ""))) {
+    return NextResponse.json(
+      { error: "ข้อมูลมีอักขระที่เข้ารหัสผิด (mojibake) — กรุณากรอกใหม่" },
+      { status: 400 },
+    );
   }
 
   const existing = await prisma.link.findFirst({
