@@ -1996,6 +1996,28 @@
   min-width: 0;
 }
 
+.ordered li > a {
+  grid-column: 2;
+  justify-self: start;
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #9270ff;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 99px;
+  background: rgba(146, 112, 255, 0.12);
+  border: 1px solid rgba(146, 112, 255, 0.35);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.ordered li > a:hover {
+  background: rgba(146, 112, 255, 0.22);
+  border-color: rgba(146, 112, 255, 0.6);
+}
+
 .ordered b {
   font-size: 13.5px;
   color: #e4e4e7;

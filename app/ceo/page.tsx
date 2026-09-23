@@ -72,14 +72,49 @@ const DEPLOY_STEPS: { title: string; when: string; cmd: string | null }[] = [
   },
 ];
 
-const CHECKLIST: [string, string][] = [
-  ["ยืนยันโดเมนอีเมลใน Resend", "SPF / DKIM / DMARC ที่ Cloudflare DNS แล้วกด Verify — ดูสถานะสดในโมดูล Resend"],
-  ["สลับ Stripe เป็น Live", "สร้าง product/price จริง แล้วตั้ง secret STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_PRICE_CREATOR"],
-  ["เพิ่ม Webhook ปลายทาง", "https://app.vibelinkth.com/api/billing/webhook (checkout.session.completed, customer.subscription.updated/deleted)"],
-  ["เปิด Billing Portal ใน Stripe", "Settings → Billing → Customer portal"],
-  ["WAF Rate Limiting", "Cloudflare → Security → WAF → Rate limiting rules สำหรับ /api/auth/* และ /go/*"],
-  ["เปิด Backup/PITR ของ Neon", "Neon Console → Project → Settings → Backups"],
-  ["(ทางเลือก) Sentry", "ส่ง DSN มาเพื่อเชื่อมการแจ้งเตือน error"],
+const CHECKLIST: { title: string; desc: string; url: string; urlLabel: string }[] = [
+  {
+    title: "ยืนยันโดเมนอีเมลใน Resend",
+    desc: "SPF / DKIM / DMARC ที่ Cloudflare DNS แล้วกด Verify — ดูสถานะสดในโมดูล Resend",
+    url: "https://resend.com/domains",
+    urlLabel: "Resend Domains",
+  },
+  {
+    title: "สลับ Stripe เป็น Live",
+    desc: "สร้าง product/price จริง แล้วตั้ง secret STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_PRICE_CREATOR",
+    url: "https://dashboard.stripe.com/",
+    urlLabel: "Stripe Dashboard",
+  },
+  {
+    title: "เพิ่ม Webhook ปลายทาง",
+    desc: "https://app.vibelinkth.com/api/billing/webhook (checkout.session.completed, customer.subscription.updated/deleted)",
+    url: "https://dashboard.stripe.com/webhooks",
+    urlLabel: "Stripe Webhooks",
+  },
+  {
+    title: "เปิด Billing Portal ใน Stripe",
+    desc: "Settings → Billing → Customer portal",
+    url: "https://dashboard.stripe.com/settings/billing/portal",
+    urlLabel: "Stripe Billing Portal",
+  },
+  {
+    title: "WAF Rate Limiting",
+    desc: "Cloudflare → Security → WAF → Rate limiting rules สำหรับ /api/auth/* และ /go/*",
+    url: "https://dash.cloudflare.com/?to=/:account/vibelinkth.com/security/waf",
+    urlLabel: "Cloudflare WAF",
+  },
+  {
+    title: "เปิด Backup/PITR ของ Neon",
+    desc: "Neon Console → Project → Settings → Backups",
+    url: "https://console.neon.tech/",
+    urlLabel: "Neon Console",
+  },
+  {
+    title: "(ทางเลือก) Sentry",
+    desc: "ส่ง DSN มาเพื่อเชื่อมการแจ้งเตือน error",
+    url: "https://sentry.io/",
+    urlLabel: "Sentry",
+  },
 ];
 
 const TONE_ORDER: Record<string, number> = { bad: 0, warn: 1, info: 2 };
@@ -185,6 +220,8 @@ export default async function DevPage() {
       icon: "mark_email_unread",
       title: "ระบบอีเมลยังปิดอยู่",
       detail: "ตั้ง RESEND_API_KEY เพื่อให้ส่งอีเมลยืนยัน/รีเซ็ตรหัสได้",
+      action: { label: "Resend API Keys", href: "https://resend.com/api-keys" },
+      target: "#mod-resend",
     });
   } else if (resend.error) {
     exceptions.push({
@@ -193,6 +230,8 @@ export default async function DevPage() {
       icon: "sync_problem",
       title: "อีเมลมีปัญหา",
       detail: resend.error,
+      action: { label: "Resend Dashboard", href: "https://resend.com/error" },
+      target: "#mod-resend",
     });
   } else if (!resend.sendOnly && records.length > 0 && !allVerified) {
     exceptions.push({
@@ -223,6 +262,7 @@ export default async function DevPage() {
       icon: "person_off",
       title: "ยังไม่มีผู้ใช้ในระบบ",
       detail: "ลองสมัครผ่าน landing เพื่อทดสอบโฟลว์จริง",
+      action: { label: "เปิดหน้าแรก", href: "https://vibelinkth.com/" },
     });
   } else if (activeSubs === 0) {
     exceptions.push({
@@ -231,6 +271,7 @@ export default async function DevPage() {
       icon: "payments",
       title: "ยังไม่มีลูกค้าจ่ายเงิน",
       detail: "money path ผ่านการทดสอบ ฿0 แล้ว — จ่ายจริงครั้งแรกค้างรอเปิด Stripe Live",
+      action: { label: "Stripe Dashboard", href: "https://dashboard.stripe.com/" },
     });
   }
 

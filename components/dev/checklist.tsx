@@ -1,6 +1,8 @@
 ﻿import styles from "@/app/ceo/dev-console.module.css";
 
-export function ChecklistModule({ items }: { items: [string, string][] }) {
+export type ChecklistItem = { title: string; desc: string; url?: string; urlLabel?: string };
+
+export function ChecklistModule({ items }: { items: ChecklistItem[] }) {
   return (
     <div className={styles.card}>
       <div className={styles.cardHead}>
@@ -10,10 +12,15 @@ export function ChecklistModule({ items }: { items: [string, string][] }) {
       </div>
       <p className={styles.cardSub}>{items.length} ขั้น — ทำใน dashboard ภายนอกตามลำดับ</p>
       <ol className={styles.ordered} start={1}>
-        {items.map(([title, desc]) => (
-          <li key={title}>
-            <b>{title}</b>
-            <span>{desc}</span>
+        {items.map((it) => (
+          <li key={it.title}>
+            <b>{it.title}</b>
+            <span>{it.desc}</span>
+            {it.url ? (
+              <a href={it.url} target="_blank" rel="noreferrer noopener">
+                {it.urlLabel ?? "เปิด"} →
+              </a>
+            ) : null}
           </li>
         ))}
       </ol>
