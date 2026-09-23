@@ -2,6 +2,7 @@
 import styles from "@/app/ceo/dev-console.module.css";
 
 const NOTES: [string, string][] = [
+  ["Cloudflare IDs (โซน vibelinkth.com)", "Zone ID: 1e455bc8708294ed587b6907a513b317 · Account ID: 11cd5159a95f1ad1c8cd86311beeb532 — ห้ามจด API Token ลงใน repo/บันทึก"],
   ["ธีม 2 โหมด ห้ามสลับชื่อ", "Blink = light (Electric Frosted · DESIGN-blink.md, bg #f5fbea) · Pank = dark (Cyberpunk Neon Glass · DESIGN.md, bg #090b10) — สลับได้ที่ landing [data-theme-btn] · แอป app/* ยังเป็น Pank เท่านั้น"],
   ["Pipeline deploy", "ต้องใช้ npm run cf:deploy เท่านั้น (build → patch Prisma wasm → deploy) หลังแก้ schema ต้อง prisma generate ก่อน"],
   ["Rate limit ในโค้ดเป็นระดับ isolate", "ป้องกันพื้นฐานได้ แต่ชั้นจริงควรใช้ WAF Rate Limiting ของ Cloudflare"],
