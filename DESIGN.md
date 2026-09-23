@@ -1,5 +1,6 @@
 ---
 name: Cyberpunk Neon Glass
+aliases: [Pank, dark]
 colors:
   surface: '#111319'
   surface-dim: '#111319'

@@ -29,6 +29,8 @@ const MODULES: Mod[] = [
   { id: "mod-roadmap", label: "โฟกัสข้างหน้า", zone: "zone-reference", keys: "roadmap phase plans" },
   { id: "mod-milestones", label: "วันที่สำคัญ", zone: "zone-reference", keys: "milestones anniversary dates" },
   { id: "mod-links", label: "ลิงก์ด่วน", zone: "zone-reference", keys: "links dashboards stripe neon cloudflare resend" },
+  { id: "mod-design", label: "ธีม · Blink / Pank", zone: "zone-reference", keys: "design theme blink pank dark light สี color ธีม" },
+  { id: "mod-incident", label: "รายงาน · .env", zone: "zone-reference", keys: "incident report env sign-off รายงาน ไฟล์ลับ .env" },
   { id: "mod-notes", label: "บันทึกเตือนใจ", zone: "zone-reference", keys: "notes warnings design" },
 ];
 

@@ -2,6 +2,7 @@ import { Collapsible } from "@/components/dev/collapsible";
 import styles from "@/app/dev/dev-console.module.css";
 
 const NOTES: [string, string][] = [
+  ["ธีม 2 โหมด ห้ามสลับชื่อ", "Blink = light (Electric Frosted · DESIGN-blink.md, bg #f5fbea) · Pank = dark (Cyberpunk Neon Glass · DESIGN.md, bg #090b10) — สลับได้ที่ landing [data-theme-btn] · แอป app/* ยังเป็น Pank เท่านั้น"],
   ["Pipeline deploy", "ต้องใช้ npm run cf:deploy เท่านั้น (build → patch Prisma wasm → deploy) หลังแก้ schema ต้อง prisma generate ก่อน"],
   ["Rate limit ในโค้ดเป็นระดับ isolate", "ป้องกันพื้นฐานได้ แต่ชั้นจริงควรใช้ WAF Rate Limiting ของ Cloudflare"],
   ["@prisma/adapter-neon เป็น v7 แต่ client v6", "ทำงานได้ แต่ควร align major ให้ตรงในอนาคต"],

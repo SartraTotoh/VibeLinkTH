@@ -22,6 +22,8 @@ import { GovernanceModule } from "@/components/dev/governance";
 import { RoadmapModule } from "@/components/dev/roadmap";
 import { MilestonesModule } from "@/components/dev/milestones";
 import { LinksModule } from "@/components/dev/links";
+import { DesignModule } from "@/components/dev/design";
+import { IncidentReportModule } from "@/components/dev/incident-report";
 import { NotesModule } from "@/components/dev/notes";
 import styles from "./dev-console.module.css";
 
@@ -322,6 +324,8 @@ export default async function DevPage() {
           <RoadmapModule />
           <MilestonesModule />
           <LinksModule />
+          <DesignModule />
+          <IncidentReportModule />
           <NotesModule />
         </ZoneSection>
 
