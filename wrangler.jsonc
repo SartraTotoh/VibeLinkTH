@@ -29,7 +29,7 @@
     "COMPANY_NAME": "VibeLink",
     "COMPANY_ADDRESS": "กรุงเทพมหานคร ประเทศไทย",
     "COMPANY_CONTACT_EMAIL": "hello@vibelinkth.com",
-    "ADMIN_EMAILS": "sattra.th@gmail.com,totoh.taponchai@shopee.com"
+    "ADMIN_EMAILS": "sattra.th@gmail.com"
   },
   "observability": {
     "enabled": true
