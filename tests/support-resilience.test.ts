@@ -1,5 +1,6 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { readFileSync } from "node:fs";
+import { prisma } from "../lib/prisma";
 
 // rateLimitDb: DB ล้ม/ช้าเกิน 3s ต้อง fail-open (ยกเว้น mode "closed")
 import { rateLimitDb, FAIL_OPEN_RESULT, FAIL_CLOSED_RESULT, RL_TIMEOUT_MS } from "../lib/rate-limit-db";
@@ -25,10 +26,15 @@ describe("rateLimitDb resilience (ไม่ให้ /api/support คืน 503 
   });
 
   it("fail-closed mode blocks requests when DB is unreachable", async () => {
-    const r = await rateLimitDb(req(), "test:fail-closed-db", 5, 60_000, null, "closed");
-    expect(r.ok).toBe(false);
-    expect(r.remaining).toBe(0);
-    expect(r.retryAfter).toBe(10);
+    const spy = vi.spyOn(prisma, "$queryRawUnsafe").mockRejectedValueOnce(new Error("Neon connection failed"));
+    try {
+      const r = await rateLimitDb(req(), "test:fail-closed-db", 5, 60_000, null, "closed");
+      expect(r.ok).toBe(false);
+      expect(r.remaining).toBe(0);
+      expect(r.retryAfter).toBe(10);
+    } finally {
+      spy.mockRestore();
+    }
   });
 
   it("timeout budget is short (3s) so requests never hang on slow DB", () => {
