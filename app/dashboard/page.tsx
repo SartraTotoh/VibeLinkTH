@@ -233,6 +233,10 @@ export default async function DashboardPage() {
               {t(lang, "nav.dev")}
             </Link>
           ) : null}
+          <Link href="/qr" className="mini-btn">
+            <span className="ms">qr_code_2</span>
+            {lang === "th" ? "QR Studio" : "QR Studio"}
+          </Link>
           <Link href="/settings" className="mini-btn">
             <span className="ms">settings</span>
             {t(lang, "nav.settings")}

@@ -4,7 +4,7 @@ const base = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://app.vibelinkth.com").
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const routes = ["", "/login", "/signup", "/terms", "/privacy", "/cookies"];
+  const routes = ["", "/qr", "/login", "/signup", "/terms", "/privacy", "/cookies"];
   return routes.map((route) => ({
     url: `${base}${route || "/"}`,
     lastModified: now,
