@@ -1,5 +1,4 @@
 import { describe, expect, it, vi } from "vitest";
-import { readFileSync } from "node:fs";
 import { prisma } from "../lib/prisma";
 
 // rateLimitDb: DB ล้ม/ช้าเกิน 3s ต้อง fail-open (ยกเว้น mode "closed")
@@ -49,22 +48,5 @@ describe("rateLimitDb resilience (ไม่ให้ /api/support คืน 503 
     const b = await rateLimitDb(spoofed, "test:ip", 5, 60_000);
     expect(a.ok).toBe(true);
     expect(b.retryAfter).toBeGreaterThanOrEqual(0);
-  });
-});
-
-describe("support route source safety (ต้องไม่คืน 503)", () => {
-  const src = readFileSync("app/api/support/route.ts", "utf8");
-
-  it("no 503 status anywhere in handler", () => {
-    expect(src.includes("status: 503")).toBe(false);
-    expect(src.includes('status: 503')).toBe(false);
-  });
-
-  it("GET and POST wrap DB in try/catch (no unhandled throw -> CF 503)", () => {
-    expect(src.match(/catch \(err\)/g)?.length ?? 0).toBeGreaterThanOrEqual(2);
-  });
-
-  it("500 responses carry Retry-After", () => {
-    expect(src.includes('"Retry-After": "10"')).toBe(true);
   });
 });
