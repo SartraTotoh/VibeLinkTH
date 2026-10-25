@@ -1739,3 +1739,12 @@
 .relatedPath a{color:var(--primary-text);text-decoration:underline;text-underline-offset:3px}
 .relatedPath a:focus-visible,.homeLink:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
 @media(max-width:720px){.homeLink{display:none}.relatedPath{font-size:12px;gap:7px}}
+
+/* Unified VibeLinkTH expressive brand language */
+.brandKicker{display:inline-flex;justify-self:start;align-items:center;padding:7px 13px;border-radius:999px;font-size:12px;font-weight:900;color:#dcffa0;background:linear-gradient(100deg,rgba(185,255,44,.12),rgba(255,79,216,.09));box-shadow:inset 0 0 0 1px rgba(185,255,44,.2);letter-spacing:.08em;margin-bottom:8px}
+.hero{position:relative;padding-top:38px;padding-bottom:19px;background:radial-gradient(ellipse at 70% 22%,rgba(185,255,44,.065),transparent 50%)}
+.hero h1{letter-spacing:-.042em;line-height:1.17}
+.hero p{text-transform:none;letter-spacing:0;font-weight:750;font-size:clamp(14px,1.5vw,17px);line-height:1.65;max-width:760px}
+.relatedPath{padding:11px 15px;border-radius:14px;background:linear-gradient(110deg,rgba(185,255,44,.065),rgba(255,79,216,.055));box-shadow:inset 0 0 0 1px rgba(185,255,44,.12)}
+.relatedPath a{font-weight:850}
+@media(max-width:620px){.brandKicker{font-size:10px;letter-spacing:.055em}.hero{padding-top:26px}.hero h1{font-size:clamp(32px,8.3vw,46px)}}
