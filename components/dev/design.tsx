@@ -47,8 +47,8 @@ export function DesignModule() {
           <div>
             <b>ปุ่มสลับโหมด</b>
             <span style={{ color: "#a1a1aa" }}>
-              อยู่ที่ landing/index.html → [data-theme-btn] · ค่าเริ่มต้น "pank" · จำตัวเลือกใน
-              localStorage "vibelink-theme"
+              อยู่ที่ landing/index.html → [data-theme-btn] · ค่าเริ่มต้น &quot;pank&quot; · จำตัวเลือกใน
+              localStorage &quot;vibelink-theme&quot;
             </span>
           </div>
         </div>
