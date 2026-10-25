@@ -17,6 +17,7 @@ const csp = [
 ].join("; ");
 
 const nextConfig: NextConfig = {
+  images: { unoptimized: true },
   poweredByHeader: false,
   outputFileTracingRoot: path.resolve(),
   serverExternalPackages: ["@prisma/client", ".prisma/client", "@prisma/adapter-neon", "@neondatabase/serverless"],
