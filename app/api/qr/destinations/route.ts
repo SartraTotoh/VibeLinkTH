@@ -30,14 +30,10 @@ export async function GET() {
     return NextResponse.json({ error: "ต้องเข้าสู่ระบบก่อน" }, { status: 401 });
   }
 
-  const [user, servicePage, links] = await Promise.all([
+  const [user, links] = await Promise.all([
     prisma.user.findUnique({
       where: { id: session.user.id },
       select: { displayName: true, vibeSlug: true, vibeTitle: true, vibeEmoji: true },
-    }),
-    prisma.servicePage.findUnique({
-      where: { ownerUserId: session.user.id },
-      select: { slug: true, category: true, isPublished: true, isAcceptingBookings: true },
     }),
     prisma.link.findMany({
       where: { userId: session.user.id, status: "ACTIVE" },
@@ -62,13 +58,9 @@ export async function GET() {
     });
   }
 
-  if (servicePage?.isPublished) {
-    destinations.push({
-      type: "booking",
-      label: servicePage.category || servicePage.slug,
-      url: `${base}/book/${servicePage.slug}`,
-    });
-  }
+  // Booking/VibeBook destinations are intentionally omitted in this release
+  // because the ServicePage model is not available in this codebase snapshot.
+  // Re-enable when VibeBook is integrated into the deployed schema.
 
   const shortBase = (process.env.SHORT_LINK_URL ?? `${base}/go`).replace(/\/$/, "");
   const shortLinks: ShortLinkOption[] = links.map((l) => ({
@@ -83,7 +75,7 @@ export async function GET() {
     ok: true,
     destinations,
     shortLinks,
-    bookingPublished: Boolean(servicePage?.isPublished),
+    bookingPublished: false,
     vibeReady: Boolean(user.vibeSlug),
   });
 }
