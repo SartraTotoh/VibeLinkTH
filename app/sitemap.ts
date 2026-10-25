@@ -3,12 +3,13 @@ import type { MetadataRoute } from "next";
 const base = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://app.vibelinkth.com").replace(/\/$/, "");
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-  const routes = ["", "/qr", "/login", "/signup", "/terms", "/privacy", "/cookies"];
-  return routes.map((route) => ({
-    url: `${base}${route || "/"}`,
-    lastModified: now,
-    changeFrequency: route === "" ? "weekly" : "monthly",
-    priority: route === "" ? 1 : 0.5,
-  }));
+  // Keep the QR tool as the app's primary indexable entry point.
+  // Last-modified dates are omitted rather than falsely updating on every build.
+  return [
+    { url: `${base}/qr`, changeFrequency: "weekly", priority: 1 },
+    { url: `${base}/`, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${base}/terms`, changeFrequency: "yearly", priority: 0.2 },
+    { url: `${base}/privacy`, changeFrequency: "yearly", priority: 0.2 },
+    { url: `${base}/cookies`, changeFrequency: "yearly", priority: 0.1 },
+  ];
 }
