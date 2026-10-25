@@ -548,7 +548,7 @@ export function QrStudio() {
         <div className={styles.navActions}>
           <NavLangSwitcher />
           <Link href="https://vibelinkth.com/" className={styles.homeLink}>
-            {lang === "th" ? "หน้าแรก VibeLinkTH" : "VibeLinkTH home"}
+            {lang === "th" ? "รู้จัก VibeLink" : "Explore VibeLink"}
           </Link>
           <Link href="/dashboard" className="mini-btn">
             <span className="ms">dashboard</span>
@@ -558,12 +558,13 @@ export function QrStudio() {
       </nav>
 
       <header className={styles.hero}>
+        <span className={styles.brandKicker}>✳ MAKE IT YOUR VIBE · VIBELINKTH</span>
         <h1>{t("hero.title")}</h1>
         <p>{t("hero.sub")}</p>
         <div className={styles.relatedPath}>
-          <span>{lang === "th" ? "QR ฟรี → Vibe Page / VibeBook → Short Link และ Analytics" : "Free QR → Vibe Page / VibeBook → Short Link and Analytics"}</span>
+          <span>{lang === "th" ? "แต่ง QR ให้มีซีน → เช็กให้ชัวร์ → แชร์ไปให้สุด" : "Free QR → Vibe Page / VibeBook → Short Link and Analytics"}</span>
           <Link href="https://vibelinkth.com/#growth-cases">
-            {lang === "th" ? "ดูวิธีต่อยอด QR กับ VibeLink ↗" : "Explore the VibeLink toolkit ↗"}
+            {lang === "th" ? "สแกนแล้วไปต่อยังไง? รู้จัก VibeLink ↗" : "Explore the VibeLink toolkit ↗"}
           </Link>
         </div>
       </header>
