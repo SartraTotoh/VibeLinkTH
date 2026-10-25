@@ -8,8 +8,8 @@ const th = {
   "nav.login": "เข้าสู่ระบบ",
   "nav.signup": "สมัครฟรี",
 
-  "hero.title": "QR STUDIO",
-  "hero.sub": "สร้าง · แต่ง · เช็ก · โหลด",
+  "hero.title": "สร้าง QR Code ฟรี",
+  "hero.sub": "สร้างคิวอาร์โค้ดออนไลน์ ใส่โลโก้ ปรับสี ดาวน์โหลด PNG / SVG",
 
   "step1.title": "ปลายทาง",
   "mode.url": "URL",
@@ -132,8 +132,8 @@ const en: Record<QrTextKey, string> = {
   "nav.login": "Log in",
   "nav.signup": "Sign up free",
 
-  "hero.title": "QR STUDIO",
-  "hero.sub": "Make · Style · Check · Download",
+  "hero.title": "Free QR Code Generator",
+  "hero.sub": "Customize colors and logo, scan-check, and download PNG / SVG",
 
   "step1.title": "Destination",
   "mode.url": "URL",
