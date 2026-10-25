@@ -3,16 +3,28 @@ import { FeatureCard } from "./feature-card";
 
 const features = [
   {
+    title: "QR Studio",
+    description: "สร้าง QR Code ฟรี แต่งสี ใส่โลโก้ เช็กก่อนแชร์ แล้วดาวน์โหลด PNG หรือ SVG",
+  },
+  {
     title: "Short Link",
-    description: "สร้างลิงก์สั้น จัดการสถานะ และเปลี่ยนปลายทางได้ในที่เดียว.",
+    description: "สร้างลิงก์สั้น จัดการสถานะ และเปลี่ยนปลายทางได้ในที่เดียว",
   },
   {
     title: "UTM Campaign",
-    description: "ติดแท็กแคมเปญให้ทุกลิงก์เพื่อวัดผลได้ชัดเจน.",
+    description: "ติดแท็กแคมเปญให้ทุกลิงก์เพื่อวัดผลได้ชัดเจน",
+  },
+  {
+    title: "Vibe Page",
+    description: "รวมโปรไฟล์ ผลงาน และลิงก์สำคัญในหน้าเดียว",
+  },
+  {
+    title: "VibeBook",
+    description: "รับจองบริการและจัดการนัดหมายในระบบเดียวกัน",
   },
   {
     title: "Creator Analytics",
-    description: "ดู Click และแหล่งที่มาของผู้ชมแบบเข้าใจง่าย.",
+    description: "ดู Click และแหล่งที่มาของผู้ชมตามสิทธิ์แพ็กเกจ",
   },
 ];
 
@@ -25,29 +37,29 @@ export function LandingPage() {
         </Link>
         <div className="navLinks">
           <Link href="#features">ฟีเจอร์</Link>
-          <Link href="#pricing">แพ็กเกจ</Link>
+          <Link href="https://vibelinkth.com/">เว็บหลัก</Link>
           <Link href="/support">Help Center</Link>
         </div>
-<Link className="button secondary" href="/login">
-            เข้าสู่ระบบ
-          </Link>
-          <Link className="button secondary" href="/support">
-            ช่วยเหลือ
-          </Link>
+        <Link className="button secondary" href="/login">
+          เข้าสู่ระบบ
+        </Link>
+        <Link className="button secondary" href="/support">
+          ช่วยเหลือ
+        </Link>
       </nav>
 
       <section className="hero">
-        <div className="eyebrow">Creator Link OS · MVP</div>
+        <div className="eyebrow">FREE QR STUDIO · MAKE IT YOUR VIBE</div>
         <h1>
-          ลิงก์ของคุณต้อง <span>คลิกเนียน</span> กว่านี้
+          QR ที่มี Vibe <span>· ลิงก์ที่ไปต่อ</span>
         </h1>
         <p>
-          สร้าง Short Link, ติดตาม Click และวัดผล UTM Campaign ได้ในโปรเจกต์เดียว
-          พร้อมต่อยอดเป็นระบบ Creator Analytics จริง
+          สร้าง QR Code ฟรี แต่งให้มีซีน เช็กก่อนแชร์ แล้วพาคนไปต่อกับ Vibe Page,
+          VibeBook และ Short Link ได้เมื่อคุณพร้อม
         </p>
         <div className="actions">
-          <Link className="button primary" href="/signup">
-            เริ่มใช้ฟรี
+          <Link className="button primary" href="/qr">
+            สร้าง QR ฟรี ให้มี Vibe
           </Link>
           <Link className="button secondary" href="#features">
             ดูฟีเจอร์
