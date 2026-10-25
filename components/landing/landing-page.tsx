@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FeatureCard } from "./feature-card";
+import styles from "./landing-page.module.css";
 
 const features = [
   {
@@ -48,7 +49,7 @@ export function LandingPage() {
         </Link>
       </nav>
 
-      <section className="hero">
+      <section className={`hero ${styles.heroMotion}`}>
         <div className="eyebrow">FREE QR STUDIO · MAKE IT YOUR VIBE</div>
         <h1>
           QR ที่มี Vibe <span>· ลิงก์ที่ไปต่อ</span>
@@ -66,7 +67,7 @@ export function LandingPage() {
           </Link>
         </div>
 
-        <div className="cards" id="features">
+        <div className={`cards ${styles.cardMotion}`} id="features">
           {features.map((feature) => (
             <FeatureCard key={feature.title} {...feature} />
           ))}
