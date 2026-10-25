@@ -4,11 +4,12 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="theme-color" content="#090b10" />
-<title>VibeLink — ตัวช่วยสายแชร์ลิงก์ ให้คลิกเนียนๆ ไม่อ่อม</title>
-<meta name="description" content="VibeLink แปลงลิงก์ธรรมดาให้เด้งเข้าแอปจริง 100% (Shopee, TikTok, Lazada) พร้อมสถิติคลิกเรียลไทม์ UTM และ QR — สมัครฟรี ไม่มีบัตร ไม่มีผูกมัด" />
+<title>สร้าง QR Code ฟรี ปรับสี ใส่โลโก้ | Vibe QR Studio by VibeLinkTH</title>
+<meta name="description" content="สร้าง QR Code ฟรีกับ Vibe QR Studio ออกแบบสี โลโก้ และกรอบ ดาวน์โหลด PNG/SVG ตรวจสแกนก่อนใช้ แล้วต่อยอดด้วย Short Link, Vibe Page และ VibeBook" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="VibeLink — ตัวช่วยสายแชร์ลิงก์ ให้คลิกเนียนๆ ไม่อ่อม" />
-<meta property="og:description" content="แปลงลิงก์ให้เด้งเข้าแอปจริง 100% + สถิติคลิกเรียลไทม์ สร้าง UTM และ QR ได้ในไม่กี่วิ" />
+<meta property="og:title" content="Vibe QR Studio — สร้าง QR ฟรี แต่งให้เป็นสไตล์คุณ" />
+<meta property="og:description" content="สร้าง QR ฟรี ปรับสีและโลโก้ ส่งออก PNG/SVG พร้อม Short Link และ VibeBook เพื่อการเติบโต" />
+<link rel="canonical" href="https://vibelinkth.com/" />
 <meta property="og:url" content="https://vibelinkth.com/" />
 <meta property="og:image" content="https://vibelinkth.com/og-cover.png" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -735,6 +736,85 @@ html{scroll-snap-type:y proximity}
 .c-form .wl-note{margin:16px auto 0;font-size:14.5px}
 [data-theme="blink"] .contact{background:transparent;border-color:transparent;box-shadow:none}
 @media (max-width:960px){.contact{grid-template-columns:1fr;padding:56px 28px;gap:38px}.f-grid{grid-template-columns:1fr}.float-emo{display:none}.plan-stats{flex-wrap:wrap}.c-form{padding:30px 24px}.help-list{grid-template-columns:1fr}.lsec{padding:40px 0}.lhero{padding:20px 0 44px}.pricing-row{padding:40px 0}.page-tag{top:12px;right:14px;font-size:10px}}
+
+/* QR-first landing isolated from dashboard preview */
+body.ishome #tabs{display:none}
+#view-home > :not(.growth-home){display:none!important}
+.growth-home{padding:12px 0 70px}
+.growth-home *{box-sizing:border-box}
+.growth-nav{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:5px 0 20px}
+.growth-nav a{padding:9px 14px;border-radius:50px;background:var(--panel-solid);color:var(--muted);font-size:12px;font-weight:800;box-shadow:inset 0 0 0 1px rgba(190,201,196,.15)}
+.growth-nav a:hover{color:var(--text);background:var(--sc-high)}
+.growth-nav small{color:var(--muted);margin-left:auto;font-weight:800;letter-spacing:.12em}
+.growth-hero{position:relative;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:28px;min-height:480px;padding:58px 53px;border-radius:32px;overflow:hidden;color:#f4f6fc;background:radial-gradient(ellipse at 85% 15%,rgba(185,255,44,.16),transparent 47%),radial-gradient(ellipse at 10% 92%,rgba(255,79,216,.18),transparent 52%),linear-gradient(130deg,#0c1119,#161323 62%,#101821);box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),0 24px 70px rgba(0,0,0,.23)}
+.growth-kicker{display:inline-flex;align-items:center;gap:8px;border-radius:50px;padding:9px 14px;background:rgba(185,255,44,.11);box-shadow:inset 0 0 0 1px rgba(185,255,44,.14);font-size:12px;font-weight:900;color:#dfff98;letter-spacing:.09em}
+.growth-kicker i{width:7px;height:7px;background:#b9ff2c;border-radius:50%;box-shadow:0 0 10px #b9ff2c}
+.growth-hero h1{font-size:clamp(36px,4.4vw,60px);line-height:1.2;letter-spacing:-.05em;margin:19px 0;font-weight:900}
+.growth-hero h1 em{font-style:normal;background:linear-gradient(100deg,#c9ff62,#76e5ea,#fdabe9);background-clip:text;-webkit-background-clip:text;color:transparent}
+.growth-hero p{font-size:clamp(14px,1.4vw,17px);line-height:1.85;color:#cbd1dc;max-width:570px}
+.growth-actions{display:flex;flex-wrap:wrap;gap:10px;margin:25px 0 16px}
+.growth-cta{display:inline-flex;align-items:center;justify-content:center;padding:12px 23px;min-height:50px;border-radius:14px;font-size:14px;font-weight:850;text-align:center;transition:transform .2s,filter .2s}
+.growth-cta:hover{transform:translateY(-3px);filter:brightness(1.05)}
+.growth-cta:focus-visible,.growth-nav a:focus-visible,.growth-card a:focus-visible{outline:none;box-shadow:0 0 0 4px rgba(185,255,44,.3)}
+.growth-cta.primary{color:#101709;background:#b9ff2c;box-shadow:0 10px 32px rgba(185,255,44,.2)}
+.growth-cta.secondary{color:#fff;background:rgba(255,255,255,.10);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.growth-cta.neutral{color:var(--text);background:var(--sc-high);box-shadow:inset 0 0 0 1px rgba(140,151,145,.15)}
+.growth-points{display:flex;gap:8px 16px;flex-wrap:wrap;color:#aeb9bf;font-size:12px}
+.growth-points span:before{content:"✓";color:#b9ff2c;font-weight:900;margin-right:6px}
+.growth-visual{min-width:0;position:relative;display:flex;align-items:center;justify-content:center;min-height:380px}
+.growth-poster{width:min(100%,325px);transform:rotate(5deg);border-radius:24px;padding:17px;background:#eef3f5;color:#142022;box-shadow:0 28px 74px rgba(0,0,0,.51),0 0 62px rgba(255,70,215,.10)}
+.growth-poster-top,.growth-poster-bottom{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:900;letter-spacing:.07em;padding:7px 5px 11px}
+.growth-poster-bottom{padding:13px 6px 5px;letter-spacing:0;color:#363e42}
+.growth-pattern{background:#fff;border-radius:18px;padding:19px;box-shadow:inset 0 0 0 1px #dfe5e7}
+.growth-pattern svg{display:block;width:min(100%,234px);height:auto;margin:auto}
+.growth-poster-note{text-align:center;margin-top:10px;font-size:10px;color:#68747b}
+.growth-float{position:absolute;padding:9px 13px;border-radius:14px;background:#1a2030;color:#fff;font-size:12px;font-weight:850;box-shadow:0 12px 30px rgba(0,0,0,.35),inset 0 0 0 1px rgba(255,255,255,.12)}
+.growth-float.one{right:-7px;top:38px;transform:rotate(-5deg)}
+.growth-float.two{left:-17px;bottom:44px;transform:rotate(-3deg)}
+.growth-section{padding:66px 0 8px;scroll-margin-top:90px}
+.growth-overline{font-size:11px;font-weight:900;color:var(--primary-text);letter-spacing:.18em}
+.growth-section h2{font-size:clamp(25px,3vw,37px);line-height:1.35;letter-spacing:-.04em;margin:10px 0 12px}
+.growth-intro{max-width:650px;color:var(--muted);line-height:1.85;font-size:15px;margin-bottom:28px}
+.growth-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.growth-card{min-width:0;padding:27px;border-radius:24px;background:radial-gradient(ellipse at 100% 0%,rgba(146,112,255,.1),transparent 48%),var(--panel-solid);box-shadow:inset 0 0 0 1px rgba(150,165,161,.15),0 10px 26px rgba(0,0,0,.06)}
+.growth-card .ms{font-size:29px;color:var(--primary-text);margin-bottom:16px}
+.growth-card small{display:block;font-weight:900;color:var(--primary-text);letter-spacing:.12em;margin-bottom:15px}
+.growth-card h3{font-size:21px;line-height:1.4;margin:0 0 11px}
+.growth-card p{font-size:14px;line-height:1.8;color:var(--muted)}
+.growth-card a{display:inline-block;margin-top:18px;font-size:13px;font-weight:850;color:var(--primary-text)}
+.growth-card a:hover{text-decoration:underline}
+.growth-cases{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.growth-case{padding:28px;min-height:208px;border-radius:24px;background:radial-gradient(ellipse at top right,rgba(255,79,216,.10),transparent 48%),var(--panel-solid);box-shadow:inset 0 0 0 1px rgba(155,168,160,.15)}
+.growth-case:nth-child(even){background:radial-gradient(ellipse at top right,rgba(185,255,44,.09),transparent 50%),var(--panel-solid)}
+.growth-case .ms{display:inline-block;color:var(--primary-text);font-size:28px;margin-bottom:14px}
+.growth-case h3{font-size:21px;margin-bottom:10px}
+.growth-case p{font-size:14px;color:var(--muted);line-height:1.8}
+.growth-case a{display:inline-block;margin-top:14px;color:var(--primary-text);font-size:13px;font-weight:850}
+.growth-prices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.growth-plan{padding:32px;border-radius:27px;background:var(--panel-solid);box-shadow:inset 0 0 0 1px rgba(155,168,160,.15)}
+.growth-plan.featured{background:radial-gradient(ellipse at 100% 0%,rgba(185,255,44,.13),transparent 52%),var(--panel-solid);box-shadow:inset 0 0 0 1px rgba(185,255,44,.24)}
+.growth-plan h3{font-size:19px}
+.growth-price{font-size:43px;font-weight:900;margin:14px 0}
+.growth-price small{font-size:13px;color:var(--muted);font-weight:600}
+.growth-plan p{color:var(--muted);line-height:1.75;font-size:14px}
+.growth-plan ul{list-style:none;display:grid;gap:12px;margin:22px 0}
+.growth-plan li{font-size:14px;line-height:1.6}
+.growth-plan li:before{content:"✓";font-weight:900;color:var(--primary-text);margin-right:9px}
+.growth-plan .growth-cta{width:100%}
+.growth-note{font-size:12px;line-height:1.75;color:var(--muted);margin-top:16px}
+.growth-faq{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.growth-faq details{padding:20px;border-radius:17px;background:var(--panel-solid);box-shadow:inset 0 0 0 1px rgba(155,168,160,.14)}
+.growth-faq summary{font-size:15px;font-weight:800;cursor:pointer}
+.growth-faq p{color:var(--muted);line-height:1.8;font-size:13px;margin-top:12px}
+.growth-finish{padding:42px 24px;margin-top:69px;text-align:center;border-radius:27px;color:#fff;background:radial-gradient(ellipse at 0% 0%,rgba(255,79,216,.18),transparent 52%),radial-gradient(ellipse at 100% 100%,rgba(185,255,44,.13),transparent 55%),#15151f;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.growth-finish h2{font-size:clamp(24px,3.2vw,38px);line-height:1.38}
+.growth-finish p{color:#cbd0d4;max-width:540px;margin:13px auto 0;line-height:1.7}
+.growth-finish .growth-actions{justify-content:center}
+@media(max-width:900px){.growth-hero{padding:40px 28px;gap:16px}.growth-visual{min-height:330px}.growth-poster{width:86%}.growth-card{padding:22px}}
+@media(max-width:720px){.growth-nav small{display:none}.growth-hero{grid-template-columns:1fr;padding:30px 23px;border-radius:25px}.growth-hero h1{font-size:clamp(32px,8vw,46px)}.growth-visual{min-height:335px}.growth-poster{width:min(76%,285px)}.growth-float{font-size:10px}.growth-float.one{right:0}.growth-float.two{left:0}.growth-grid,.growth-cases,.growth-prices,.growth-faq{grid-template-columns:1fr}.growth-section{padding-top:52px}.growth-plan{padding:25px}.growth-card{padding:25px}}
+@media(max-width:380px){.growth-hero{padding:28px 18px}.growth-cta{width:100%}.growth-visual{min-height:300px}.growth-poster{width:79%;padding:10px}.growth-pattern{padding:11px}.growth-float{padding:8px}.growth-float.one{right:-8px}.growth-float.two{left:-5px}.growth-nav a{font-size:11px;padding:8px 11px}}
+@media(prefers-reduced-motion:reduce){.growth-home .growth-cta{transition:none}}
+
 </style>
 </head>
 <body class="ishome">
@@ -748,18 +828,18 @@ html{scroll-snap-type:y proximity}
 </div>
 <div class="hdr-actions">
 <a class="hdr-btn ghost" href="https://app.vibelinkth.com/login">เข้าสู่ระบบ</a>
-<a class="hdr-btn go" href="https://app.vibelinkth.com/signup">เริ่มใช้ฟรี</a>
+<a class="hdr-btn go" href="https://app.vibelinkth.com/qr">สร้าง QR ฟรี ↗</a>
 </div>
 </div>
 </header>
 <div class="hero">
 <div>
-<h1 class="h-title">ฟาดสถิติ<span style="background:linear-gradient(90deg,var(--primary),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent">ตัวมัม</span>⚡</h1>
-<div class="live-row"><i class="radar"></i><span>Live Tracking · อัปเดต 3 นาทีที่แล้ว</span></div>
+<h2 class="h-title">ตัวอย่างแดชบอร์ด <span class="grad">VibeLink</span></h2>
+<div class="live-row"><i class="radar"></i><span>ข้อมูลจำลอง · ไม่ใช่สถิติจริง</span></div>
 </div>
-<div class="vip-badge"><span class="ms">verified</span>VIP CREATOR</div>
+<div class="vip-badge"><span class="ms">verified</span>DASHBOARD DEMO</div>
 </div>
-<div class="compare-bar"><span class="compare">เทียบกับช่วงก่อนหน้า · รวมทุกแพลตฟอร์มแบบเรียลไทม์</span></div>
+<div class="compare-bar"><span class="compare">ตัวอย่างข้อมูลสำหรับสาธิตหน้าจอเท่านั้น</span></div>
 <nav class="tabs" id="tabs">
 <button class="tab active" data-view="home"><span class="ms">rocket_launch</span>Home</button>
 <button class="tab" data-view="overview"><span class="ms">grid_view</span>Overview</button>
@@ -771,6 +851,50 @@ html{scroll-snap-type:y proximity}
 </nav>
 <div class="custom-range" id="customRange" hidden><span class="ms">date_range</span><label>เริ่มต้น<input type="date" id="rangeStart"></label><label>สิ้นสุด<input type="date" id="rangeEnd"></label><button class="btn-mini" id="rangeApply"><span class="ms" style="font-size:14px">check</span>ใช้ช่วงนี้</button></div>
 <section class="view active" id="view-home">
+
+<div class="growth-home" id="growth-home">
+  <nav class="growth-nav" aria-label="ส่วนต่าง ๆ ของ VibeLink"><a href="#growth-how">วิธีใช้งาน</a><a href="#growth-cases">ตัวอย่างใช้จริง</a><a href="#growth-plans">แพ็กเกจ</a><a href="#growth-faq">คำถามที่พบบ่อย</a><small>QR · LINKS · BOOKING</small></nav>
+  <div class="growth-hero">
+    <div>
+      <span class="growth-kicker"><i aria-hidden="true"></i> NEW · VIBE QR STUDIO</span>
+      <h1>สร้าง QR สวย ๆ ฟรี<br><em>แล้วพาคนมารู้จักคุณ</em></h1>
+      <p>เปลี่ยนลิงก์ธรรมดาให้เป็น QR สไตล์คุณ ปรับสี ใส่โลโก้ เลือกกรอบ แล้วดาวน์โหลดไปใช้ได้เลย พร้อมต่อยอดสู่ Vibe Page, Short Link และ VibeBook เมื่ออยากเติบโตมากขึ้น</p>
+      <div class="growth-actions"><a class="growth-cta primary" href="https://app.vibelinkth.com/qr" data-growth-cta="hero_qr">✳ สร้าง QR ฟรีเลย ↗</a><a class="growth-cta secondary" href="#growth-how" data-growth-cta="hero_learn">ดูวิธีใช้งาน</a></div>
+      <div class="growth-points"><span>QR พื้นฐานฟรี</span><span>ใส่สีและโลโก้</span><span>PNG / SVG</span><span>ตรวจ Scan Health</span></div>
+    </div>
+    <div class="growth-visual">
+      <div class="growth-poster">
+        <div class="growth-poster-top"><span>VIBE / QR</span><span>DESIGN STUDIO ✳</span></div>
+        <div class="growth-pattern"><svg viewBox="0 0 150 150" role="img" aria-label="ภาพประกอบลวดลาย QR ไม่ใช่โค้ดที่ใช้สแกน"><rect width="150" height="150" fill="#fff"/><g fill="#182519"><path d="M5 5h43v43H5z M102 5h43v43h-43z M5 102h43v43H5z M59 5h11v11H59z M80 6h12v14H80z M60 26h29v11H60z M90 37h11v16H90z M59 48h16v10H59z M78 58h20v14H78z M7 60h18v12H7z M33 60h22v13H33z M62 75h14v13H62z M82 78h11v22H82z M100 60h21v13h-21z M127 61h17v10h-17z M7 80h23v11H7z M36 82h22v10H36z M63 101h12v11H63z M79 107h22v12H79z M108 80h30v12h-30z M119 99h24v13h-24z M60 120h14v23H60z M80 127h32v12H80z M118 121h14v23h-14z M139 127h8v16h-8z"/></g><g fill="#fff"><rect x="13" y="13" width="27" height="27"/><rect x="110" y="13" width="27" height="27"/><rect x="13" y="110" width="27" height="27"/></g><g fill="#182519"><rect x="20" y="20" width="13" height="13"/><rect x="117" y="20" width="13" height="13"/><rect x="20" y="117" width="13" height="13"/></g><rect x="66" y="61" width="13" height="13" rx="3" fill="#b9ff2c"/></svg><div class="growth-poster-note">ภาพประกอบดีไซน์ · สร้าง QR ที่สแกนได้จริงใน Studio</div></div>
+        <div class="growth-poster-bottom"><strong>Make it your vibe.</strong><span>VIBELINKTH</span></div>
+      </div>
+      <div class="growth-float one">✦ แต่งสี + โลโก้</div><div class="growth-float two">✓ ตรวจสแกนก่อนใช้</div>
+    </div>
+  </div>
+  <section class="growth-section" id="growth-how" aria-labelledby="growth-how-h"><span class="growth-overline">CREATE · DESIGN · SHARE</span><h2 id="growth-how-h">QR พร้อมแชร์ใน 3 ขั้นตอน</h2><p class="growth-intro">เริ่มจากลิงก์ของคุณ แล้วทำให้มันเข้ากับแบรนด์ ไม่ต้องซื้อแพ็กเกจก่อน</p><div class="growth-grid">
+    <article class="growth-card"><small>01 / CREATE</small><span class="ms" aria-hidden="true">link</span><h3>วางลิงก์</h3><p>เลือกเว็บไซต์ โปรไฟล์หรือหน้าจองที่อยากให้คนเปิดหลังสแกน</p></article>
+    <article class="growth-card"><small>02 / DESIGN</small><span class="ms" aria-hidden="true">palette</span><h3>แต่งให้เป็นคุณ</h3><p>ปรับสี ใส่โลโก้ และตรวจความชัดกับ Scan Health ก่อนใช้จริง</p></article>
+    <article class="growth-card"><small>03 / SHARE</small><span class="ms" aria-hidden="true">ios_share</span><h3>ดาวน์โหลดไปใช้</h3><p>ส่งออก PNG / SVG สำหรับโพสต์ นามบัตร โปสเตอร์ หรือหน้าร้าน</p><a href="https://app.vibelinkth.com/qr" data-growth-cta="steps_qr">ลองสร้าง QR ↗</a></article>
+  </div></section>
+  <section class="growth-section" id="growth-cases" aria-labelledby="growth-cases-h"><span class="growth-overline">ONE QR · MORE POSSIBILITIES</span><h2 id="growth-cases-h">สแกนครั้งเดียว เปิดโอกาสได้มากกว่า</h2><p class="growth-intro">QR เป็นประตูให้คนเข้ามา เครื่องมืออื่นของ VibeLink ช่วยต่อยอดตามเป้าหมายคุณ</p><div class="growth-cases">
+    <article class="growth-case"><span class="ms" aria-hidden="true">person</span><h3>Creator · รวมตัวตนให้คนจำ</h3><p>พาคนจาก QR ไปยัง Vibe Page ที่รวมโปรไฟล์ ผลงาน และลิงก์สำคัญ</p><a href="https://app.vibelinkth.com/signup" data-growth-cta="creator_signup">เริ่มสร้าง Vibe Page ↗</a></article>
+    <article class="growth-case"><span class="ms" aria-hidden="true">event_available</span><h3>Provider · ให้ลูกค้าจองง่ายขึ้น</h3><p>พาคนไปหน้า Service Page หรือ VibeBook เพื่อดูบริการและเริ่มต้นจอง</p><a href="https://app.vibelinkth.com/signup" data-growth-cta="booking_signup">เริ่มใช้ VibeBook ↗</a></article>
+    <article class="growth-case"><span class="ms" aria-hidden="true">campaign</span><h3>Small Business · แชร์แคมเปญ</h3><p>ใช้ QR บนสื่อออฟไลน์และต่อยอดด้วย Short Link / UTM เพื่อแยกแหล่งที่มาของ Traffic</p><a href="https://app.vibelinkth.com/signup" data-growth-cta="campaign_signup">สำรวจเครื่องมือ Campaign ↗</a></article>
+    <article class="growth-case"><span class="ms" aria-hidden="true">monitoring</span><h3>Analytics · เมื่ออยากเห็นผลลัพธ์</h3><p>QR แบบ Static ฟรี ส่วนเครื่องมือวัดผลลิงก์และแคมเปญช่วยให้ตัดสินใจจากข้อมูลได้</p><a href="#growth-plans" data-growth-cta="analytics_pricing">เปรียบเทียบแพ็กเกจ ↗</a></article>
+  </div></section>
+  <section class="growth-section" id="growth-plans" aria-labelledby="growth-plans-h"><span class="growth-overline">FREE TO START · GROW WHEN READY</span><h2 id="growth-plans-h">ใช้ QR ฟรีก่อน อัปเกรดเมื่อคุ้มกับคุณ</h2><p class="growth-intro">เราไม่จำเป็นต้องเปลี่ยนคนสร้าง QR ทุกคนให้เป็น Subscriber แต่จะให้เหตุผลชัดเจนเมื่ออยากวัดผลและเติบโต</p><div class="growth-prices">
+    <article class="growth-plan"><h3>QR Studio Free</h3><div class="growth-price">฿0 <small>QR พื้นฐาน</small></div><p>เหมาะกับคนที่อยากสร้าง QR สวยและใช้งานได้ทันที</p><ul><li>สร้าง QR สำหรับ URL</li><li>ปรับสี โลโก้ และกรอบตามฟีเจอร์ที่รองรับ</li><li>ดาวน์โหลด PNG / SVG</li><li>ตรวจ Scan Health ก่อนใช้</li></ul><a class="growth-cta neutral" href="https://app.vibelinkth.com/qr" data-growth-cta="price_qr">สร้าง QR ฟรี ↗</a></article>
+    <article class="growth-plan featured"><h3>VibeLink Creator</h3><div class="growth-price">฿199 <small>/เดือน · ราคาเต็มตามบันทึก</small></div><p>สำหรับคนที่อยากจัดการลิงก์ ติดตามแคมเปญ และสร้างความต่อเนื่องกับผู้ชม</p><ul><li>Short Link และ UTM</li><li>Analytics ตามสิทธิ์แพ็กเกจ</li><li>เครื่องมือ Creator เพื่อการเติบโต</li><li>ตรวจสอบราคาและสิทธิ์ล่าสุดก่อนชำระ</li></ul><a class="growth-cta primary" href="https://app.vibelinkth.com/signup" data-growth-cta="price_creator">สมัครและดูแพ็กเกจ ↗</a></article>
+  </div><p class="growth-note">฿199/เดือนคือราคาเต็มใน Product Decision Log; โปรโมชัน Debut 50% เป็นบันทึกเดิม ยังไม่ได้ยืนยันว่ามีผลอยู่ โปรดตรวจสอบราคาและรายละเอียดที่ Checkout ก่อนชำระเงินจริง · Creator Plus อยู่ในแผนอนาคต ไม่เปิดขายผ่านหน้านี้</p></section>
+  <section class="growth-section" id="growth-faq" aria-labelledby="growth-faq-h"><span class="growth-overline">GOOD TO KNOW</span><h2 id="growth-faq-h">คำถามก่อนเริ่ม</h2><div class="growth-faq">
+    <details><summary>สร้าง QR ฟรีได้จริงไหม?</summary><p>QR พื้นฐานเป็นฟีเจอร์ฟรีตาม Product Decision Log ส่วนแพ็กเกจชำระเงินใช้สำหรับฟีเจอร์จัดการลิงก์และวัดผลเพิ่มเติม</p></details>
+    <details><summary>QR แบบ Static เปลี่ยนลิงก์ทีหลังได้ไหม?</summary><p>ไม่ได้ เพราะ QR ฝังข้อมูลปลายทางไว้ หากต้องการเปลี่ยน URL ภายหลัง ควรใช้ Short Link หรือ Dynamic Link ที่รองรับก่อนเผยแพร่ QR</p></details>
+    <details><summary>ใช้ QR พิมพ์บนสื่อได้ไหม?</summary><p>รองรับ PNG และ SVG ควรตรวจความคมชัด ระยะ Quiet Zone และทดสอบสแกนจากไฟล์จริงก่อนพิมพ์จำนวนมาก</p></details>
+    <details><summary>ต้องซื้อ Creator ก่อนใช้ QR ไหม?</summary><p>ไม่ต้องสำหรับ QR พื้นฐาน Creator เหมาะเมื่อคุณต้องการจัดการแคมเปญหรือติดตามผลลิงก์ตามสิทธิ์ของแพ็กเกจ</p></details>
+  </div></section>
+  <section class="growth-finish" aria-labelledby="growth-finish-h"><span class="growth-overline">MAKE YOUR FIRST QR</span><h2 id="growth-finish-h">ลิงก์เล็ก ๆ อาจเป็นจุดเริ่มต้นที่ยิ่งใหญ่</h2><p>เริ่มฟรีกับ Vibe QR Studio แล้วต่อยอดด้วยเครื่องมือที่ช่วยให้คนรู้จักและเข้าถึงบริการของคุณ</p><div class="growth-actions"><a class="growth-cta primary" href="https://app.vibelinkth.com/qr" data-growth-cta="bottom_qr">สร้าง QR ฟรี ↗</a><a class="growth-cta secondary" href="https://app.vibelinkth.com/signup" data-growth-cta="bottom_signup">สมัครใช้ VibeLink ↗</a></div></section>
+</div>
+
 <div class="lhero">
 <div class="c-hero">
 <span class="page-tag">01 · CREATE + TAGLINE</span>
@@ -783,9 +907,9 @@ html{scroll-snap-type:y proximity}
 </div>
 <div class="conv-tip"><span class="ms">tips_and_updates</span>ทริคตัวจี๊ด: ลงโพสต์ 19:30 น. ปุ๊บ ลิงก์วาร์ปจะพายอดคลิกทะยานฉ่ำวาว ✨</div>
 <div class="stat-chips">
-<span class="schip"><span class="ms">link</span><b>1,247</b>&nbsp;ลิงก์กำลังวาร์ป</span>
-<span class="schip"><span class="ms">verified</span><b>99.8%</b>&nbsp;Bypass สำเร็จ</span>
-<span class="schip"><span class="ms">star</span><b>4.9</b>&nbsp;จากครีเอเตอร์ 2.3k คน</span>
+<span class="schip"><span class="ms">link</span><b>Short Link</b>&nbsp;แชร์ง่าย</span>
+<span class="schip"><span class="ms">verified</span><b>Scan Check</b>&nbsp;ตรวจ QR</span>
+<span class="schip"><span class="ms">star</span><b>PNG/SVG</b>&nbsp;ดาวน์โหลด</span>
 </div>
 </div>
 <div class="lhero-art">
@@ -796,8 +920,8 @@ html{scroll-snap-type:y proximity}
 <span class="boom"><i></i></span>
 <i class="spk s1"></i><i class="spk s2"></i><i class="spk s3"></i><i class="spk s4"></i><i class="spk s5"></i><i class="spk s6"></i>
 </div>
-<span class="fchip c1"><span class="ms">verified</span>BYPASS 100%</span>
-<span class="fchip pink c2"><span class="ms">trending_up</span>+24.8% คลิก</span>
+<span class="fchip c1"><span class="ms">verified</span>รองรับการแชร์ลิงก์</span>
+<span class="fchip pink c2"><span class="ms">trending_up</span>สถิติสำหรับ Creator</span>
 <span class="fchip c3"><span class="ms">qr_code_2</span>QR พร้อมแล้ว</span>
 </div>
 <div class="lcta">
@@ -815,7 +939,7 @@ html{scroll-snap-type:y proximity}
 <div class="f-grid">
 <article class="f-card" style="--i:0">
 <span class="f-icon lime"><span class="ms">verified_user</span></span>
-<div><b>Bypass In-App Browser 100%</b><p>เปิดแอปจริงทุกครั้ง (Shopee, TikTok, Lazada) ไม่ตกหล่นแม้แตะเดียว — ยอดคลิกยกให้โพสต์ขายเลย</p></div>
+<div><b>ลิงก์สั้นและแชร์ง่าย</b><p>เปิดแอปจริงทุกครั้ง (ร้านค้าออนไลน์, TikTok, Lazada) ไม่ตกหล่นแม้แตะเดียว — ยอดคลิกยกให้โพสต์ขายเลย</p></div>
 </article>
 <article class="f-card" style="--i:1">
 <span class="f-icon pink"><span class="ms">monitoring</span></span>
@@ -863,7 +987,7 @@ html{scroll-snap-type:y proximity}
 <button class="btn-ghost" data-plan="free" style="justify-content:center">เริ่มใช้ฟรี</button>
 </div>
 <div class="glass pink plan hot selected rise" style="--d:.28s">
-<span class="pop-badge">🔥 คนใช้เยอะสุด + ราคาเปิดตัว</span>
+<span class="pop-badge">🔥 ส่วนลดตามโปรโมชันที่ใช้ได้</span>
 <div class="pname"><b>CREATOR</b><span class="chip lime">เหลือ 50%</span></div>
 <div class="price" style="color:var(--secondary-soft)"><b class="p-num">฿99</b><small style="color:var(--muted)">/เดือน</small></div>
 <div class="plan-stats" style="border-color:color-mix(in srgb,var(--secondary-soft) 30%,transparent)"><span><b>500</b>Active Links</span><span><b>90</b>วัน Analytics</span><span><b>100k</b>Redirect/เดือน</span></div>
@@ -915,7 +1039,7 @@ html{scroll-snap-type:y proximity}
 <a class="faq-act" href="mailto:hello@vibelinkth.com?subject=ขอความช่วยเหลือ VibeLink" title="ทักทีมงาน"><span class="ms">support_agent</span></a>
 </div>
 </div>
-<details data-full="ลิงก์วาร์ปต่างจาก short link ทั่วไปยังไง?"><summary><span class="q-text"></span><span class="ms">expand_more</span></summary><div class="ans">Short link ทั่วไปแค่ย่อลิงก์ให้สั้น แต่ลิงก์วาร์ปของ VibeLink จะพาผู้ชมเด้งเข้าแอปจริง (Shopee, TikTok, Lazada) ทันที ไม่ติด in-app browser ที่กินคลิก — ยอดคลิกเลยต่างกันแบบเห็นๆ</div></details>
+<details data-full="ลิงก์วาร์ปต่างจาก short link ทั่วไปยังไง?"><summary><span class="q-text"></span><span class="ms">expand_more</span></summary><div class="ans">Short link ทั่วไปแค่ย่อลิงก์ให้สั้น แต่ลิงก์วาร์ปของ VibeLink จะพาผู้ชมเด้งเข้าแอปจริง (ร้านค้าออนไลน์, TikTok, Lazada) ทันที ไม่ติด in-app browser ที่กินคลิก — ยอดคลิกเลยต่างกันแบบเห็นๆ</div></details>
 <details data-full="กดแล้วแอปไม่เด้ง ต้องทำไงดี?"><summary><span class="q-text"></span><span class="ms">expand_more</span></summary><div class="ans">ลองเปิดลิงก์ผ่านเบราว์เซอร์หลักของเครื่อง เช็กว่าติดตั้งแอปปลายทางไว้แล้ว แล้วกด "ทดสอบลิงก์" ในหน้าจัดการลิงก์ดูก่อน ถ้ายังไม่ได้ ตามทีมงานให้ช่วยได้เลย ตอบไวใน 1 ชม.</div></details>
 <details data-full="ค่าคอมมิชชันคิดยังไง จ่ายตอนไหน?"><summary><span class="q-text"></span><span class="ms">expand_more</span></summary><div class="ans">ระบบดึงยอดจากแพลตฟอร์มร้านค้าแบบเรียลไทม์ สรุปรวมทุกสิ้นเดือน โอนเข้าบัญชีภายใน 5 วันทำการ ไม่มีค่าธรรมเนียมแอบแฝง ยอดเท่าไหร่ได้เท่านั้น</div></details>
 <details data-full="ยกเลิก Creator ได้ไหม ข้อมูลหายไหม?"><summary><span class="q-text"></span><span class="ms">expand_more</span></summary><div class="ans">ยกเลิกได้ทุกเมื่อ กดปุ๊บเปลี่ยนเป็นแพ็กเกจฟรีทันที ลิงก์และสถิติเดิมอยู่ครบทุกอัน ไม่มีหายไปไหน อยากกลับมา Creator ตอนไหนก็ได้เลย</div></details>
@@ -953,9 +1077,9 @@ html{scroll-snap-type:y proximity}
 <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
 <div>
 <div class="card-title"><span class="ms" style="color:var(--secondary-soft)">bolt</span>เสกลิงก์วาร์ป จึ้งไม่อ่อม</div>
-<p class="card-sub">Smart Deep-Link · Bypass In-App Browser 100%</p>
+<p class="card-sub">Smart Deep-Link · ลิงก์สั้นและแชร์ง่าย</p>
 </div>
-<span class="chip lime"><span class="ms" style="font-size:13px">verified</span>BYPASS 100%</span>
+<span class="chip lime"><span class="ms" style="font-size:13px">verified</span>รองรับการแชร์ลิงก์</span>
 </div>
 <div class="conv-row">
 <div class="field"><span class="ms">link</span><input id="quickInput" placeholder="วางลิงก์ร้านค้า / วิดีโอที่จะแชร์..." /></div>
@@ -1153,9 +1277,9 @@ html{scroll-snap-type:y proximity}
 </section>
 <section class="view" id="view-campaigns">
 <div class="glass pink" style="margin-bottom:14px">
-<div class="card-head"><div><div class="card-title"><span class="ms" style="color:var(--secondary-soft)">auto_fix</span>เสก UTM Campaign Link</div><p class="card-sub">ติดแท็กแคมเปญแบบโปร · ใช้กับลิงก์วาร์ปได้ทุกลิงก์</p></div><span class="chip lime">BYPASS 100%</span></div>
+<div class="card-head"><div><div class="card-title"><span class="ms" style="color:var(--secondary-soft)">auto_fix</span>เสก UTM Campaign Link</div><p class="card-sub">ติดแท็กแคมเปญแบบโปร · ใช้กับลิงก์วาร์ปได้ทุกลิงก์</p></div><span class="chip lime">รองรับการแชร์ลิงก์</span></div>
 <div class="form-grid">
-<div class="urlrow"><div class="grow"><label class="flabel">Destination URL</label><input class="finput" id="dest" placeholder="https://shopee.co.th/your-shop" /></div><button class="btn-grad" id="btnGen"><span class="ms" style="font-size:17px">bolt</span>เสกลิงก์วาร์ปทันที</button></div>
+<div class="urlrow"><div class="grow"><label class="flabel">Destination URL</label><input class="finput" id="dest" placeholder="https://example.com/your-shop" /></div><button class="btn-grad" id="btnGen"><span class="ms" style="font-size:17px">bolt</span>เสกลิงก์วาร์ปทันที</button></div>
 <div><label class="flabel">Source</label><input class="finput" id="source" placeholder="tiktok / instagram / youtube" /></div>
 <div><label class="flabel">Medium</label><input class="finput" id="medium" placeholder="bio / story / video" /></div>
 <div><label class="flabel">Campaign Name</label><input class="finput" id="cname" placeholder="flash-sale-sep" /></div>
@@ -1216,10 +1340,10 @@ $("#tabs").addEventListener("click",e=>{const t=e.target.closest(".tab");if(t)sw
 $("#seeAll").onclick=e=>{e.preventDefault();switchView("links")};
 
 const links=[
-{t:"รองเท้าคู่โปรดตอนนี้",slug:"sneaker-drop",plat:"Shopee",icon:"shopping_bag",pc:"pink",clicks:"8,642",ctr:"42.8%",growth:"+56%",income:"฿38.4k",on:true,hot:true},
+{t:"รองเท้าคู่โปรดตอนนี้",slug:"sneaker-drop",plat:"ร้านค้าออนไลน์",icon:"shopping_bag",pc:"pink",clicks:"8,642",ctr:"42.8%",growth:"+56%",income:"฿38.4k",on:true,hot:true},
 {t:"สกินแคร์ผิวใสใน 7 วัน",slug:"skin-glow",plat:"TikTok Shop",icon:"play_circle",pc:"lime",clicks:"5,931",ctr:"36.4%",growth:"+31%",income:"฿24.1k",on:true,hot:true},
 {t:"ของน่ารักในตะกร้า",slug:"cute-cart",plat:"Lazada",icon:"checkroom",pc:"vio",clicks:"3,210",ctr:"29.7%",growth:"+18%",income:"฿12.8k",on:true,hot:false},
-{t:"กาแฟเอ็กซ์ตร้าช็อต",slug:"cafe-x",plat:"Shopee",icon:"local_cafe",pc:"pink",clicks:"1,082",ctr:"21.3%",growth:"-6%",income:"฿4.2k",on:false,hot:false},
+{t:"กาแฟเอ็กซ์ตร้าช็อต",slug:"cafe-x",plat:"ร้านค้าออนไลน์",icon:"local_cafe",pc:"pink",clicks:"1,082",ctr:"21.3%",growth:"-6%",income:"฿4.2k",on:false,hot:false},
 {t:"ฟิล์มกล้องย้อนยุค",slug:"retro-cam",plat:"TikTok Shop",icon:"photo_camera",pc:"lime",clicks:"948",ctr:"18.9%",growth:"+2%",income:"฿3.7k",on:false,hot:false}
 ];
 const topHTML=l=>`<article class="glass link-card" style="border-radius:18px">
