@@ -51,8 +51,8 @@ export default function QrPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData }} />
       <QrStudio />
       <section className={styles.guide} aria-labelledby="qr-seo-guide-title">
-        <div className={styles.kicker}>QR CODE GUIDE · VIBELINKTH</div>
-        <h2 id="qr-seo-guide-title">วิธีสร้าง QR Code ฟรีออนไลน์ พร้อมโลโก้และสีแบรนด์</h2>
+        <div className={styles.kicker}>✳ QR WITH VIBE · THE QUICK GUIDE</div>
+        <h2 id="qr-seo-guide-title">สร้าง QR Code ฟรี แบบมี Vibe — แต่งให้เป็นคุณ</h2>
         <p className={styles.lead}>
           ใช้ Vibe QR Studio สร้างคิวอาร์โค้ด (QR Code) สำหรับเว็บไซต์ โปรไฟล์ หรือหน้าจองบริการ
           เริ่มจาก URL ปลายทาง ออกแบบลายและสีตามต้องการ แล้วตรวจ Scan Health ก่อนบันทึกไฟล์
@@ -61,17 +61,17 @@ export default function QrPage() {
         <div className={styles.grid}>
           <article className={styles.card}>
             <span>01 · START</span>
-            <h3>สร้าง QR Code จากลิงก์เว็บไซต์</h3>
+            <h3>แปะลิงก์ แล้วไปต่อ</h3>
             <p>วาง URL ที่ต้องการให้คนเปิดหลังสแกน เช่น เว็บไซต์ ร้านค้า หรือหน้ารวมผลงาน ระบบจะนำลิงก์ไปสร้าง QR ให้พร้อมปรับแต่ง</p>
           </article>
           <article className={styles.card}>
             <span>02 · CUSTOMIZE</span>
-            <h3>ทำ QR Code ใส่โลโก้และปรับสี</h3>
+            <h3>ใส่โลโก้ แต่ง QR ให้มีซีน</h3>
             <p>ปรับสี จุดและกรอบ ใส่โลโก้ให้เข้ากับแบรนด์ และตรวจสอบความชัดของ QR เพื่อให้ใช้งานบนสื่อจริงได้สะดวก</p>
           </article>
           <article className={styles.card}>
             <span>03 · EXPORT</span>
-            <h3>ดาวน์โหลด QR Code เป็น PNG หรือ SVG</h3>
+            <h3>เช็กให้ชัวร์ โหลด PNG หรือ SVG</h3>
             <p>เลือก PNG สำหรับการแชร์หรือ SVG สำหรับงานดีไซน์และพิมพ์ ทดสอบสแกนไฟล์จริงก่อนนำไปใช้บนป้าย นามบัตร หรือโปสเตอร์</p>
           </article>
         </div>
@@ -85,10 +85,10 @@ export default function QrPage() {
             </p>
           </div>
           <div className={styles.funnel}>
-            <span>START FREE</span>
-            <strong>สร้าง QR ฟรี → แชร์ลิงก์ → ใช้ VibeLink เมื่ออยากวัดผล</strong>
+            <span>START FREE · GO FURTHER</span>
+            <strong>สร้าง QR ให้มี Vibe → แชร์ให้สุด → ดูผลลัพธ์เมื่อพร้อมโต</strong>
             <p>เหมาะสำหรับ Creator, ผู้รับจองบริการ และธุรกิจขนาดเล็กที่อยากให้คนเข้าถึงบริการผ่าน QR ได้สะดวกขึ้น</p>
-            <Link href="https://vibelinkth.com/#growth-cases">ดูตัวอย่างการต่อยอด QR บน Landing Page ↗</Link>
+            <Link href="https://vibelinkth.com/#growth-cases">ดูว่า VibeLink พา QR ไปต่อยังไง ↗</Link>
           </div>
         </div>
         <div className={styles.faq} id="qr-guide-faq">
@@ -111,11 +111,11 @@ export default function QrPage() {
           </details>
         </div>
         <div className={styles.nextStep}>
-          <div><span className={styles.kicker}>BEYOND QR</span><h2>QR Code คือจุดเริ่มต้น ส่วน VibeLink ช่วยคุณไปต่อ</h2>
+          <div><span className={styles.kicker}>BEYOND QR</span><h2>QR ที่มี Vibe · ลิงก์ที่ไปต่อ</h2>
             <p>ลองรวมลิงก์บน Vibe Page หรือใช้ VibeBook เพื่อรับจอง และเลือกเครื่องมือวัดผลเมื่อธุรกิจพร้อมเติบโต</p></div>
           <div className={styles.actions}>
-            <Link className={styles.mainLink} href="https://vibelinkth.com/">ดู VibeLinkTH Landing Page ↗</Link>
-            <Link className={styles.altLink} href="https://vibelinkth.com/#growth-plans">เปรียบเทียบแพ็กเกจ ↗</Link>
+            <Link className={styles.mainLink} href="https://vibelinkth.com/">ไปดู VibeLinkTH เต็ม ๆ ↗</Link>
+            <Link className={styles.altLink} href="https://vibelinkth.com/#growth-plans">ดูแพ็กเกจแบบไม่ต้องรีบตัดสินใจ ↗</Link>
           </div>
         </div>
       </section>
