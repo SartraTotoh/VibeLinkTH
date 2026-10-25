@@ -354,14 +354,66 @@
       box-shadow: inset 0 0 0 1px rgba(185, 255, 44, 0.18);
     }
     .qr-preview-art {
+      position: relative;
       display: grid;
       place-items: center;
       padding: 18px;
       border-radius: var(--radius-lg);
       background: #f5fbea;
       box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
     }
     .qr-preview-art svg { width: min(280px, 100%); height: auto; }
+    .qr-scan-line {
+      position: absolute;
+      left: 12%;
+      right: 12%;
+      top: 18%;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, rgba(185, 255, 44, 0.95), transparent);
+      box-shadow: 0 0 18px rgba(185, 255, 44, 0.65);
+      animation: scanLine 3.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .connect-node {
+      position: absolute;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(17, 20, 28, 0.92);
+      color: var(--primary);
+      font-size: 16px;
+      box-shadow: var(--shadow-soft), inset 0 0 0 1px rgba(185, 255, 44, 0.22);
+      animation: nodePulse 2.6s ease-in-out infinite;
+    }
+    .connect-node.one { top: 16px; right: 18px; animation-delay: 0s; }
+    .connect-node.two { bottom: 20px; left: 18px; animation-delay: 0.9s; }
+    .connect-node.three { bottom: 18px; right: 24px; animation-delay: 1.7s; }
+    .connect-beam {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(185, 255, 44, 0.0), rgba(185, 255, 44, 0.55), rgba(185, 255, 44, 0.0));
+      animation: beamFlow 3.6s linear infinite;
+      pointer-events: none;
+    }
+    .connect-beam.one { top: 34px; right: 52px; width: 74px; transform: rotate(18deg); }
+    .connect-beam.two { bottom: 42px; left: 52px; width: 74px; transform: rotate(-18deg); }
+    @keyframes scanLine {
+      0%, 100% { top: 18%; opacity: 0.35; }
+      50% { top: 78%; opacity: 1; }
+    }
+    @keyframes nodePulse {
+      0%, 100% { transform: scale(1); box-shadow: var(--shadow-soft), inset 0 0 0 1px rgba(185, 255, 44, 0.22); }
+      50% { transform: scale(1.08); box-shadow: 0 0 24px -6px rgba(185, 255, 44, 0.55), inset 0 0 0 1px rgba(185, 255, 44, 0.42); }
+    }
+    @keyframes beamFlow {
+      0% { opacity: 0.25; transform: translateX(-6px) rotate(18deg); }
+      50% { opacity: 0.85; }
+      100% { opacity: 0.25; transform: translateX(6px) rotate(18deg); }
+    }
     .qr-preview-note {
       margin-top: 14px;
       color: var(--faint);
@@ -828,6 +880,7 @@
         <a href="#how">วิธีใช้</a>
         <a href="#cases">Use cases</a>
         <a href="#ecosystem">Ecosystem</a>
+        <a href="#connectivity">Connectivity</a>
         <a href="#pricing">แพ็กเกจ</a>
         <a href="#faq">คำถาม</a>
       </nav>
@@ -869,6 +922,8 @@
           <span class="qr-preview-badge">DESIGN PREVIEW</span>
         </div>
         <div class="qr-preview-art">
+          <span class="connect-beam one" aria-hidden="true"></span>
+          <span class="connect-beam two" aria-hidden="true"></span>
           <svg viewBox="0 0 150 150" role="img" aria-label="ภาพประกอบลวดลาย QR ไม่ใช่โค้ดที่ใช้สแกน">
             <rect width="150" height="150" fill="#fff" />
             <g fill="#182519">
@@ -878,6 +933,10 @@
               <rect x="66" y="61" width="13" height="13" rx="3" fill="#b9ff2c" />
             </g>
           </svg>
+          <span class="qr-scan-line" aria-hidden="true"></span>
+          <span class="connect-node one" aria-hidden="true"><span class="ms">link</span></span>
+          <span class="connect-node two" aria-hidden="true"><span class="ms">auto_awesome</span></span>
+          <span class="connect-node three" aria-hidden="true"><span class="ms">calendar_month</span></span>
         </div>
         <p class="qr-preview-note">ภาพประกอบดีไซน์ · สร้าง QR ที่สแกนได้จริงใน Studio</p>
         <span class="qr-float one">✦ แต่ง QR ให้มีซีน</span>
@@ -1065,6 +1124,39 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="connectivity" aria-labelledby="connectivity-title">
+      <div class="shell">
+        <span class="section-kicker">QR CONNECTIVITY</span>
+        <h2 class="section-title" id="connectivity-title">QR ไม่ได้แค่สแกน <em>แต่พาคนไปต่อ</em></h2>
+        <p class="section-intro">
+          สร้าง QR ให้ชี้ไปยังปลายทางที่คุณควบคุมได้ แล้วต่อยอดด้วย Short Link, Vibe Page, VibeBook และ UTM
+          เพื่อให้ทุกการสแกนกลายเป็นโอกาสต่อไป ไม่ใช่แค่ภาพที่สวย
+        </p>
+        <div class="case-grid">
+          <article class="case-card">
+            <span class="case-icon"><span class="ms">qr_code_2</span></span>
+            <h3>Static QR ฟรี</h3>
+            <p>ฝัง URL ไว้ในภาพโดยตรง เหมาะสำหรับใช้ทันทีบนสื่อ นามบัตร หรือหน้าร้าน</p>
+          </article>
+          <article class="case-card">
+            <span class="case-icon"><span class="ms">link</span></span>
+            <h3>Short Link ที่ไปต่อ</h3>
+            <p>ถ้าต้องการเปลี่ยนปลายทางภายหลัง ให้ QR ชี้ไปยัง Short Link ที่รองรับการจัดการและวัดผล</p>
+          </article>
+          <article class="case-card">
+            <span class="case-icon"><span class="ms">campaign</span></span>
+            <h3>UTM สำหรับแคมเปญ</h3>
+            <p>แยกแหล่งที่มาของ Traffic จาก QR แต่ละชิ้น เพื่อรู้ว่าสื่อไหนพาคนมาจริง</p>
+          </article>
+          <article class="case-card">
+            <span class="case-icon"><span class="ms">monitoring</span></span>
+            <h3>Analytics ตามสิทธิ์</h3>
+            <p>ดูผลลัพธ์เมื่อพร้อมโต โดยไม่อ้างตัวเลขปลอมหรือสถิติที่ยังไม่ได้วัดจริง</p>
+          </article>
         </div>
       </div>
     </section>
