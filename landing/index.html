@@ -13,12 +13,16 @@
   <meta property="og:title" content="QR ที่มี Vibe ลิงก์ที่ไปต่อ | VibeLinkTH" />
   <meta property="og:description" content="ลิงก์ดี ๆ อย่าปล่อยให้จืด สร้าง QR Code ฟรี แต่งให้มีซีน แล้วพาคนไปต่อกับ VibeLink" />
   <meta property="og:url" content="https://vibelinkth.com/" />
-  <meta property="og:image" content="https://vibelinkth.com/og-cover.png" />
+  <meta property="og:image" content="https://vibelinkth.com/og-cover.png?v=20261026" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="VibeLinkTH — สร้าง QR Code ฟรี ให้ทุกลิงก์มี Vibe" />
   <meta property="og:locale" content="th_TH" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="QR ที่มี Vibe ลิงก์ที่ไปต่อ | VibeLinkTH" />
   <meta name="twitter:description" content="สร้าง QR ฟรี แต่งให้มีซีน เช็กก่อนแชร์ แล้วไปต่อด้วย VibeLink" />
-  <meta name="twitter:image" content="https://vibelinkth.com/og-cover.png" />
+  <meta name="twitter:image" content="https://vibelinkth.com/og-cover.png?v=20261026" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23090b10'/%3E%3Ctext x='50' y='72' font-size='62' text-anchor='middle' fill='%23b9ff2c'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,7 +36,7 @@
         "@type": "Organization",
         "name": "VibeLinkTH",
         "url": "https://vibelinkth.com/",
-        "logo": "https://vibelinkth.com/og-cover.png",
+        "logo": "https://vibelinkth.com/assets/logo-mark.png",
         "contactPoint": {
           "@type": "ContactPoint",
           "email": "hello@vibelinkth.com",
@@ -138,6 +142,10 @@
       transition: top 0.2s ease;
     }
     .skip-link:focus { top: 16px; }
+    a:focus-visible, button:focus-visible, summary:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 3px;
+    }
 
     .shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; position: relative; z-index: 1; }
 
@@ -165,12 +173,10 @@
       letter-spacing: -0.02em;
     }
     .brand-mark {
-      width: 40px;
-      height: 40px;
-      border-radius: 14px;
+      width: 42px;
+      height: 42px;
       object-fit: contain;
-      box-shadow: var(--glow-lime);
-      background: rgba(255, 255, 255, 0.04);
+      filter: drop-shadow(0 0 14px rgba(185, 255, 44, 0.28));
     }
     .brand small {
       display: block;
@@ -327,7 +333,7 @@
         radial-gradient(120% 120% at 90% 100%, rgba(255, 79, 216, 0.12), transparent 58%),
         var(--panel);
       box-shadow: var(--shadow);
-      overflow: hidden;
+      overflow: visible;
     }
     .qr-preview::after {
       content: "";
@@ -355,6 +361,8 @@
       background: rgba(185, 255, 44, 0.12);
       color: var(--primary);
       box-shadow: inset 0 0 0 1px rgba(185, 255, 44, 0.18);
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .qr-preview-art {
       position: relative;
@@ -425,6 +433,7 @@
     }
     .qr-float {
       position: absolute;
+      z-index: 3;
       padding: 10px 14px;
       border-radius: 999px;
       background: rgba(17, 20, 28, 0.88);
@@ -434,11 +443,12 @@
       box-shadow: var(--shadow-soft), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(12px);
     }
-    .qr-float.one { top: 18px; right: 18px; }
-    .qr-float.two { bottom: 22px; left: 20px; }
+    .qr-float.one { top: -16px; left: 20px; }
+    .qr-float.two { bottom: -16px; right: 20px; }
 
     .section {
       padding: 88px 0;
+      scroll-margin-top: 88px;
     }
     .section-kicker {
       display: inline-flex;
@@ -588,6 +598,7 @@
       align-items: center;
     }
     .showcase-panel {
+      min-width: 0;
       padding: 28px;
       border-radius: var(--radius-xl);
       background:
@@ -607,14 +618,16 @@
       display: flex;
       gap: 12px;
       align-items: flex-start;
+      min-width: 0;
       padding: 14px;
       border-radius: var(--radius-md);
       background: rgba(255, 255, 255, 0.03);
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
     }
+    .showcase-list div > div { min-width: 0; }
     .showcase-list .ms { color: var(--primary); font-size: 22px; }
     .showcase-list strong { display: block; margin-bottom: 2px; }
-    .showcase-list span { color: var(--muted); font-size: 14px; }
+    .showcase-list span { color: var(--muted); font-size: 14px; overflow-wrap: anywhere; }
 
     .pricing {
       display: grid;
@@ -702,10 +715,22 @@
       align-items: center;
     }
     details summary::-webkit-details-marker { display: none; }
-    details summary .ms { color: var(--primary); }
+    details summary .ms { color: var(--primary); transition: transform 0.2s ease; }
+    details[open] summary .ms { transform: rotate(180deg); }
     details p {
       color: var(--muted);
       margin-top: 12px;
+    }
+    .faq-help {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .faq-help a {
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
 
     .final-cta {
@@ -767,7 +792,7 @@
     .mock-top strong { margin-left: 6px; }
     .mock-body {
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: minmax(0, 1fr) auto;
       gap: 18px;
       padding: 18px;
       color: #15171c;
@@ -776,12 +801,19 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      min-width: 0;
       padding: 12px 14px;
       border-radius: var(--radius-sm);
       background: #fff;
       color: #4b5a3a;
       font-size: 13px;
       box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+    }
+    .mock-field span:last-child {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .mock-preview {
       display: grid;
@@ -861,13 +893,20 @@
       50% { box-shadow: inset 0 0 0 1px rgba(185, 255, 44, 0.42), 0 0 24px -8px rgba(185, 255, 44, 0.45); }
     }
 
+    .mobile-nav { display: none; }
+    .mobile-cta { display: none; }
+    @media (scripting: none) {
+      .reveal-on-scroll { opacity: 1; transform: none; }
+    }
+
     @media (max-width: 960px) {
       .hero { grid-template-columns: 1fr; }
-      .qr-preview { order: -1; }
+      .qr-preview { order: 0; }
+      .qr-float { display: none; }
       .steps { grid-template-columns: 1fr; }
       .case-grid { grid-template-columns: 1fr; }
       .ecosystem { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .showcase { grid-template-columns: 1fr; }
+      .showcase { grid-template-columns: minmax(0, 1fr); }
       .pricing { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
@@ -875,8 +914,63 @@
       .shell { width: min(100% - 24px, 1180px); }
       .section { padding: 64px 0; }
       .ecosystem { grid-template-columns: 1fr; }
+      .hero { padding: 40px 0 32px; gap: 28px; }
+      .hero-copy { font-size: 17px; }
       .hero-actions { flex-direction: column; }
       .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+      .qr-preview { padding: 16px; }
+      .qr-preview-art { padding: 10px; }
+      .qr-preview-art svg { width: min(150px, 62%); }
+      .qr-preview-top { font-size: 11px; gap: 8px; margin-bottom: 12px; }
+      .qr-preview-badge { padding: 4px 8px; font-size: 10px; }
+      .qr-preview-note { margin-top: 10px; font-size: 11px; }
+
+      .mobile-nav {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding: 10px 12px 12px;
+        border-bottom: 1px solid var(--line);
+        scrollbar-width: none;
+      }
+      .mobile-nav::-webkit-scrollbar { display: none; }
+      .mobile-nav a {
+        flex: 0 0 auto;
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .mobile-cta {
+        position: fixed;
+        left: 12px;
+        right: 12px;
+        bottom: calc(12px + env(safe-area-inset-bottom));
+        z-index: 70;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 12px 10px 16px;
+        border-radius: 18px;
+        background: rgba(17, 20, 28, 0.92);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(255, 255, 255, 0.10);
+        transform: translateY(140%);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform 0.28s ease, opacity 0.28s ease;
+      }
+      .mobile-cta.is-visible { transform: translateY(0); opacity: 1; pointer-events: auto; }
+      .mobile-cta-copy { display: flex; flex-direction: column; line-height: 1.25; }
+      .mobile-cta-copy strong { font-size: 14px; }
+      .mobile-cta-copy span { font-size: 11px; color: var(--muted); }
+      .mobile-cta .btn-primary { width: auto; padding: 10px 16px; font-size: 14px; white-space: nowrap; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -893,7 +987,7 @@
   <header>
     <div class="shell nav">
       <a class="brand" href="https://vibelinkth.com/">
-        <img class="brand-mark" src="assets/logo.png" alt="VibeLinkTH" width="40" height="40" />
+        <img class="brand-mark" src="assets/logo-mark.png" alt="" width="42" height="42" fetchpriority="high" />
         <span>
           <strong>Vibe<span style="color: var(--primary)">Link</span>TH</strong>
           <small>QR · LINK · GROW</small>
@@ -901,15 +995,23 @@
       </a>
       <nav class="nav-links" aria-label="เมนูหลัก">
         <a href="#how">วิธีใช้</a>
-        <a href="#cases">Use cases</a>
-        <a href="#ecosystem">Ecosystem</a>
-        <a href="#connectivity">Connectivity</a>
+        <a href="#cases">ใช้งาน</a>
+        <a href="#ecosystem">เครื่องมือ</a>
+        <a href="#connectivity">การเชื่อมต่อ</a>
         <a href="#pricing">แพ็กเกจ</a>
         <a href="#faq">คำถาม</a>
       </nav>
       <a class="nav-cta" href="https://app.vibelinkth.com/qr">สร้าง QR ฟรี ↗</a>
     </div>
   </header>
+
+  <nav class="mobile-nav" aria-label="เมนูลัด">
+    <a href="#how">วิธีใช้</a>
+    <a href="#cases">ใช้งาน</a>
+    <a href="#showcase">ตัวอย่าง</a>
+    <a href="#pricing">แพ็กเกจ</a>
+    <a href="#faq">คำถาม</a>
+  </nav>
 
   <main id="main">
     <section class="shell hero" aria-labelledby="hero-title">
@@ -961,7 +1063,7 @@
           <span class="connect-node two" aria-hidden="true"><span class="ms">auto_awesome</span></span>
           <span class="connect-node three" aria-hidden="true"><span class="ms">calendar_month</span></span>
         </div>
-        <p class="qr-preview-note">ภาพประกอบดีไซน์ · สร้าง QR ที่สแกนได้จริงใน Studio</p>
+        <p class="qr-preview-note">ภาพประกอบดีไซน์ · สร้าง QR จริงได้ใน Studio</p>
         <span class="qr-float one">✦ แต่ง QR ให้มีซีน</span>
         <span class="qr-float two">✓ เช็กให้ชัวร์ก่อนแชร์</span>
       </aside>
@@ -1082,7 +1184,7 @@
         </p>
         <div class="showcase">
           <div class="showcase-panel">
-            <h3>QR Studio Flow</h3>
+            <h3>ขั้นตอนใน QR Studio</h3>
             <p>วางลิงก์ แต่ง QR ตรวจ Scan Health แล้วดาวน์โหลด PNG หรือ SVG ไปใช้บนสื่อจริง</p>
             <div class="showcase-list">
               <div>
@@ -1130,12 +1232,12 @@
             </div>
           </div>
           <div class="showcase-panel">
-            <h3>Product Boundary ที่ชัดเจน</h3>
-            <p>หน้าการตลาดอธิบายคุณค่า ส่วนการสร้าง QR และจัดการลิงก์เกิดขึ้นในแอปจริง</p>
+            <h3>ขอบเขตที่ชัดเจน</h3>
+            <p>หน้าเว็บนี้ใช้ทำความรู้จักผลิตภัณฑ์ ส่วนการสร้าง QR และจัดการลิงก์เกิดขึ้นในแอปจริง</p>
             <div class="showcase-list">
               <div>
                 <span class="ms">qr_code_2</span>
-                <div><strong>Marketing Landing</strong><span>vibelinkth.com สำหรับค้นพบและเข้าใจผลิตภัณฑ์</span></div>
+                <div><strong>หน้าเว็บหลัก</strong><span>vibelinkth.com สำหรับค้นพบและเข้าใจผลิตภัณฑ์</span></div>
               </div>
               <div>
                 <span class="ms">app_registration</span>
@@ -1209,7 +1311,7 @@
           <article class="plan featured">
             <span class="plan-kicker">VIBELINK CREATOR</span>
             <h3>โตเมื่อพร้อม</h3>
-            <div class="plan-price">฿199 <small>/เดือน · ราคาเต็มตามบันทึก</small></div>
+            <div class="plan-price">฿199 <small>/เดือน · ตรวจสอบราคาที่หน้าชำระเงิน</small></div>
             <p>สำหรับคนที่เริ่มแชร์จริงจัง อยากจัดการลิงก์และดูข้อมูลแคมเปญให้ชัดกว่าเดิม</p>
             <ul>
               <li><span class="ms">check_circle</span>Short Link และ UTM</li>
@@ -1221,8 +1323,8 @@
           </article>
         </div>
         <p class="plan-note">
-          ฿199/เดือนคือราคาเต็มใน Product Decision Log; โปรโมชัน Debut 50% เป็นบันทึกเดิม ยังไม่ได้ยืนยันว่ามีผลอยู่
-          โปรดตรวจสอบราคาและรายละเอียดที่ Checkout ก่อนชำระเงินจริง · Creator Plus อยู่ในแผนอนาคต ไม่เปิดขายผ่านหน้านี้
+          ราคา ฿199/เดือน · โปรโมชันและสิทธิ์การใช้งานอาจเปลี่ยนแปลงได้ โปรดตรวจสอบราคาจริงที่หน้าชำระเงินก่อนสมัคร ·
+          Creator Plus ยังไม่เปิดขายผ่านหน้านี้
         </p>
       </div>
     </section>
@@ -1234,7 +1336,7 @@
         <div class="faq-list">
           <details>
             <summary>สร้าง QR Code ฟรีได้จริงไหม?<span class="ms">expand_more</span></summary>
-            <p>QR พื้นฐานเป็นฟีเจอร์ฟรีตาม Product Decision Log ส่วนแพ็กเกจชำระเงินใช้สำหรับฟีเจอร์จัดการลิงก์และวัดผลเพิ่มเติม</p>
+            <p>ได้จริง QR พื้นฐานใช้ฟรีโดยไม่ต้องซื้อแพ็กเกจ ส่วนแพ็กเกจชำระเงินมีไว้สำหรับฟีเจอร์จัดการลิงก์และวัดผลเพิ่มเติม</p>
           </details>
           <details>
             <summary>QR แบบ Static เปลี่ยนลิงก์ทีหลังได้ไหม?<span class="ms">expand_more</span></summary>
@@ -1248,7 +1350,12 @@
             <summary>ต้องซื้อ Creator ก่อนใช้ QR ไหม?<span class="ms">expand_more</span></summary>
             <p>ไม่ต้องสำหรับ QR พื้นฐาน Creator เหมาะเมื่อคุณต้องการจัดการแคมเปญหรือติดตามผลลิงก์ตามสิทธิ์ของแพ็กเกจ</p>
           </details>
+          <details>
+            <summary>เปิดเว็บในเครือข่ายองค์กรไม่ได้ ต้องทำอย่างไร?<span class="ms">expand_more</span></summary>
+            <p>บางองค์กรจำกัดเว็บภายนอกด้วยไฟร์วอลล์หรือ Proxy แนะนำให้เปิดด้วยมือถือหรืออินเทอร์เน็ตนอกองค์กรก่อน หากต้องการใช้ในที่ทำงาน ให้ทีม IT ตรวจสอบการ allowlist โดเมน vibelinkth.com และ app.vibelinkth.com หรือติดต่อ hello@vibelinkth.com เพื่อวางแผนการใช้งาน</p>
+          </details>
         </div>
+        <p class="faq-help">ใช้งานในองค์กร หรือต้องการให้ทีม IT ตรวจสอบโดเมน? <a href="mailto:hello@vibelinkth.com">ติดต่อ hello@vibelinkth.com</a></p>
       </div>
     </section>
 
@@ -1277,67 +1384,76 @@
       <nav class="footer-links" aria-label="ลิงก์ท้ายหน้า">
         <a href="https://app.vibelinkth.com/login">เข้าสู่ระบบ</a>
         <a href="https://app.vibelinkth.com/signup">สมัครฟรี</a>
-        <a href="https://app.vibelinkth.com/support">Help Center</a>
-        <a href="https://app.vibelinkth.com/privacy">Privacy</a>
-        <a href="https://app.vibelinkth.com/terms">Terms</a>
-        <a href="https://app.vibelinkth.com/cookies">Cookies</a>
+        <a href="https://app.vibelinkth.com/support">ศูนย์ช่วยเหลือ</a>
+        <a href="mailto:hello@vibelinkth.com">ติดต่อเรา</a>
+        <a href="https://app.vibelinkth.com/privacy">ความเป็นส่วนตัว</a>
+        <a href="https://app.vibelinkth.com/terms">ข้อกำหนด</a>
+        <a href="https://app.vibelinkth.com/cookies">คุกกี้</a>
       </nav>
     </div>
   </footer>
 
+  <div class="mobile-cta" id="mobile-cta" aria-hidden="true" inert>
+    <span class="mobile-cta-copy">
+      <strong>สร้าง QR ฟรี</strong>
+      <span>ใช้ฟรีบนเว็บ · ไม่ต้องติดตั้ง</span>
+    </span>
+    <a class="btn-primary" href="https://app.vibelinkth.com/qr">เริ่มเลย ↗</a>
+  </div>
+
   <script>
     (function () {
-      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const targets = document.querySelectorAll(
+      var revealTargets = document.querySelectorAll(
         "section, .step-card, .case-card, .eco-card, .showcase-panel, .plan, details, .qr-preview, .final-cta"
       );
-      targets.forEach(function (el) { el.classList.add("reveal-on-scroll"); });
-      if (prefersReduced) {
-        targets.forEach(function (el) { el.classList.add("is-visible"); });
-        return;
+      try {
+        revealTargets.forEach(function (el) { el.classList.add("reveal-on-scroll"); });
+        var prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (prefersReduced || !("IntersectionObserver" in window)) {
+          revealTargets.forEach(function (el) { el.classList.add("is-visible"); });
+        } else {
+          var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
+          revealTargets.forEach(function (el) { observer.observe(el); });
+          setTimeout(function () {
+            revealTargets.forEach(function (el) {
+              var rect = el.getBoundingClientRect();
+              if (rect.top < window.innerHeight && rect.bottom > 0) {
+                el.classList.add("is-visible");
+              }
+            });
+          }, 1200);
+        }
+      } catch (err) {
+        revealTargets.forEach(function (el) { el.classList.add("is-visible"); });
       }
-      if (!("IntersectionObserver" in window)) {
-        targets.forEach(function (el) { el.classList.add("is-visible"); });
-        return;
+
+      var mobileCta = document.getElementById("mobile-cta");
+      if (!mobileCta) return;
+      var finalCta = document.getElementById("start");
+      var finalVisible = false;
+      function syncCta() {
+        var show = window.scrollY > 560 && !finalVisible && window.innerWidth <= 640;
+        mobileCta.classList.toggle("is-visible", show);
+        mobileCta.toggleAttribute("inert", !show);
+        mobileCta.setAttribute("aria-hidden", show ? "false" : "true");
       }
-      const observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.12, rootMargin: "0px 0px -8% 0px" });
-      targets.forEach(function (el) { observer.observe(el); });
+      window.addEventListener("scroll", syncCta, { passive: true });
+      window.addEventListener("resize", syncCta);
+      if (finalCta && "IntersectionObserver" in window) {
+        new IntersectionObserver(function (entries) {
+          finalVisible = entries.some(function (entry) { return entry.isIntersecting; });
+          syncCta();
+        }, { threshold: 0.2 }).observe(finalCta);
+      }
+      syncCta();
     })();
   </script>
 </body>
 </html>
-```
-
-This is our new landing. It's clean, modern, no fake metrics. It already fulfills most master prompt requirements. It removes the dashboard demo and fake data. It has one H1. Good.
-
-But note: footer links to `/privacy` (relative) which on vibelinkth.com (static landing domain) may not exist (they are in app). The original had `/privacy` too. Could use absolute app URLs. The master prompt says internal links. Using relative `/privacy` on static landing may 404 if not deployed. But original did. Better use `https://app.vibelinkth.com/privacy`? The app has those pages. However, the public landing might be deployed with those routes? Unclear. To be safe, use app URLs for legal pages: `https://app.vibelinkth.com/privacy`, etc. But original landing linked to `/privacy` and maybe they are served from same domain? The wrangler routes only app.vibelinkth.com and vibelinkth.com/go/*, not vibelinkth.com/privacy. So `/privacy` on vibelinkth.com would 404. Let's change footer legal links to app URLs. Also Help Center. Signup/login already absolute. Nav "Help Center" maybe link to app support. Let's update footer and nav to use absolute app URLs for support/privacy/terms/cookies. Also "ดูว่า VibeLink ทำอะไรได้อีก" internal anchor.
-
-Need also ensure `landing/index.html` is the actual deployed landing. Yes.
-
-Now, potential issue: The file uses `color-mix`, `clamp`, modern CSS; fine for modern browsers. `backdrop-filter` okay.
-
-Potential issue: No `lang`? set th. Good.
-
-Potential issue: JSON-LD has no fake ratings. Good.
-
-Potential issue: The hero QR preview is decorative but clearly labeled "DESIGN PREVIEW" and "ภาพประกอบดีไซน์". Good.
-
-Potential issue: The master prompt wants "Show the Experience" with product UI. We have showcase section with text, no real screenshot. Could add a lightweight UI mock in CSS? The master prompt says "At least one authentic product UI example should appear". We don't have screenshots. We could include a simple mock of QR Studio UI (not fake metrics) using CSS. But our showcase panel is text cards. Is that enough? It describes flow and boundaries. Maybe add a visual mock of the QR Studio interface (a simple card with steps) to satisfy. But not necessary? The prompt says "Use real product screenshots or faithful UI representations based on inspected application code." We have inspected; we can create a faithful static representation of the QR Studio (header, URL input, preview, health, download) without fake data. That would strengthen. Let's add a "showcase" visual panel with a mock UI. But our showcase section already has two panels. We could replace one with a mock browser window showing QR Studio. Let's add a visual mock using CSS.
-
-However, time. We can add a simple mock: a window frame with title bar, URL input placeholder, canvas preview, health chips, download buttons. No fake numbers. This is more work but valuable. Let's do it in CSS/HTML. We can append to showcase section.
-
-Also need update in-app `components/landing/landing-page.tsx` to align brand? The master prompt says public landing primary. But app root currently shows old "Creator Link OS". Could update to a concise version with new tagline and CTA to QR/signup. This is low risk and improves consistency. Let's do after landing.
-
-Also need update README? Not necessary.
-
-Now, before writing, we already wrote landing/index.html. Need edit footer links and add mock. Let's edit.
-
-First footer links.<|end|><|start|>Assistant to=edit<|channel|>analysis <|constrain|>xml<|message|><rfl:parameter name="path">
-C:\Users\totoh.taponchai\AppData\Local\Temp\opencode\landing-wt\landing\index.html
