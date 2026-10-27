@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090b10" />
+  <meta name="robots" content="noindex,follow" />
+  <title>ไม่พบหน้านี้ | VibeLinkTH</title>
+  <style>
+    :root {
+      --bg: #090b10;
+      --panel: rgba(17, 20, 28, 0.78);
+      --text: #e2e2e9;
+      --muted: #9aa0b4;
+      --primary: #b9ff2c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      color: var(--text);
+      font-family: "Inter", "Noto Sans Thai", "Leelawadee UI", Tahoma, sans-serif;
+      background:
+        radial-gradient(600px 400px at 10% -10%, rgba(185, 255, 44, 0.16), transparent 60%),
+        radial-gradient(600px 400px at 100% 110%, rgba(146, 112, 255, 0.16), transparent 60%),
+        var(--bg);
+    }
+    main {
+      width: min(520px, 100%);
+      text-align: center;
+      padding: 40px 28px;
+      border-radius: 24px;
+      background: var(--panel);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+    .code {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(185, 255, 44, 0.12);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+    }
+    h1 { margin: 18px 0 10px; font-size: 30px; line-height: 1.25; }
+    p { margin: 0 0 26px; color: var(--muted); line-height: 1.65; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    a.primary { background: var(--primary); color: #121b03; }
+    a.secondary { color: var(--text); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14); }
+    a:focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
+    footer { margin-top: 24px; font-size: 12px; color: var(--muted); }
+    footer a { padding: 0; color: var(--muted); text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <main>
+    <span class="code">404 · NOT FOUND</span>
+    <h1>ไม่พบหน้าที่คุณกำลังหา</h1>
+    <p>ลิงก์นี้อาจถูกเปลี่ยน ย้าย หรือพิมพ์ผิด — กลับไปหน้าแรก แล้วเริ่มสร้าง QR ของคุณได้เลย</p>
+    <div class="actions">
+      <a class="primary" href="https://vibelinkth.com/">กลับหน้าแรก</a>
+      <a class="secondary" href="https://app.vibelinkth.com/qr">สร้าง QR ฟรี</a>
+    </div>
+    <footer>ต้องการความช่วยเหลือ? <a href="mailto:hello@vibelinkth.com">hello@vibelinkth.com</a></footer>
+  </main>
+</body>
+</html>
