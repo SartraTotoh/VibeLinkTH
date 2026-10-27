@@ -44,8 +44,8 @@ export function LandingPage() {
         <Link className="button secondary" href="/login">
           เข้าสู่ระบบ
         </Link>
-        <Link className="button secondary" href="/support">
-          ช่วยเหลือ
+        <Link className="button primary" href="/signup">
+          สมัครสมาชิก
         </Link>
       </nav>
 

@@ -215,6 +215,56 @@
     }
     .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 0 52px -8px rgba(185, 255, 44, 0.65); }
 
+    .nav-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .nav-btn-login {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      background: radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 2px 8px rgba(0, 0, 0, 0.25);
+      transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .nav-btn-login:hover {
+      background: radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+    .nav-btn-signup {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 50% 0%, var(--primary) 0%, var(--primary-deep) 100%);
+      color: var(--primary-ink);
+      font-size: 14px;
+      font-weight: 800;
+      box-shadow: var(--glow-lime), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .nav-btn-signup:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 52px -8px rgba(185, 255, 44, 0.7);
+    }
+    .nav-btn-login .ms, .nav-btn-signup .ms {
+      font-size: 17px;
+      line-height: 1;
+    }
+
     .hero {
       display: grid;
       grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
@@ -911,6 +961,10 @@
     }
     @media (max-width: 640px) {
       .nav-links { display: none; }
+      .nav-actions { gap: 6px; }
+      .nav-btn-login { padding: 7px 11px; font-size: 12px; }
+      .nav-btn-signup { padding: 7px 13px; font-size: 12px; }
+      .nav-btn-login .ms, .nav-btn-signup .ms { font-size: 14px; }
       .shell { width: min(100% - 24px, 1180px); }
       .section { padding: 64px 0; }
       .ecosystem { grid-template-columns: 1fr; }
@@ -1001,7 +1055,16 @@
         <a href="#pricing">แพ็กเกจ</a>
         <a href="#faq">คำถาม</a>
       </nav>
-      <a class="nav-cta" href="https://app.vibelinkth.com/qr">สร้าง QR ฟรี ↗</a>
+      <div class="nav-actions">
+        <a class="nav-btn-login" href="https://app.vibelinkth.com/login" data-cta="nav_login">
+          <span class="ms" aria-hidden="true">login</span>
+          <span>เข้าสู่ระบบ</span>
+        </a>
+        <a class="nav-btn-signup" href="https://app.vibelinkth.com/signup" data-cta="nav_signup">
+          <span>สมัครสมาชิก</span>
+          <span class="ms" aria-hidden="true">arrow_forward</span>
+        </a>
+      </div>
     </div>
   </header>
 
