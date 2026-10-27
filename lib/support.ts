@@ -46,9 +46,9 @@ export const DEFAULT_RULES: SupportRuleSeed[] = [
     faqTh: "แพ็กเกจมีอะไรบ้าง ราคาเท่าไหร่?",
     faqEn: "What plans do you have and how much do they cost?",
     replyTh:
-      "ปัจจุบันมี 3 แพ็กเกจครับ: Free (ฟรี 10 ลิงก์ สถิติ 7 วัน), Creator ฿199/เดือน (500 ลิงก์ สถิติ 90 วัน ตั้ง slug เอง โอเพ่นแอปทุกแพลตฟอร์ม) และ Creator Plus — อัปเกรดได้จากปุ่มในหน้าควบคุมลิงก์ ชำระผ่าน Stripe ยกเลิกได้ทุกเมื่อ",
+      "ปัจจุบันมี 3 แพ็กเกจครับ: Free (ฟรี 10 ลิงก์ สถิติ 7 วัน), Creator ฿199/เดือน (500 ลิงก์ สถิติ 90 วัน ตั้ง slug เอง โอเพ่นแอปทุกแพลตฟอร์ม) และ Creator Plus (ยังไม่เปิดขาย) — อัปเกรดได้จากปุ่มในหน้าควบคุมลิงก์ ชำระผ่าน Stripe ยกเลิกได้ทุกเมื่อ",
     replyEn:
-      "We have 3 plans: Free (10 links, 7-day stats), Creator ฿199/mo (500 links, 90-day stats, custom slugs, in-app deep links), and Creator Plus. Upgrade from your dashboard — payment is via Stripe and you can cancel anytime.",
+      "We have 3 plans: Free (10 links, 7-day stats), Creator ฿199/mo (500 links, 90-day stats, custom slugs, in-app deep links), and Creator Plus (coming soon). Upgrade from your dashboard — payment is via Stripe and you can cancel anytime.",
   },
   {
     priority: 40,
