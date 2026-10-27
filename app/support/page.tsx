@@ -6,7 +6,7 @@ import { isAdmin } from "@/lib/admin";
 import { LANG_COOKIE, type Lang } from "@/lib/i18n";
 import { NavLangSwitcher } from "@/components/i18n/language";
 import { SignOutButton } from "@/components/dashboard/sign-out-button";
-import { SupportChat } from "@/components/support/support-chat";
+import { AdminSupportWrapper } from "@/components/support/admin-support-wrapper";
 
 export const dynamic = "force-dynamic";
 export const metadata = {
@@ -19,6 +19,7 @@ export default async function SupportPage() {
   if (!session?.user?.id) redirect("/login");
 
   const lang: Lang = (await cookies()).get(LANG_COOKIE)?.value === "en" ? "en" : "th";
+  const userIsAdmin = isAdmin(session.user.email);
 
   return (
     <main className="shell">
@@ -38,7 +39,7 @@ export default async function SupportPage() {
             <span className="ms">settings</span>
             {lang === "th" ? "ตั้งค่า" : "Settings"}
           </Link>
-          {isAdmin(session.user.email) ? (
+          {userIsAdmin ? (
             <Link href="/ceo" className="mini-btn">
               <span className="ms">terminal</span>
               Dev
@@ -50,17 +51,17 @@ export default async function SupportPage() {
 
       <div className="dash-head">
         <div>
-          <h1>{lang === "th" ? "ช่วยเหลือ & พูดคุยกับทีมงาน" : "Help & talk to our team"}</h1>
+          <h1>{lang === "th" ? "ช่วยเหลือ & ฝ่ายสนับสนุน" : "Help & Support"}</h1>
           <p className="greet">
             {lang === "th"
-              ? "ค้นหาคำตอบยอดฮิตได้ทันที หรือส่งข้อความ — ทีมงานตอบกลับเร็ว"
-              : "Get instant answers to popular questions, or message us — we reply fast"}
+              ? "ศูนย์กลางติดต่อทีมงาน ตอบคำถาม และจัดการ Ticket บริการ"
+              : "Support hub, ticket management, and member inquiries"}
           </p>
         </div>
       </div>
 
       <div className="dash">
-        <SupportChat lang={lang} />
+        <AdminSupportWrapper lang={lang} isAdminUser={userIsAdmin} />
       </div>
 
       <footer className="dash-foot">
