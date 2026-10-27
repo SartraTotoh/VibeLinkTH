@@ -10,6 +10,12 @@ const handler = readFileSync(handlerPath, "utf8");
 
 const needle = "getMiddlewareManifest(){return this.minimalMode?null:require(this.middlewareManifestPath)}";
 if (!handler.includes(needle)) {
+  // OpenNext now bundles middleware separately and the node handler already
+  // returns null here instead of requiring the manifest at runtime.
+  if (handler.includes("getMiddlewareManifest(){return null}")) {
+    console.log("[middleware-patch] skipped: handler already uses the bundled middleware path");
+    process.exit(0);
+  }
   console.error("[middleware-patch] could not find getMiddlewareManifest dynamic require");
   process.exit(1);
 }
