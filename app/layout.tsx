@@ -48,6 +48,9 @@ export const metadata: Metadata = {
     apple: "/logo.png",
   },
   robots: { index: true, follow: true },
+  verification: {
+    google: "aJZNCUTvLVZDIWEpC3rP_9Bfw_r1Gtb6LdFImBQTY6I",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
