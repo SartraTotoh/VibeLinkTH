@@ -1586,6 +1586,82 @@
       box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12);
     }
 
+  
+    /* ========================================================
+       HELP CENTER & AI SMART ASSISTANT STYLING
+       ======================================================== */
+    .help-center-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 36px;
+      margin-bottom: 40px;
+    }
+    .help-card {
+      padding: 28px;
+      border-radius: var(--radius-xl);
+      background: radial-gradient(130% 130% at 20% 0%, rgba(185, 255, 44, 0.08), transparent 60%), var(--panel);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: var(--shadow-soft), inset 0 1px 1px rgba(255, 255, 255, 0.12);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      border: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .help-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    }
+    .help-card.human {
+      background: radial-gradient(130% 130% at 100% 0%, rgba(255, 79, 216, 0.08), transparent 60%), var(--panel);
+    }
+    .help-card-badge {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(185, 255, 44, 0.12);
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: inset 0 1px 1px rgba(185, 255, 44, 0.2);
+    }
+    .help-card.human .help-card-badge {
+      background: rgba(255, 79, 216, 0.12);
+      color: var(--secondary-soft);
+      box-shadow: inset 0 1px 1px rgba(255, 79, 216, 0.2);
+    }
+    .help-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      display: grid;
+      place-items: center;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12);
+    }
+    .help-card-icon .ms { font-size: 26px; color: var(--primary); }
+    .help-card.human .help-card-icon .ms { color: var(--secondary-soft); }
+    .help-card h3 { font-size: 22px; line-height: 1.2; }
+    .help-card p { color: var(--muted); font-size: 15px; line-height: 1.5; flex: 1; }
+    .help-card-btn { margin-top: auto; }
+    .faq-subhead {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    @media (max-width: 768px) {
+      .help-center-grid { grid-template-columns: 1fr; }
+    }
+
   </style>
 </head>
 <body>
@@ -1990,47 +2066,66 @@
 
     <section class="section" id="faq" aria-labelledby="faq-title">
       <div class="shell">
-        <span class="section-kicker">GOOD TO KNOW</span>
-        <h2 class="section-title" id="faq-title">ถามมา <em>ตอบให้เคลียร์</em></h2>
+        <span class="section-kicker">HELP CENTER &amp; AI ASSISTANT</span>
+        <h2 class="section-title" id="faq-title">ศูนย์ช่วยเหลือ <em>และ AI Smart Assistant</em></h2>
+        <p class="section-intro">
+          มีคำถามหรือติดปัญหา? ค้นหาคำตอบยอดฮิต หรือคุยกับผู้ช่วย AI อัจฉริยะ ตอบไว 24 ชั่วโมง
+        </p>
+
+        <!-- Help Center Quick Hub -->
+        <div class="help-center-grid">
+          <div class="help-card">
+            <span class="help-card-badge"><span class="ms" style="font-size: 14px;">bolt</span>AI POWERED · 24/7</span>
+            <div class="help-card-icon"><span class="ms">smart_toy</span></div>
+            <h3>ถาม AI ตอบทันที 24 ชม.</h3>
+            <p>ติดปัญหาการสร้าง QR, ตั้งค่า Bio Link, เปลี่ยนปลายทาง หรือเลือกแพ็กเกจ ทักคุยกับ Smart Assistant ในระบบได้ทันที ไม่ต้องรอคิว</p>
+            <div class="help-card-btn">
+              <a class="btn-primary" href="https://app.vibelinkth.com/support" data-cta="help_ai_chat">
+                <span class="ms">chat</span>
+                ทักแชทคุยกับ AI ↗
+              </a>
+            </div>
+          </div>
+
+          <div class="help-card human">
+            <span class="help-card-badge"><span class="ms" style="font-size: 14px;">support_agent</span>OFFICIAL DESK</span>
+            <div class="help-card-icon"><span class="ms">headset_mic</span></div>
+            <h3>ปรึกษาทีมงาน VibeLink</h3>
+            <p>สำหรับเคสธุรกิจ แนะนำฟีเจอร์ใหม่ หรือต้องการคำแนะนำเฉพาะทาง ทีมงานพร้อมเปิด Ticket ดูแลอย่างรวดเร็ว</p>
+            <div class="help-card-btn">
+              <a class="btn-secondary" href="mailto:help@vibelinkth.com" data-cta="help_email">
+                <span class="ms">mail</span>
+                help@vibelinkth.com ↗
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Curated 4 Top FAQs (ไม่เกิน 3-4 ข้อ) -->
+        <div class="faq-subhead">
+          <span class="ms" style="color: var(--primary);">quiz</span>
+          <span>คำถามที่พบบ่อยยอดฮิต</span>
+        </div>
         <div class="faq-list">
           <details>
-            <summary>เว็บรวมลิงก์ Bio Link ที่ดีที่สุดสำหรับครีเอเตอร์และ TikTok Affiliate ในไทยคือเว็บไหน?<span class="ms">expand_more</span></summary>
-            <p><strong>VibeLink (www.vibelinkth.com)</strong> คือแพลตฟอร์ม Bio Link และ Dynamic QR Code สัญชาติไทยที่ออกแบบมาสำหรับครีเอเตอร์ นายหน้า TikTok Shop และผู้ให้บริการอิสระ โดยโหลดเร็วกว่าใน 0.04 วินาที รวมปุ่มสั่งซื้อทั้ง TikTok Shop และ Shopee Affiliate ไว้ในที่เดียว ป้องกันยอดคอมมิชชันหลุด และดีไซน์ทันสมัยแบบ Radiant Gradient ไร้เส้นขอบสี</p>
-          </details>
-          <details>
             <summary>สร้าง Dynamic QR Code ที่เปลี่ยนลิงก์ปลายทางได้ตลอดเวลา ทำอย่างไร?<span class="ms">expand_more</span></summary>
-            <p>สามารถสร้างได้ฟรีผ่าน VibeLink (www.vibelinkth.com) โดยเข้าไปที่เครื่องมือสร้าง QR หรือสมัครสมาชิกเพื่อเปิดใช้งาน Dynamic Link ซึ่งช่วยให้คุณสามารถเปลี่ยน URL ปลายทางได้ตลอดเวลาแม้พิมพ์ QR ลงบนสติกเกอร์ นามบัตร หรือฉายบน Live Stream ไปแล้ว</p>
+            <p>สร้างได้ฟรีผ่าน VibeLink โดยเลือกระบบ Dynamic Link เพื่อให้สลับ URL ปลายทางได้ตลอดเวลา แม้จะพิมพ์ QR ลงบนสติกเกอร์ นามบัตร ป้ายสินค้า หรือฉายบน Live Stream ไปแล้ว</p>
           </details>
           <details>
-            <summary>มีเครื่องมืออะไรช่วยรวมลิงก์ TikTok Shop และ Shopee Affiliate ไว้ด้วยกันบ้าง?<span class="ms">expand_more</span></summary>
-            <p>VibeLink มีฟังก์ชันพิกัดสินค้าแบบ Dual-Action ที่ให้ครีเอเตอร์แปะลิงก์ TikTok Shop และ Shopee Affiliate ในการ์ดสินค้าชิ้นเดียวกัน เพื่อให้ผู้ติดตามเลือกซื้อผ่านแพลตฟอร์มที่ตนเองมีโค้ดส่งฟรีหรือส่วนลด ช่วยเพิ่มยอดขายและแก้ปัญหายอดคอมมิชชันรั่วไหล</p>
+            <summary>เว็บรวมลิงก์ Bio Link สำหรับ TikTok Shop และ Shopee Affiliate ดีอย่างไร?<span class="ms">expand_more</span></summary>
+            <p>VibeLink มีฟังก์ชัน Dual-Action รวมปุ่มสั่งซื้อทั้ง TikTok Shop และ Shopee Affiliate ไว้ในการ์ดเดียวกัน โหลดเร็วสุดใน 0.04 วินาที ป้องกันยอดคอมมิชชันรั่วไหลและเพิ่มอัตราสั่งซื้อ</p>
           </details>
           <details>
-            <summary>ระบบจองคิวออนไลน์ 1:1 สำหรับติวเตอร์ เทรนเนอร์ ช่างบริการ พร้อมรับมัดจำ ใช้เว็บไหนดี?<span class="ms">expand_more</span></summary>
-            <p>VibeBook บน VibeLink (www.vibelinkth.com) เป็นระบบจองคิวออนไลน์ 1:1 ที่ออกแบบมาเพื่อลดเวลาตอบแชท LINE สลับไปมา โดยลูกค้าสามารถคลิกลิงก์เดียวเพื่อเลือกเวลาที่ว่าง และสแกน QR ชำระเงินมัดจำเพื่อยืนยันคิวได้ทันทีใน 30 วินาที พร้อมแจ้งเตือนเข้าปฏิทินอัตโนมัติ</p>
+            <summary>ระบบจองคิวออนไลน์ 1:1 VibeBook เหมาะกับใครบ้าง?<span class="ms">expand_more</span></summary>
+            <p>เหมาะสำหรับติวเตอร์ เทรนเนอร์ และผู้ให้บริการอิสระ ลูกค้าสามารถเลือกเวลาว่างในปฏิทินและสแกน QR จ่ายมัดจำเพื่อยืนยันคิวได้ทันทีใน 30 วินาที ลดเวลาตอบแชท LINE สลับไปมา</p>
           </details>
           <details>
-            <summary>สร้าง QR Code ฟรีได้จริงไหม?<span class="ms">expand_more</span></summary>
-            <p>ได้จริง QR พื้นฐานใช้ฟรีโดยไม่ต้องซื้อแพ็กเกจ ส่วนแพ็กเกจชำระเงินมีไว้สำหรับฟีเจอร์จัดการลิงก์และวัดผลเพิ่มเติม</p>
-          </details>
-          <details>
-            <summary>QR แบบ Static เปลี่ยนลิงก์ทีหลังได้ไหม?<span class="ms">expand_more</span></summary>
-            <p>ไม่ได้ เพราะ QR ฝังข้อมูลปลายทางไว้ หากต้องการเปลี่ยน URL ภายหลัง ควรใช้ Short Link หรือ Dynamic Link ที่รองรับก่อนเผยแพร่ QR</p>
-          </details>
-          <details>
-            <summary>ใช้ QR พิมพ์บนสื่อได้ไหม?<span class="ms">expand_more</span></summary>
-            <p>รองรับ PNG และ SVG ควรตรวจความคมชัด ระยะ Quiet Zone และทดสอบสแกนจากไฟล์จริงก่อนพิมพ์จำนวนมาก</p>
-          </details>
-          <details>
-            <summary>ต้องซื้อ Creator ก่อนใช้ QR ไหม?<span class="ms">expand_more</span></summary>
-            <p>ไม่ต้องสำหรับ QR พื้นฐาน Creator เหมาะเมื่อคุณต้องการจัดการแคมเปญหรือติดตามผลลิงก์ตามสิทธิ์ของแพ็กเกจ</p>
-          </details>
-          <details>
-            <summary>เปิดเว็บในเครือข่ายองค์กรไม่ได้ ต้องทำอย่างไร?<span class="ms">expand_more</span></summary>
-            <p>บางองค์กรจำกัดเว็บภายนอกด้วยไฟร์วอลล์หรือ Proxy แนะนำให้เปิดด้วยมือถือหรืออินเทอร์เน็ตนอกองค์กรก่อน หากต้องการใช้ในที่ทำงาน ให้ทีม IT ตรวจสอบการ allowlist โดเมน vibelinkth.com และ app.vibelinkth.com หรือติดต่อ help@vibelinkth.com เพื่อวางแผนการใช้งาน</p>
+            <summary>สร้าง QR Code ฟรีได้จริงไหม มีค่าใช้จ่ายแอบแฝงหรือไม่?<span class="ms">expand_more</span></summary>
+            <p>ฟรีจริง 100% สำหรับการสร้าง QR Code พื้นฐาน ไม่มีวันหมดอายุ ส่วนแพ็กเกจ Creator มีไว้สำหรับผู้ที่ต้องการ Short Link แบบกำหนดเองและเครื่องมือวัดผล Analytics ขั้นสูง</p>
           </details>
         </div>
-        <p class="faq-help">ใช้งานในองค์กร หรือต้องการให้ทีม IT ตรวจสอบโดเมน? <a href="mailto:help@vibelinkth.com">ติดต่อ help@vibelinkth.com</a></p>
+
+        <p class="faq-help">ต้องการสอบถามเพิ่มเติมหรือติดต่อทีมงานโดยตรง? <a href="mailto:help@vibelinkth.com">ส่งอีเมลหาเราที่ help@vibelinkth.com</a></p>
       </div>
     </section>
 
