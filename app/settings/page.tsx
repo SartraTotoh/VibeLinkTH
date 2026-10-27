@@ -9,9 +9,10 @@ import { SignOutButton } from "@/components/dashboard/sign-out-button";
 import { VerifyEmailBanner } from "@/components/dashboard/verify-email-banner";
 import { SettingsActions } from "@/components/dashboard/settings-actions";
 import { NavLangSwitcher } from "@/components/i18n/language";
+import { SocialHubSettings } from "@/components/dashboard/social-hub-settings";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Settings" };
+export const metadata = { title: "Settings | VibeLink" };
 
 export default async function SettingsPage() {
   const session = await auth();
@@ -22,7 +23,14 @@ export default async function SettingsPage() {
   const [user, subscription, plan] = await Promise.all([
     prisma.user.findUnique({
       where: { id: session.user.id },
-      select: { email: true, displayName: true, emailVerified: true, createdAt: true, termsAcceptedAt: true },
+      select: {
+        email: true,
+        displayName: true,
+        emailVerified: true,
+        createdAt: true,
+        termsAcceptedAt: true,
+        vibeSlug: true,
+      },
     }),
     prisma.subscription.findFirst({
       where: { userId: session.user.id },
@@ -39,17 +47,27 @@ export default async function SettingsPage() {
       year: "numeric",
     });
 
+  const planName =
+    plan === "CREATOR"
+      ? "Creator"
+      : plan === "CREATOR_PLUS"
+        ? "Creator Plus"
+        : "Free";
+
   return (
     <main className="shell">
       <nav className="nav">
         <Link href="/" className="brand">
-          <img src="/logo.png" alt="" />
+          <img src="/logo.png" alt="VibeLink Logo" />
           Vibe<span>Link</span>
         </Link>
         <div className="dash-actions">
+          <span className="nav-user" style={{ color: "var(--muted)", fontWeight: 700, fontSize: 14 }}>
+            {session.user.email}
+          </span>
           <NavLangSwitcher />
           <Link href="/dashboard" className="mini-btn">
-            <span className="ms">link</span>
+            <span className="ms">dashboard</span>
             {t(lang, "nav.links")}
           </Link>
           <SignOutButton label={lang === "th" ? "ออกจากระบบ" : "Sign out"} />
@@ -61,12 +79,16 @@ export default async function SettingsPage() {
           <h1>{t(lang, "set.title")}</h1>
           <p className="greet">{t(lang, "set.sub")}</p>
         </div>
-        <span className="plan-badge">{t(lang, "dash.plan")} {plan}</span>
+        <span className="plan-badge">
+          <span className="ms">workspace_premium</span>
+          {t(lang, "dash.plan")} {planName}
+        </span>
       </div>
 
       <div className="dash">
         {user && !user.emailVerified ? <VerifyEmailBanner lang={lang} /> : null}
 
+        {/* Account Details */}
         <section className="panel">
           <div className="panel-head">
             <span className="ms">person</span>
@@ -81,26 +103,42 @@ export default async function SettingsPage() {
               </small>
             </div>
           </div>
-          <div className="settings-row">
+          <div className="settings-row" style={{ marginTop: 8 }}>
             <div>
               <b>{t(lang, "set.displayName")}</b>
               <small>{user?.displayName || t(lang, "set.noName")}</small>
             </div>
           </div>
-          <div className="settings-row">
+          <div className="settings-row" style={{ marginTop: 8 }}>
+            <div>
+              <b>Vibe Page Slug (URL ประจำตัว)</b>
+              <small>
+                {user?.vibeSlug ? `vibelinkth.com/vibe/${user.vibeSlug}` : "ยังไม่ได้ตั้งค่า slug"}
+              </small>
+            </div>
+            <Link href="/dashboard/vibepage" className="mini-btn">
+              <span className="ms">edit</span>
+              ตั้งค่า Vibe Page
+            </Link>
+          </div>
+          <div className="settings-row" style={{ marginTop: 8 }}>
             <div>
               <b>{t(lang, "set.plan")}</b>
               <small>
-                {plan}
+                {planName}
                 {subscription?.expiresAt ? ` · ${t(lang, "set.expires")} ${dateFmt(subscription.expiresAt)}` : ""}
               </small>
             </div>
           </div>
           <p className="form-note">
-            {t(lang, "set.changeInfo")} <a href="mailto:hello@vibelinkth.com">hello@vibelinkth.com</a>
+            {t(lang, "set.changeInfo")} <a href="mailto:help@vibelinkth.com" style={{ color: "var(--primary-text)", fontWeight: 700 }}>help@vibelinkth.com</a>
           </p>
         </section>
 
+        {/* Connected Social Accounts & Phone Contact Hub */}
+        <SocialHubSettings lang={lang} />
+
+        {/* Privacy & Account Actions */}
         <section className="panel">
           <div className="panel-head">
             <span className="ms">shield</span>
@@ -110,14 +148,16 @@ export default async function SettingsPage() {
           <SettingsActions hasSubscription={Boolean(subscription?.customerRef)} />
         </section>
 
+        {/* Legal Documents */}
         <section className="panel">
           <div className="panel-head">
             <span className="ms">description</span>
             <h2>{t(lang, "set.docs")}</h2>
           </div>
           <p className="panel-sub">
-            <Link href="/terms">{t(lang, "auth.terms")}</Link> · <Link href="/privacy">{t(lang, "auth.privacy")}</Link> ·{" "}
-            <Link href="/cookies">Cookies</Link>
+            <Link href="/terms" style={{ color: "var(--primary-text)", fontWeight: 700 }}>{t(lang, "auth.terms")}</Link> ·{" "}
+            <Link href="/privacy" style={{ color: "var(--primary-text)", fontWeight: 700 }}>{t(lang, "auth.privacy")}</Link> ·{" "}
+            <Link href="/cookies" style={{ color: "var(--primary-text)", fontWeight: 700 }}>Cookies</Link>
           </p>
         </section>
       </div>

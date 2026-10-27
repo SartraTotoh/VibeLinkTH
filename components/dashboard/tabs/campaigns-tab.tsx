@@ -97,7 +97,7 @@ export function CampaignsTab({ initialCampaigns, perf, lang }: Props) {
 
   return (
     <div className={styles.pane}>
-      <div className="panel" style={{ borderColor: "var(--line-pink)" }}>
+      <div className="panel">
         <div className="panel-head">
           <span className="ms">campaign</span>
           <h2>
@@ -167,7 +167,7 @@ export function CampaignsTab({ initialCampaigns, perf, lang }: Props) {
         {ok ? <div className="notice" style={{ marginTop: 12 }}>{ok}</div> : null}
       </div>
 
-      <div className="panel" style={{ borderColor: "var(--line-pink)" }}>
+      <div className="panel">
         <div className="panel-head">
           <span className="ms">list</span>
           <h2>{lang === "th" ? "แคมเปญของคุณ" : "Your campaigns"}</h2>

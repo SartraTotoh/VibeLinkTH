@@ -76,7 +76,7 @@ export function OverviewPane({ a, lang }: { a: AnalyticsPayload; lang: Lang }) {
         </div>
       </div>
 
-      <div className="panel" style={{ borderColor: "var(--line-pink)" }}>
+      <div className="panel">
         <div className="panel-head">
           <span className="ms">show_chart</span>
           <h2>{lang === "th" ? "ยอดคลิกรายวัน" : "Daily clicks"}</h2>
@@ -101,7 +101,7 @@ export function OverviewPane({ a, lang }: { a: AnalyticsPayload; lang: Lang }) {
       </div>
 
       <div className={styles.twoCol}>
-        <div className="panel" style={{ borderColor: "var(--line-pink)" }}>
+        <div className="panel">
           <div className="panel-head">
             <span className="ms">leaderboard</span>
             <h2>{lang === "th" ? "ลิงก์ยอดนิยม" : "Top links"}</h2>
@@ -131,7 +131,7 @@ export function OverviewPane({ a, lang }: { a: AnalyticsPayload; lang: Lang }) {
           )}
         </div>
 
-        <div className="panel" style={{ borderColor: "var(--line-pink)" }}>
+        <div className="panel">
           <div className="panel-head">
             <span className="ms">notifications_active</span>
             <h2>{lang === "th" ? "คลิกล่าสุด" : "Recent clicks"}</h2>

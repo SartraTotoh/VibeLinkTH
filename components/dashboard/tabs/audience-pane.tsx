@@ -8,7 +8,7 @@ const fmt = (n: number) => n.toLocaleString("en-US");
 
 function list(name: string, data: { name: string; clicks: number }[], label: string) {
   return (
-    <div className="panel" key={name} style={{ borderColor: "var(--line-pink)" }}>
+    <div className="panel" key={name}>
       <div className="panel-head">
         <span className="ms">{name === "device" ? "devices" : name === "browser" ? "language" : name === "os" ? "memory" : name === "country" ? "public" : "play_circle"}</span>
         <h2>{label}</h2>

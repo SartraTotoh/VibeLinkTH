@@ -16,7 +16,7 @@ export function PerformancePane({ a, lang }: { a: AnalyticsPayload; lang: Lang }
 
   return (
     <div className={styles.pane}>
-      <div className="panel" style={{ borderColor: "var(--line-pink)" }}>
+      <div className="panel">
         <div className="panel-head">
           <span className="ms">trending_up</span>
           <h2>{lang === "th" ? "ผลงานแต่ละลิงก์" : "Per-link performance"}</h2>

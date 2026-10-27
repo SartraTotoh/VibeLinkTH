@@ -73,7 +73,7 @@ export function VibeTab({ vibe, activeLinks, lang }: Props) {
       </p>
 
       <div className={styles.vibeFrame}>
-        <div className="panel" style={{ flex: 1, minWidth: 280, borderColor: "var(--line-pink)" }}>
+        <div className="panel" style={{ flex: 1, minWidth: 280 }}>
           <div className="panel-head">
             <span className="ms">auto_awesome</span>
             <h2>{lang === "th" ? "ตั้งค่าหน้า Vibe" : "Vibe Page setup"}</h2>
@@ -114,7 +114,8 @@ export function VibeTab({ vibe, activeLinks, lang }: Props) {
                 width: "100%",
                 padding: "12px 14px",
                 borderRadius: 14,
-                border: "1px solid var(--line)",
+                border: "none",
+                boxShadow: "inset 0 1px 2px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.08)",
                 background: "var(--input)",
                 color: "var(--text)",
                 fontSize: 14,

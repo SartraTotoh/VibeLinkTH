@@ -11,6 +11,7 @@ const registerSchema = z.object({
   email: z.string().email().max(200),
   password: z.string().min(8).max(100),
   displayName: z.string().trim().min(1).max(60).optional(),
+  vibeSlug: z.string().trim().min(2).max(30).regex(/^[a-z0-9_-]+$/i, "slug ต้องประกอบด้วย a-z, 0-9, - หรือ _").optional(),
   acceptedTerms: z.literal(true),
 });
 
@@ -43,15 +44,24 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "อีเมลนี้ถูกใช้สมัครแล้ว" }, { status: 409 });
   }
 
+  const slug = parsed.data.vibeSlug ? parsed.data.vibeSlug.toLowerCase() : undefined;
+  if (slug) {
+    const existingSlug = await prisma.user.findUnique({ where: { vibeSlug: slug } });
+    if (existingSlug) {
+      return NextResponse.json({ error: `ชื่อลิงก์ @${slug} มีผู้ใช้งานแล้ว กรุณาเลือกชื่ออื่น` }, { status: 409 });
+    }
+  }
+
   const passwordHash = await bcrypt.hash(parsed.data.password, 12);
   const user = await prisma.user.create({
     data: {
       email,
       passwordHash,
       displayName: parsed.data.displayName,
+      vibeSlug: slug,
       termsAcceptedAt: new Date(),
     },
-    select: { id: true, email: true, displayName: true },
+    select: { id: true, email: true, displayName: true, vibeSlug: true },
   });
 
   let verificationSent = false;

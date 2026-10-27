@@ -1,91 +1,119 @@
+/* Segmented Glass Switcher - Symmetrical & Equal-Width */
 .tabsBar {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 8px;
-  margin-bottom: 16px;
+  width: 100%;
+  margin: 0 auto 24px;
+  padding: 6px;
+  border-radius: 20px;
+  border: none;
+  background: radial-gradient(130% 160% at 50% 0%, rgba(30, 34, 46, 0.85), rgba(14, 17, 24, 0.85));
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.12);
 }
 
 .tabBtn {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 48px;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 10px 16px;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
   border-radius: 14px;
-  border: 1px solid var(--line);
-  background: var(--sc);
+  border: none;
+  background: transparent;
   color: var(--muted);
-  font: inherit;
-  font-size: 13.5px;
+  font-family: inherit;
+  font-size: 14.5px;
   font-weight: 800;
   cursor: pointer;
-  transition: 0.18s;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .tabBtn .ms {
-  font-size: 17px;
+  font-size: 19px;
+  line-height: 1;
+  color: var(--muted);
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
-.tabBtn:hover {
-  color: var(--text);
-  border-color: var(--line-pink);
-  box-shadow: var(--glow-pink);
+.tabBtn:hover:not(.tabActive) {
+  background: radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.tabBtn:hover:not(.tabActive) .ms {
+  color: #fff;
 }
 
 .tabActive {
-  border-color: rgba(255, 79, 216, 0.45);
-  background: linear-gradient(135deg, rgba(255, 79, 216, 0.16), rgba(139, 92, 246, 0.18));
-  color: #ff9be6;
+  background: radial-gradient(circle at 50% 0%, var(--primary) 0%, var(--primary-deep) 100%);
+  color: var(--primary-ink) !important;
+  font-weight: 900;
+  box-shadow: var(--glow-lime), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+  transform: translateY(-1px);
 }
 
 .tabActive .ms {
-  color: #ff9be6;
+  color: var(--primary-ink) !important;
+  transform: scale(1.08);
 }
 
 .pane {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 18px;
 }
 
 .paneSub {
   margin: 0;
-  font-size: 12.5px;
+  font-size: 14.5px;
   color: var(--muted);
+  line-height: 1.6;
 }
 
+/* KPI Cards */
 .kpis {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+  gap: 16px;
 }
 
 .kpi {
-  padding: 16px 18px 14px;
-  border: 1px solid var(--line-pink);
-  border-radius: 16px;
-  background: var(--panel);
-  box-shadow: var(--shadow);
+  padding: 20px 22px 18px;
+  border-radius: 20px;
+  border: none;
+  background: radial-gradient(130% 160% at 50% 0%, rgba(185, 255, 44, 0.075), transparent 60%), var(--panel);
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-glass);
 }
 
 .kpiLabel {
   display: flex;
   align-items: center;
-  gap: 7px;
-  font-size: 12px;
-  font-weight: 700;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 800;
   color: var(--muted);
 }
 
 .kpiLabel .ms {
-  font-size: 15px;
+  font-size: 18px;
   color: var(--primary-text);
 }
 
 .kpiVal {
   display: block;
-  margin-top: 6px;
-  font-size: 30px;
-  font-weight: 800;
+  margin-top: 8px;
+  font-size: 34px;
+  font-weight: 900;
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
   color: #fff;
@@ -93,16 +121,16 @@
 
 .kpiSub {
   display: block;
-  margin-top: 5px;
-  font-size: 12px;
+  margin-top: 6px;
+  font-size: 14px;
   color: var(--faint);
 }
 
 .kpiDelta {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  font-size: 12px;
+  gap: 4px;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -111,7 +139,7 @@
 }
 
 .deltaDown {
-  color: #ff8f8f;
+  color: #ff9b9b;
 }
 
 .deltaFlat {
@@ -121,16 +149,20 @@
 .twoCol {
   display: grid;
   grid-template-columns: 1.4fr 1fr;
-  gap: 12px;
+  gap: 18px;
   align-items: start;
 }
 
 .barsDay {
   display: flex;
   align-items: flex-end;
-  gap: 5px;
-  height: 96px;
-  margin-top: 12px;
+  gap: 6px;
+  height: 110px;
+  margin-top: 16px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: var(--sc);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 .barCol {
@@ -138,66 +170,65 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   min-width: 0;
 }
 
 .barFill {
   width: 100%;
-  max-width: 26px;
-  border-radius: 6px 6px 2px 2px;
-  background: linear-gradient(180deg, #8b5cf6, #ff4fd8);
-  min-height: 3px;
+  max-width: 28px;
+  border-radius: 8px 8px 3px 3px;
+  background: linear-gradient(180deg, var(--primary), var(--secondary));
+  min-height: 4px;
+  box-shadow: 0 0 10px rgba(185, 255, 44, 0.3);
 }
 
 .barFillZero {
   background: var(--sc-highest);
-  min-height: 3px;
+  min-height: 4px;
 }
 
 .barDay {
-  font-size: 9.5px;
+  font-size: 14px;
   color: var(--faint);
   white-space: nowrap;
-  transform: rotate(-35deg);
-  transform-origin: top left;
 }
 
 .sparkRow {
   display: flex;
   align-items: baseline;
-  gap: 8px;
-  margin-top: 10px;
+  gap: 10px;
+  margin-top: 12px;
 }
 
 .sparkVal {
-  font-size: 26px;
-  font-weight: 800;
+  font-size: 30px;
+  font-weight: 900;
   color: #fff;
   font-variant-numeric: tabular-nums;
 }
 
 .sparkHint {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
 }
 
 .breakRows {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .breakRow {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(60px, 1.4fr) 44px;
-  gap: 10px;
+  grid-template-columns: minmax(0, 1.2fr) minmax(60px, 1.4fr) 50px;
+  gap: 12px;
   align-items: center;
 }
 
 .breakName {
-  font-size: 12.5px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 800;
   color: var(--text);
   white-space: nowrap;
   overflow: hidden;
@@ -205,8 +236,8 @@
 }
 
 .breakBar {
-  height: 8px;
-  border-radius: 99px;
+  height: 9px;
+  border-radius: 999px;
   background: var(--sc-highest);
   overflow: hidden;
 }
@@ -214,12 +245,12 @@
 .breakFill {
   display: block;
   height: 100%;
-  border-radius: 99px;
-  background: linear-gradient(90deg, #8b5cf6, #ff4fd8);
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
 }
 
 .breakVal {
-  font-size: 12.5px;
+  font-size: 14px;
   font-weight: 800;
   text-align: right;
   color: #fff;
@@ -229,17 +260,18 @@
 .recentRows {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .recentRow {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 9px 12px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--sc);
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: none;
+  background: radial-gradient(130% 160% at 50% 0%, rgba(255, 255, 255, 0.04), transparent 60%), var(--sc);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
 }
 
 .recentRow .rt {
@@ -249,33 +281,36 @@
 
 .recentRow .rt b {
   display: block;
-  font-size: 12.5px;
+  font-size: 14.5px;
   color: #fff;
+  font-weight: 800;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .recentRow .rt small {
-  font-size: 11px;
+  font-size: 14px;
   color: var(--faint);
 }
 
+/* Performance Table */
 .perfTable {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .perfRow {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) 70px 70px 60px auto;
-  gap: 10px;
+  grid-template-columns: minmax(0, 1.5fr) 80px 80px 70px auto;
+  gap: 12px;
   align-items: center;
-  padding: 12px 14px;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: var(--sc);
+  padding: 14px 18px;
+  border-radius: 16px;
+  border: none;
+  background: radial-gradient(130% 160% at 50% 0%, rgba(255, 255, 255, 0.04), transparent 60%), var(--sc);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
 }
 
 .perfMain {
@@ -284,7 +319,8 @@
 
 .perfMain b {
   display: block;
-  font-size: 13px;
+  font-size: 15px;
+  font-weight: 800;
   color: #fff;
   white-space: nowrap;
   overflow: hidden;
@@ -292,7 +328,7 @@
 }
 
 .perfMain small {
-  font-size: 11.5px;
+  font-size: 14px;
   color: var(--faint);
   white-space: nowrap;
   overflow: hidden;
@@ -301,7 +337,7 @@
 
 .perfNum {
   text-align: right;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
   color: #fff;
@@ -309,13 +345,13 @@
 
 .perfNum small {
   display: block;
-  font-size: 10.5px;
+  font-size: 14px;
   color: var(--faint);
   font-weight: 600;
 }
 
 .perfTrend {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
@@ -325,43 +361,46 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 3px 9px;
-  border-radius: 99px;
-  font-size: 10.5px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 14px;
   font-weight: 800;
-  background: rgba(139, 92, 246, 0.14);
-  border: 1px solid rgba(139, 92, 246, 0.3);
-  color: #b9a6ff;
+  border: none;
+  background: radial-gradient(120% 120% at 50% 0%, rgba(146, 112, 255, 0.22), rgba(146, 112, 255, 0.06));
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.18);
+  color: #c9bcff;
   white-space: nowrap;
 }
 
 .tagNeutral {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: var(--line);
+  background: rgba(255, 255, 255, 0.08);
   color: var(--muted);
 }
 
+/* Campaign Cards */
 .campCard {
-  padding: 14px 16px;
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: var(--sc);
+  padding: 18px 20px;
+  border-radius: 18px;
+  border: none;
+  background: radial-gradient(130% 160% at 50% 0%, rgba(255, 255, 255, 0.04), transparent 60%), var(--sc);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
 }
 
 .campHead {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
 }
 
 .campHead b {
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 800;
   color: #fff;
 }
 
 .campClicks {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 800;
   color: var(--primary-text);
   font-variant-numeric: tabular-nums;
@@ -370,105 +409,109 @@
 .campMeta {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 9px;
+  gap: 8px;
+  margin-top: 12px;
 }
 
 .campNote {
-  margin: 8px 0 0;
-  font-size: 11.5px;
+  margin: 10px 0 0;
+  font-size: 14px;
   color: var(--faint);
 }
 
+/* Vibe Tab Frame */
 .vibeFrame {
   display: flex;
-  gap: 16px;
+  gap: 20px;
   align-items: flex-start;
   flex-wrap: wrap;
 }
 
 .vibeCard {
-  width: 250px;
+  width: 270px;
   flex: none;
-  border: 1px solid var(--line-pink);
-  border-radius: 20px;
-  background: linear-gradient(160deg, rgba(139, 92, 246, 0.12), rgba(255, 79, 216, 0.06));
-  padding: 22px;
+  border-radius: 22px;
+  border: none;
+  background: radial-gradient(140% 160% at 50% 0%, rgba(146, 112, 255, 0.18), rgba(255, 79, 216, 0.08)), var(--panel-solid);
+  box-shadow: var(--shadow-glass);
+  padding: 26px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .vibeAvatar {
-  width: 64px;
-  height: 64px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 30px;
-  background: linear-gradient(135deg, #8b5cf6, #ff4fd8);
-  box-shadow: 0 0 28px -4px rgba(255, 79, 216, 0.6);
+  font-size: 36px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  box-shadow: 0 0 32px rgba(185, 255, 44, 0.45);
 }
 
 .vibeName {
-  margin: 4px 0 0;
-  font-size: 17px;
-  font-weight: 800;
+  margin: 6px 0 0;
+  font-size: 19px;
+  font-weight: 900;
   color: #fff;
 }
 
 .vibeTitle {
   margin: 0;
-  font-size: 12.5px;
-  color: #ff9be6;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--secondary-soft);
 }
 
 .vibeBio {
-  margin: 6px 0 0;
-  font-size: 12px;
+  margin: 8px 0 0;
+  font-size: 14px;
   line-height: 1.6;
   color: var(--muted);
 }
 
 .vibeLinks {
-  margin-top: 14px;
+  margin-top: 16px;
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .vibeLink {
   display: block;
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.05);
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: none;
+  background: radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.14);
   color: #fff;
-  font-size: 12.5px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 800;
   text-decoration: none;
-  transition: 0.18s;
+  transition: all 0.2s ease;
 }
 
 .vibeLink:hover {
-  border-color: var(--line-pink);
-  color: #ff9be6;
-  box-shadow: var(--glow-pink);
+  background: radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.06));
+  color: var(--primary-text);
+  transform: translateY(-1px);
 }
 
 .vibeUrl {
-  font-size: 11.5px;
+  font-size: 14px;
   color: var(--faint);
 }
 
 .campForm {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
+  gap: 12px;
 }
 
 .campFormWide {
@@ -481,18 +524,20 @@
 
 .linkPick select {
   width: 100%;
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: 1px solid var(--line);
+  padding: 12px 14px;
+  min-height: 48px;
+  border-radius: 14px;
+  border: none;
   background: var(--input);
   color: var(--text);
   font: inherit;
-  font-size: 13px;
+  font-size: 14.5px;
   outline: none;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 .linkPick select:focus {
-  border-color: var(--primary);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5), inset 0 0 0 1.5px var(--primary);
 }
 
 .selected {
@@ -500,41 +545,48 @@
 }
 
 @media (max-width: 960px) {
+  .tabsBar {
+    flex-wrap: wrap;
+  }
+  .tabBtn {
+    flex: 1 1 30%;
+  }
   .kpis {
     grid-template-columns: repeat(2, 1fr);
   }
-
   .twoCol {
     grid-template-columns: 1fr;
   }
-
   .perfRow {
-    grid-template-columns: minmax(0, 1.4fr) 60px 60px auto;
+    grid-template-columns: minmax(0, 1.4fr) 70px 70px auto;
   }
-
   .perfTrend {
     display: none;
   }
-
   .campForm {
     grid-template-columns: 1fr;
   }
-
   .campFormWide {
     grid-column: 1;
   }
 }
 
 @media (max-width: 560px) {
+  .tabsBar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .tabBtn {
+    flex: none;
+    width: 100%;
+  }
   .kpis {
     grid-template-columns: 1fr;
   }
-
   .vibeFrame {
     flex-direction: column;
     width: 100%;
   }
-
   .vibeCard {
     width: 100%;
   }
