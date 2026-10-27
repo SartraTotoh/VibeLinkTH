@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VibeLink · Pitch Email Studio & Campaign Builder</title>
+  <style>
+    /* CSS Reset & Variable Definitions */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border: none !important; /* STRICT: ZERO COLORED BORDER RULE */
+    }
+
+    :root {
+      --bg: #090c15;
+      --card-bg: #111526;
+      --card-highlight: radial-gradient(130% 130% at 50% 0%, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.015) 100%);
+      --input-bg: radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%), #161b30;
+      --fg: #edf0f8;
+      --muted: #8c95ab;
+      --primary: #b9ff2c;
+      --primary-dark: #84cc16;
+      --purple: #a855f7;
+      --amber: #f59e0b;
+      --sky: #38bdf8;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      padding: 24px;
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Header Bar */
+    .header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 8px;
+    }
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: radial-gradient(120% 120% at 50% 0%, #b9ff2c 0%, #84cc16 100%);
+      box-shadow: 0 0 24px -4px rgba(185, 255, 44, 0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #080b12;
+      flex-shrink: 0;
+    }
+    .brand-title {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge-dev {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: rgba(168, 85, 247, 0.2);
+      color: #d8b4fe;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .brand-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .header-badges {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.04);
+      box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.08) inset;
+      font-size: 12px;
+      color: #cbd5e1;
+    }
+    .status-chip strong {
+      color: #ffffff;
+    }
+
+    /* Main 2-Column Grid */
+    .grid-layout {
+      display: grid;
+      grid-template-columns: 480px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 1024px) {
+      .grid-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Glass Cards */
+    .glass-card {
+      background: var(--card-highlight), var(--card-bg);
+      box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.7), 0 0 2px 1px rgba(255, 255, 255, 0.06) inset;
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .card-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-link {
+      font-size: 12px;
+      color: var(--primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      text-decoration: none;
+    }
+    .card-link:hover {
+      text-decoration: underline;
+    }
+
+    /* 3-Tier Selector Buttons */
+    .tier-group {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      width: 100%;
+    }
+    .tier-btn {
+      padding: 12px 8px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.035);
+      box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.05) inset;
+      color: #cbd5e1;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      text-align: center;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .tier-btn:hover {
+      background: rgba(255, 255, 255, 0.07);
+    }
+    .tier-btn.active {
+      background: radial-gradient(120% 120% at 50% 0%, rgba(185, 255, 44, 0.22) 0%, rgba(185, 255, 44, 0.04) 100%), #141b2c;
+      box-shadow: 0 0 20px -4px rgba(185, 255, 44, 0.4), 0 0 1px 1px rgba(185, 255, 44, 0.4) inset;
+      color: var(--primary);
+    }
+    .tier-btn .tier-name {
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .tier-btn .tier-sub {
+      font-size: 10px;
+      color: var(--muted);
+    }
+    .tier-btn.active .tier-sub {
+      color: #d9f99d;
+    }
+
+    /* Form Fields */
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+    }
+    .form-item {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .form-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: var(--input-bg);
+      box-shadow: 0 0 2px 1px rgba(255, 255, 255, 0.06) inset;
+      color: #ffffff;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .form-textarea {
+      min-height: 90px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      box-shadow: 0 0 0 2px rgba(185, 255, 44, 0.4), 0 0 20px -4px rgba(185, 255, 44, 0.3);
+    }
+    .form-select {
+      cursor: pointer;
+    }
+    .form-select option {
+      background: #111526;
+      color: #ffffff;
+    }
+
+    /* Segmented Radio Tabs */
+    .segmented-control {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 4px;
+      border-radius: 12px;
+    }
+    .seg-item {
+      padding: 8px;
+      border-radius: 8px;
+      font-size: 11.5px;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .seg-item.active {
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.1) inset;
+      color: #ffffff;
+    }
+
+    /* Action Buttons (Equal Size Rule) */
+    .action-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      width: 100%;
+    }
+    .btn {
+      width: 100%;
+      height: 48px;
+      padding: 0 16px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+    }
+    .btn-lime {
+      background: radial-gradient(120% 120% at 50% 0%, #d4ff68 0%, #b9ff2c 100%);
+      color: #0b0f19;
+      box-shadow: 0 8px 24px -4px rgba(185, 255, 44, 0.45);
+    }
+    .btn-lime:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px -4px rgba(185, 255, 44, 0.7);
+    }
+    .btn-glass {
+      background: radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
+      color: #ffffff;
+      box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.1) inset;
+    }
+    .btn-glass:hover {
+      background: radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.05) 100%);
+      transform: translateY(-2px);
+    }
+
+    /* Status Badge */
+    .status-badge {
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .badge-pending {
+      background: radial-gradient(120% 120% at 50% 0%, rgba(245, 158, 11, 0.25) 0%, rgba(245, 158, 11, 0.05) 100%);
+      color: #fbbf24;
+      box-shadow: 0 0 14px -4px rgba(245, 158, 11, 0.4);
+    }
+    .badge-approved {
+      background: radial-gradient(120% 120% at 50% 0%, rgba(185, 255, 44, 0.25) 0%, rgba(185, 255, 44, 0.05) 100%);
+      color: #b9ff2c;
+      box-shadow: 0 0 16px -4px rgba(185, 255, 44, 0.5);
+    }
+
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 640px) {
+      .checklist-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.035);
+      box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.04) inset;
+      font-size: 12px;
+      color: #cbd5e1;
+      cursor: pointer;
+      user-select: none;
+    }
+    .check-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #b9ff2c;
+      cursor: pointer;
+    }
+
+    /* Live Preview Section */
+    .preview-box {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .preview-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .subject-card {
+      padding: 14px 18px;
+      border-radius: 14px;
+      background: rgba(0, 0, 0, 0.45);
+      box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.05) inset;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .subject-label {
+      font-size: 10px;
+      font-weight: 800;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .subject-text {
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.4;
+    }
+
+    /* Email Canvas Mockup */
+    .email-canvas {
+      background: #ffffff;
+      color: #1e293b;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.9);
+      display: flex;
+      flex-direction: column;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .email-banner-wrap {
+      width: 100%;
+      background: #090b10;
+      overflow: hidden;
+    }
+    .email-banner-img {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .email-body-content {
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      color: #1e293b;
+    }
+    .email-body-content a {
+      color: #2563eb;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .email-cta-btn {
+      display: inline-block;
+      width: fit-content;
+      margin: 8px 0;
+      padding: 12px 24px;
+      background: #111827;
+      color: #b9ff2c !important;
+      font-weight: 700;
+      border-radius: 9999px;
+      text-decoration: none !important;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    }
+
+    /* Professional Signature Style (Exact match to sample image) */
+    .email-signature-card {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      font-size: 13px;
+      color: #334155;
+    }
+    .sig-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .sig-role {
+      font-size: 13px;
+      color: #475569;
+      font-weight: 500;
+      margin-top: -2px;
+    }
+    .sig-contact-row {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      font-size: 12.5px;
+      color: #334155;
+    }
+    .sig-contact-row strong {
+      color: #0f172a;
+    }
+    .sig-footer-row {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .sig-logo-box {
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
+      background: #090c15;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      flex-shrink: 0;
+    }
+    .sig-logo-box img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .sig-closing {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .sig-thanks {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .sig-team-name {
+      font-size: 13px;
+      color: #475569;
+    }
+
+    .pdpa-card {
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.02);
+      box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.03) inset;
+      font-size: 11px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    /* Icon SVGs */
+    .icon {
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      vertical-align: middle;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Header -->
+    <header class="header">
+      <div class="header-brand">
+        <div class="brand-icon">
+          <svg class="icon" style="width:22px;height:22px;" viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        </div>
+        <div>
+          <div class="brand-title">
+            Pitch Email Studio
+            <span class="badge-dev">Pro Builder</span>
+          </div>
+          <div class="brand-sub">Banner Heading · Deep-link Body · Executive Signature · 3-Tier Outreach Funnel</div>
+        </div>
+      </div>
+
+      <div class="header-badges">
+        <div class="status-chip">
+          <svg class="icon" style="color:#b9ff2c;" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>PDPA Guard: <strong>Active</strong></span>
+        </div>
+        <div class="status-chip">
+          <svg class="icon" style="color:#fbbf24;" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+          <span>Sprint Mode: <strong>W1 &gt; W2 &gt; W3 (Full-time)</strong></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Grid Layout -->
+    <div class="grid-layout">
+
+      <!-- LEFT COLUMN: Tier, Banner & Form Controls -->
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        
+        <!-- 1. Tier Card -->
+        <div class="glass-card">
+          <div class="card-header">
+            <span class="card-title">
+              <svg class="icon" style="color:#b9ff2c;" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              1. เลือกระดับเป้าหมาย (Pitch Tier)
+            </span>
+            <span id="tierDesc" style="font-size:11px;color:#b9ff2c;font-weight:600;">W1: Micro Tier</span>
+          </div>
+
+          <div class="tier-group">
+            <div class="tier-btn active" id="btnTierMicro" onclick="selectTier('micro')">
+              <span class="tier-name">W1: Micro</span>
+              <span class="tier-sub">KOS / ติวเตอร์ / ช่าง</span>
+            </div>
+            <div class="tier-btn" id="btnTierMacro" onclick="selectTier('macro')">
+              <span class="tier-name">W2: Macro</span>
+              <span class="tier-sub">100K-1M KOLs</span>
+            </div>
+            <div class="tier-btn" id="btnTierUltimate" onclick="selectTier('ultimate')">
+              <span class="tier-name">W3: Ultimate</span>
+              <span class="tier-sub">MCNs / Agencies</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Banner Heading Settings Card (Fixed vs Upload) -->
+        <div class="glass-card">
+          <div class="card-header">
+            <span class="card-title">
+              <svg class="icon" style="color:#38bdf8;" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              2. Banner Heading (ภาพหัวอีเมล)
+            </span>
+          </div>
+
+          <div class="segmented-control">
+            <div class="seg-item active" id="segFixed" onclick="setBannerMode('fixed')">Fixed VibeLink</div>
+            <div class="seg-item" id="segUpload" onclick="setBannerMode('upload')">Upload รูปใหม่</div>
+            <div class="seg-item" id="segNone" onclick="setBannerMode('none')">ไม่ใส่ Banner</div>
+          </div>
+
+          <div id="bannerUploadArea" style="display:none;flex-direction:column;gap:8px;">
+            <label class="form-label">อัปโหลดภาพ Banner จากเครื่อง หรือใส่ URL ภาพ</label>
+            <input type="file" id="bannerFileInput" accept="image/*" class="form-input" onchange="handleBannerUpload(event)" style="padding:6px 12px;font-size:11.5px;" />
+            <input type="url" id="bannerUrlInput" class="form-input" placeholder="หรือวางลิงก์ภาพ https://.../banner.png" oninput="handleBannerUrl(event)" />
+          </div>
+        </div>
+
+        <!-- 3. Personalization & Deep Link Parameters Card -->
+        <div class="glass-card">
+          <div class="card-header">
+            <span class="card-title">
+              <svg class="icon" style="color:#a855f7;" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              3. กำหนดข้อมูลผู้รับ &amp; Deep Link
+            </span>
+            <span class="card-link" onclick="randomSampleLead()">
+              <svg class="icon" style="width:13px;height:13px;" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              สุ่มข้อมูลตัวอย่าง
+            </span>
+          </div>
+
+          <div class="field-group">
+            <div class="form-item">
+              <label class="form-label">ชื่อผู้รับ / ชื่อช่อง / แบรนด์</label>
+              <input type="text" id="targetName" class="form-input" value="คุณเมย์ (MayStyle Channel)" oninput="renderPitch()" />
+            </div>
+
+            <div class="form-row">
+              <div class="form-item">
+                <label class="form-label">หมวดหมู่ / Niche</label>
+                <select id="targetNiche" class="form-select" onchange="renderPitch()">
+                  <option value="beauty">บิวตี้ &amp; แฟชั่น</option>
+                  <option value="tech">ไอที &amp; แกดเจ็ต</option>
+                  <option value="tiktok_affiliate">นายหน้า TikTok Shop</option>
+                  <option value="tutor_trainer">ติวเตอร์ / เทรนเนอร์ / โยคะ</option>
+                  <option value="home_service">ช่างซ่อมแอร์ / แม่บ้าน / นวด</option>
+                  <option value="ugc_editor">ฟรีแลนซ์ UGC &amp; ตัดต่อ</option>
+                  <option value="agency">เอเจนซี่ / MCN</option>
+                </select>
+              </div>
+              <div class="form-item">
+                <label class="form-label">Pain Point ที่ชู</label>
+                <select id="painPoint" class="form-select" onchange="renderPitch()">
+                  <option value="shopee_leak">ยอดคอม Shopee หลุดจาก TikTok</option>
+                  <option value="pdf_ratecard">Rate Card PDF ตัวเลขไม่อัปเดต</option>
+                  <option value="line_scheduling">เสียเวลาตอบแชท LINE เช็คคิว</option>
+                  <option value="qr_live">คนดูไลฟ์สแกนไม่ทัน / สติกเกอร์เก่า</option>
+                  <option value="agency_50creators">เปลี่ยนลิงก์ Bio 50 คนไม่ทัน</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-item">
+              <label class="form-label">อีเมลผู้รับ (Public Business Email)</label>
+              <input type="email" id="targetEmail" class="form-input" value="workwith.maystyle@gmail.com" oninput="renderPitch()" />
+            </div>
+
+            <div class="form-item">
+              <label class="form-label">ผลงานล่าสุดที่อ้างถึง (Reference Work)</label>
+              <input type="text" id="targetRef" class="form-input" value="คลิปรีวิวสกินแคร์กู้ผิวตัวล่าสุดเมื่อวาน" oninput="renderPitch()" />
+            </div>
+
+            <div class="form-item">
+              <label class="form-label">Deep Link ปลายทางหลัก (Primary Destination)</label>
+              <input type="url" id="targetDeepLink" class="form-input" value="https://app.vibelinkth.com/signup" oninput="renderPitch()" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-group">
+          <button class="btn btn-lime" onclick="approveAndScreen()">
+            <svg class="icon" style="width:18px;height:18px;color:#0b0f19;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>ผ่านการ Screening (Approve)</span>
+          </button>
+          <button class="btn btn-glass" onclick="copyRichHtmlEmail()">
+            <svg class="icon" style="width:17px;height:17px;" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span>คัดลอกอีเมล Rich HTML (Gmail)</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN: Screening Matrix & Live Preview Canvas -->
+      <div style="display:flex;flex-direction:column;gap:20px;">
+        
+        <!-- Screening Matrix Card -->
+        <div class="glass-card">
+          <div class="card-header">
+            <span class="card-title">
+              <svg class="icon" style="color:#b9ff2c;" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              4. สถานะการตรวจสอบก่อนส่ง (Screening Status)
+            </span>
+            <span id="screeningBadge" class="status-badge badge-pending">PENDING SCREENING</span>
+          </div>
+
+          <div class="checklist-grid">
+            <label class="check-item">
+              <input type="checkbox" id="chkPublicEmail" checked />
+              <span>เป็นอีเมลติดต่องานสาธารณะ</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="chkPersonalized" checked />
+              <span>อ้างอิงผลงานจริง (ไม่สแปม)</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="chkDeepLink" checked />
+              <span>ตรวจสอบ Deep Link ปลายทาง</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="chkSignature" checked />
+              <span>Signature &amp; PDPA ครบถ้วน</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Live Email Preview Card (Mockup) -->
+        <div class="glass-card">
+          <div class="preview-box">
+            
+            <div class="preview-header">
+              <div style="display:flex;align-items:center;gap:6px;">
+                <svg class="icon" style="color:#b9ff2c;" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                <span>Live Email Canvas: <strong>Desktop HTML Preview</strong></span>
+              </div>
+              <span style="font-family:monospace;color:#64748b;">From: help@vibelinkth.com</span>
+            </div>
+
+            <!-- Subject Line -->
+            <div class="subject-card">
+              <span class="subject-label">Subject:</span>
+              <span class="subject-text" id="previewSubject">[เทคนิค] เสียดายยอดคอมมิชชัน Shopee จากคลิป TikTok ของคุณเมย์</span>
+            </div>
+
+            <!-- Email Mockup Container -->
+            <div class="email-canvas" id="emailCanvas">
+              
+              <!-- 1. Banner Heading -->
+              <div class="email-banner-wrap" id="emailBannerWrap">
+                <img id="emailBannerImg" class="email-banner-img" src="https://vibelinkth.com/og-cover.png?v=20261026" alt="VibeLink Banner" />
+              </div>
+
+              <!-- 2. Email Body with Deep Links -->
+              <div class="email-body-content" id="emailBodyContent">
+                <!-- Populated by JavaScript -->
+              </div>
+
+              <!-- 3. Corporate Signature (Exact match to requested layout) -->
+              <div style="padding: 0 28px 24px 28px;">
+                <div class="email-signature-card">
+                  <div>
+                    <div class="sig-name">Sartra Taponchai (Totoh)</div>
+                    <div class="sig-role">Dev Team VibeLinkTH (<a href="https://vibelinkth.com" target="_blank" style="color:#2563eb;text-decoration:none;">vibelinkth.com</a>)</div>
+                  </div>
+
+                  <div class="sig-contact-row">
+                    <div><strong>VibelinkTH | QR - LINK - GROW</strong></div>
+                    <div>Mobile: (+66) 064 616 6222</div>
+                    <div>Email Address: <a href="mailto:sartra.tapo@vibelinkth.com" style="color:#2563eb;text-decoration:none;">sartra.tapo@vibelinkth.com</a></div>
+                  </div>
+
+                  <div class="sig-footer-row">
+                    <div class="sig-logo-box">
+                      <img src="https://vibelinkth.com/logo-mark.png" alt="VibeLinkTH Logo" />
+                    </div>
+                    <div class="sig-closing">
+                      <div class="sig-thanks">Thank you &amp; Best regards,</div>
+                      <div class="sig-team-name">VibeLinkTH Creator &amp; Dev Team</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- PDPA Notice -->
+            <div class="pdpa-card">
+              🔒 <strong>PDPA Protection:</strong> อีเมลนี้ส่งถึงคุณเนื่องจากมีการเปิดเผยข้อมูลติดต่องานไว้บนช่องทางสาธารณะ หากไม่ประสงค์รับข้อมูลข่าวสารเกี่ยวกับเครื่องมือช่วยเหลือการตลาด สามารถตอบกลับอีเมลนี้ด้วยคำว่า <em>"ยกเลิก"</em> ได้ทันทีครับ
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    let activeTier = 'micro';
+    let bannerMode = 'fixed';
+    let customBannerSrc = '';
+
+    const defaultBannerSrc = 'https://vibelinkth.com/og-cover.png?v=20261026';
+
+    function setBannerMode(mode) {
+      bannerMode = mode;
+      document.getElementById('segFixed').classList.toggle('active', mode === 'fixed');
+      document.getElementById('segUpload').classList.toggle('active', mode === 'upload');
+      document.getElementById('segNone').classList.toggle('active', mode === 'none');
+
+      const area = document.getElementById('bannerUploadArea');
+      area.style.display = (mode === 'upload') ? 'flex' : 'none';
+
+      updateBannerDisplay();
+    }
+
+    function handleBannerUpload(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          customBannerSrc = event.target.result;
+          updateBannerDisplay();
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function handleBannerUrl(e) {
+      const url = e.target.value.trim();
+      if (url) {
+        customBannerSrc = url;
+        updateBannerDisplay();
+      }
+    }
+
+    function updateBannerDisplay() {
+      const wrap = document.getElementById('emailBannerWrap');
+      const img = document.getElementById('emailBannerImg');
+
+      if (bannerMode === 'none') {
+        wrap.style.display = 'none';
+      } else if (bannerMode === 'upload' && customBannerSrc) {
+        wrap.style.display = 'block';
+        img.src = customBannerSrc;
+      } else {
+        wrap.style.display = 'block';
+        img.src = defaultBannerSrc;
+      }
+    }
+
+    function selectTier(tier) {
+      activeTier = tier;
+      document.getElementById('btnTierMicro').classList.toggle('active', tier === 'micro');
+      document.getElementById('btnTierMacro').classList.toggle('active', tier === 'macro');
+      document.getElementById('btnTierUltimate').classList.toggle('active', tier === 'ultimate');
+
+      const descMap = {
+        'micro': 'W1: Micro Tier (KOS / ติวเตอร์ / ช่างบริการ)',
+        'macro': 'W2: Macro Tier (100K-1M KOLs)',
+        'ultimate': 'W3: Ultimate Tier (Top MCNs & Agencies)'
+      };
+      document.getElementById('tierDesc').textContent = descMap[tier];
+
+      resetScreeningBadge();
+      renderPitch();
+    }
+
+    function resetScreeningBadge() {
+      const b = document.getElementById('screeningBadge');
+      b.textContent = 'PENDING SCREENING';
+      b.className = 'status-badge badge-pending';
+    }
+
+    function approveAndScreen() {
+      const c1 = document.getElementById('chkPublicEmail').checked;
+      const c2 = document.getElementById('chkPersonalized').checked;
+      const c3 = document.getElementById('chkDeepLink').checked;
+      const c4 = document.getElementById('chkSignature').checked;
+
+      if (!c1 || !c2 || !c3 || !c4) {
+        alert('กรุณาติ๊กตรวจสอบเงื่อนไข Pre-Kickoff ให้ครบทั้ง 4 ข้อก่อนกด Approve ครับ');
+        return;
+      }
+
+      const b = document.getElementById('screeningBadge');
+      b.textContent = 'APPROVED FOR KICKOFF';
+      b.className = 'status-badge badge-approved';
+      alert('บันทึกสถานะ: อีเมลฉบับนี้ผ่านการ Screening เรียบร้อยแล้ว พร้อมส่งออก (Kickoff Ready)!');
+    }
+
+    function randomSampleLead() {
+      if (activeTier === 'micro') {
+        document.getElementById('targetName').value = 'ครูเบนซ์ (สอนภาษาอังกฤษ 1:1)';
+        document.getElementById('targetNiche').value = 'tutor_trainer';
+        document.getElementById('painPoint').value = 'line_scheduling';
+        document.getElementById('targetEmail').value = 'teacher.benz.tutoring@gmail.com';
+        document.getElementById('targetRef').value = 'โพสต์ตารางสอนพิเศษเดือนพฤศจิกายนบน BestKru';
+        document.getElementById('targetDeepLink').value = 'https://app.vibelinkth.com/signup?ref=tutor_demo';
+      } else if (activeTier === 'macro') {
+        document.getElementById('targetName').value = 'คุณกันต์ (Gunt Tech Talk 450K)';
+        document.getElementById('targetNiche').value = 'tech';
+        document.getElementById('painPoint').value = 'qr_live';
+        document.getElementById('targetEmail').value = 'work.gunttechtalk@gmail.com';
+        document.getElementById('targetRef').value = 'คลิปแกะกล่องมือถือเรือธงที่มีคนดู 2.3 แสนวิว';
+        document.getElementById('targetDeepLink').value = 'https://vibelinkth.com/#showcase';
+      } else {
+        document.getElementById('targetName').value = 'ทีมบริหาร Tellscore / Motive Influence';
+        document.getElementById('targetNiche').value = 'agency';
+        document.getElementById('painPoint').value = 'agency_50creators';
+        document.getElementById('targetEmail').value = 'contact@tellscore.com';
+        document.getElementById('targetRef').value = 'แคมเปญอินฟลูเอนเซอร์บิวตี้ 50 ช่องของแบรนด์ใหญ่';
+        document.getElementById('targetDeepLink').value = 'https://vibelinkth.com/#ecosystem';
+      }
+      resetScreeningBadge();
+      renderPitch();
+    }
+
+    function renderPitch() {
+      const name = document.getElementById('targetName').value || 'คุณลูกค้า';
+      const ref = document.getElementById('targetRef').value || 'ผลงานล่าสุดของคุณ';
+      const pain = document.getElementById('painPoint').value;
+      const deepLink = document.getElementById('targetDeepLink').value || 'https://vibelinkth.com';
+
+      let subject = '';
+      let bodyHtml = '';
+
+      if (activeTier === 'micro') {
+        if (pain === 'line_scheduling') {
+          subject = `[สอบถาม] เบื่อไหมครับกับการตอบแชทเช็คคิวว่างสลับไปมาใน LINE? (สำหรับ ${name})`;
+          bodyHtml = `
+            <p>สวัสดีครับ <strong>${name}</strong></p>
+            <p>ผมติดตาม <em>${ref}</em> แล้วประทับใจความตั้งใจในการดูแลลูกค้ามากๆ ครับ</p>
+            <p>สาเหตุที่ส่งอีเมลมาฉบับนี้สั้นๆ เพราะสังเกตเห็นว่าผู้ให้บริการและติวเตอร์/เทรนเนอร์หลายท่าน มักต้องเสียเวลาวันละ 1-2 ชั่วโมงไปกับการตอบแชท LINE สลับไปมาเพื่อเช็คคิวว่าง <em>("วันเสาร์บ่ายสองว่างไหมคะ? ขอเช็คสมุดก่อนนะคะ")</em> และบางครั้งลูกค้าก็เงียบหายไปเพราะรอนาน</p>
+            <p>ทางเราได้พัฒนา <strong><a href="${deepLink}" target="_blank">VibeLink (ระบบจองคิว 1:1 + QR มัดจำ)</a></strong> ที่ช่วยให้:</p>
+            <ul style="padding-left:20px;display:flex;flex-direction:column;gap:6px;">
+              <li>ลูกค้าคลิกลิงก์เดียวจากหน้าโปรไฟล์ เห็นสล็อตเวลาที่ว่างของคุณทันที</li>
+              <li>ลูกค้าเลือกจองและจ่ายเงินมัดจำผ่าน QR จบใน 30 วินาที</li>
+              <li>ปฏิทินซิงค์เข้า Google Calendar ของคุณอัตโนมัติ ลดเวลาตอบแชทลง 80%</li>
+            </ul>
+            <p>ผมตั้งใจอยากให้คุณได้ลองใช้งานเวอร์ชันทดลองฟรี ไม่ทราบว่าสะดวกให้ผมสร้างหน้าต้นแบบและส่งให้ลองกดเล่นๆ ดูไหมครับ?</p>
+            <div>
+              <a href="${deepLink}" target="_blank" class="email-cta-btn">⚡ ลองเปิดใช้งานระบบจองคิวฟรีทันที &rarr;</a>
+            </div>
+            <p style="font-size:12px;color:#64748b;">ยินดีให้คำแนะนำโดยไม่มีข้อผูกมัดใดๆ ทั้งสิ้นครับ</p>
+          `;
+        } else {
+          subject = `[เทคนิค] เสียดายยอดคอมมิชชัน Shopee จากคลิป TikTok ของ ${name}`;
+          bodyHtml = `
+            <p>สวัสดีครับ <strong>${name}</strong></p>
+            <p>ผมเพิ่งดู <em>${ref}</em> มา คลิปทำออกมาสนุกและมีประโยชน์มากครับ</p>
+            <p>พอดีผมสังเกตเห็นว่าผู้ชมส่วนใหญ่ชอบถามหา "พิกัดของ" แต่บน TikTok สามารถใส่ลิงก์ได้จำกัด และผู้ชมจำนวนมากอยากซื้อผ่าน Shopee/Lazada เพราะมีโค้ดส่งฟรี ทำให้หลายครั้งยอดคอมมิชชันของคุณอาจจะหลุดไปอย่างน่าเสียดาย</p>
+            <p>ทางทีมงานเราเลยสร้าง <strong><a href="${deepLink}" target="_blank">VibeLink หน้าพิกัดสินค้าแบบ Visual Card</a></strong> ที่:</p>
+            <ul style="padding-left:20px;display:flex;flex-direction:column;gap:6px;">
+              <li>รวมปุ่ม TikTok Shop + Shopee Affiliate ไว้ในสินค้าชิ้นเดียว ให้คนดูเลือกซื้อช่องทางที่ตนเองชอบ</li>
+              <li>หน้าเว็บโหลดไวใน 0.04 วินาที โทนสี Radiant สวยงาม ไม่มีขอบสีแข็งๆ แบบเดิม</li>
+              <li>มี <strong><a href="https://app.vibelinkth.com/qr" target="_blank">Dynamic QR Code</a></strong> เอาขึ้นมุมจอตอนไลฟ์สด ให้คนดูสแกนสั่งซื้อได้ทันที</li>
+            </ul>
+            <div>
+              <a href="${deepLink}" target="_blank" class="email-cta-btn">🚀 เริ่มสร้างหน้ารวมพิกัดสินค้าฟรี &rarr;</a>
+            </div>
+            <p style="font-size:12px;color:#64748b;">ถ้า ${name} สนใจ ผมยินดีจัดหน้าพิกัดสินค้าตัวอย่างให้ทดลองใช้งานฟรีเลยครับ</p>
+          `;
+        }
+      } else if (activeTier === 'macro') {
+        subject = `[Partner] เสนอระบบ Dynamic QR จอไลฟ์ & Live Media Kit สำหรับ ${name}`;
+        bodyHtml = `
+          <p>เรียน <strong>${name}</strong></p>
+          <p>ในฐานะที่ติดตามช่องและผลงาน <em>${ref}</em> มาโดยตลอด ทางทีม VibeLink ชื่นชมคุณภาพคอนเทนต์และความมีอิทธิพลต่อผู้ติดตามของคุณมากๆ ครับ</p>
+          <p>สำหรับการร่วมงานกับแบรนด์ในระดับของคุณ ปัญหาที่พบบ่อยคือ:</p>
+          <ol style="padding-left:20px;display:flex;flex-direction:column;gap:6px;">
+            <li>การส่ง Rate Card แบบ PDF ที่ตัวเลขผู้ติดตามไม่อัปเดต ต้องคอยทำไฟล์ใหม่บ่อยๆ</li>
+            <li>การขึ้นภาพ QR บนจอไลฟ์สดที่ไม่สามารถเปลี่ยนปลายทางระหว่างสตรีมได้ ทำให้เสียโอกาสทำ Flash Sale หรือเปลี่ยนสปอนเซอร์รายวัน</li>
+          </ol>
+          <p>เราจึงออกแบบ <strong><a href="${deepLink}" target="_blank">VibeLink Pro</a></strong> มาเพื่อตอบโจทย์ Macro Creator โดยเฉพาะ:</p>
+          <ul style="padding-left:20px;display:flex;flex-direction:column;gap:6px;">
+            <li><strong>Live Interactive Media Kit:</strong> หน้ารวมสถิติและคลิปผลงานแบบ Embed เล่นได้ทันที พร้อมฟอร์มรับงานตรงจากแบรนด์เข้าอีเมล</li>
+            <li><strong>Dynamic QR Engine:</strong> QR สำหรับขึ้นมุมจอไลฟ์ ที่คุณสามารถสลับลิงก์ดีลสินค้าหลังบ้านได้ตลอดเวลา</li>
+            <li><strong>High-End Visual Hierarchy:</strong> ดีไซน์ระดับสากล ไร้เส้นขอบสี ใช้ Radiant Gradient เข้ากับภาพลักษณ์พรีเมียมของช่อง</li>
+          </ul>
+          <div>
+            <a href="${deepLink}" target="_blank" class="email-cta-btn">✨ ดูตัวอย่างหน้า VibeLink Pro Demo &rarr;</a>
+          </div>
+          <p style="font-size:12px;color:#64748b;">ทางเราอยากมอบสิทธิ์ VibeLink Pro ให้ ${name} ใช้งานฟรีตลอดชีพ พร้อมทีมช่วยเซ็ตอัปทุกขั้นตอนครับ</p>
+        `;
+      } else {
+        // Ultimate Tier
+        subject = `[ความร่วมมือเชิงกลยุทธ์] ระบบ Centralized Bio Link & Dynamic QR สำหรับครีเอเตอร์ในสังกัด ${name}`;
+        bodyHtml = `
+          <p>เรียน <strong>${name}</strong></p>
+          <p>ในฐานะที่ทางเอเจนซี่ของคุณเป็นผู้นำด้าน Influencer Marketing และการจัดการ Creator Ecosystem แถวหน้าของประเทศไทย</p>
+          <p>เราเข้าใจดีว่าหนึ่งใน Operational Pain Point เวลาดูแลแคมเปญที่มีอินฟลูเอนเซอร์ 50 - 100 คนพร้อมกันคือ:</p>
+          <ul style="padding-left:20px;display:flex;flex-direction:column;gap:6px;">
+            <li>การต้องตามแก้ลิงก์ Bio ของครีเอเตอร์แต่ละคนเมื่อแบรนด์ต้องการเปลี่ยนโปรโมชั่นหรือ Landing Page กลางคัน</li>
+            <li>การวัดผล Conversion และเก็บ Pixel (Meta/TikTok/GA4) รายบุคคลที่ซับซ้อนและใช้เวลานาน</li>
+          </ul>
+          <p><strong><a href="${deepLink}" target="_blank">VibeLink for Agency &amp; MCNs</a></strong> ถูกสร้างขึ้นเพื่อปลดล็อกปัญหานี้:</p>
+          <ol style="padding-left:20px;display:flex;flex-direction:column;gap:6px;">
+            <li><strong>Centralized Campaign Control:</strong> สลับลิงก์ปลายทางของครีเอเตอร์ทุกคนในแคมเปญได้ใน 1 คลิกจากระบบศูนย์กลาง (Dynamic Redirection)</li>
+            <li><strong>Automated Multi-Pixel &amp; UTM Tracking:</strong> ติดตั้ง Meta Pixel, TikTok Pixel และ GA4 ลงในลิงก์เดียว เพื่อดึงรีพอร์ต Conversion ส่งลูกค้าแบรนด์ได้แบบ Real-time</li>
+            <li><strong>White-Label &amp; Custom Branding:</strong> ใช้โดเมนของเอเจนซี่ได้เต็มรูปแบบ พร้อมดีไซน์ Radiant Gradient สวยงามระดับอินเตอร์</li>
+          </ol>
+          <div>
+            <a href="${deepLink}" target="_blank" class="email-cta-btn">🏢 นัดหมายชมเดโม่ระบบ Agency Sandbox &rarr;</a>
+          </div>
+          <p style="font-size:12px;color:#64748b;">สะดวกสละเวลา 15 นาทีผ่าน Google Meet ในสัปดาห์นี้เพื่อชมเดโม่ระบบหลังบ้านไหมครับ?</p>
+        `;
+      }
+
+      document.getElementById('previewSubject').textContent = subject;
+      document.getElementById('emailBodyContent').innerHTML = bodyHtml;
+    }
+
+    function copyRichHtmlEmail() {
+      const emailCanvas = document.getElementById('emailCanvas');
+      const htmlContent = emailCanvas.innerHTML;
+      const textContent = emailCanvas.innerText;
+
+      if (navigator.clipboard && window.ClipboardItem) {
+        const blobHtml = new Blob([htmlContent], { type: 'text/html' });
+        const blobText = new Blob([textContent], { type: 'text/plain' });
+        const item = new ClipboardItem({
+          'text/html': blobHtml,
+          'text/plain': blobText
+        });
+
+        navigator.clipboard.write([item]).then(() => {
+          alert('คัดลอกแบบ Rich HTML เรียบร้อยแล้ว! สามารถกด Ctrl+V วางลงในช่องเขียนอีเมลของ Gmail หรือ Outlook ได้ทันทีครับ (ภาพ Banner, ลิงก์, และ Signature จะมาครบถ้วน)');
+        }).catch(err => {
+          fallbackCopyText(textContent);
+        });
+      } else {
+        fallbackCopyText(textContent);
+      }
+    }
+
+    function fallbackCopyText(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('คัดลอกข้อความอีเมลลง Clipboard เรียบร้อยแล้ว!');
+      });
+    }
+
+    // Init
+    updateBannerDisplay();
+    renderPitch();
+  </script>
+</body>
+</html>
