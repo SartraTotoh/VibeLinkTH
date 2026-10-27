@@ -41,7 +41,7 @@ test("full flow: scan health passes and both exported files decode", async ({ pa
   expect(png.subarray(1, 4).toString()).toBe("PNG");
   expect(PNG.sync.read(png).width).toBe(1024);
   expect(decodePng(png)).toBe(PAYLOAD);
-  await expect(page.getByText(/ดาวน์โหลดแล้ว/)).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByRole("status").getByText(/ดาวน์โหลดแล้ว/)).toBeVisible({ timeout: 30_000 });
 
   const [svgDownload] = await Promise.all([
     page.waitForEvent("download"),

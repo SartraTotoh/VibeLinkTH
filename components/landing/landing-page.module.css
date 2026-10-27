@@ -1,0 +1,38 @@
+.heroMotion,
+.cardMotion {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: fadeUp 0.7s ease both;
+}
+
+.cardMotion {
+  animation-delay: 0.08s;
+}
+
+.heroMotion .actions a {
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.heroMotion .actions a:hover {
+  transform: translateY(-2px);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroMotion,
+  .cardMotion {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}

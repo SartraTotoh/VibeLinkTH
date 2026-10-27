@@ -67,11 +67,10 @@ describe("GET /api/qr/destinations", () => {
 
     expect(body.destinations).toEqual([
       { type: "vibe", label: "Meaw's Vibe", url: "https://app.example.test/vibe/meaw" },
-      { type: "booking", label: "cat-sitting", url: "https://app.example.test/book/meaw-book" },
     ]);
     expect(body.shortLinks[0].shortUrl).toBe("https://s.example.test/abc123");
     expect(body.vibeReady).toBe(true);
-    expect(body.bookingPublished).toBe(true);
+    expect(body.bookingPublished).toBe(false);
 
     expect(prismaMock.user.findUnique).toHaveBeenCalledWith(
       expect.objectContaining({ where: { id: "u1" } }),
@@ -81,13 +80,7 @@ describe("GET /api/qr/destinations", () => {
     );
   });
 
-  it("hides an unpublished booking page", async () => {
-    prismaMock.servicePage.findUnique.mockResolvedValue({
-      slug: "draft-page",
-      category: "draft",
-      isPublished: false,
-      isAcceptingBookings: false,
-    });
+  it("does not expose a booking destination in this release", async () => {
     const res = await GET();
     const body = await res.json();
     expect(body.destinations.map((d: { type: string }) => d.type)).toEqual(["vibe"]);

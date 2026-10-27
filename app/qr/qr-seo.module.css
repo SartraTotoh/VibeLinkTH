@@ -1,0 +1,39 @@
+.guide{width:min(1160px,calc(100% - 32px));margin:45px auto 65px;color:var(--text);font-family:var(--font-noto-thai),var(--font-inter),sans-serif}
+.kicker{font-weight:900;font-size:14px;letter-spacing:.12em;color:var(--primary-text);margin-bottom:13px}
+.guide h2{font-size:clamp(23px,3vw,36px);line-height:1.38;letter-spacing:-.03em;margin:0 0 14px}
+.guide h3{font-size:clamp(17px,2vw,21px);line-height:1.45;margin:10px 0 12px}
+.guide p{line-height:1.85;font-size:15px;color:var(--muted)}
+.lead{max-width:830px;margin-bottom:28px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.card{background:var(--panel-solid);border:1px solid var(--line);border-radius:21px;padding:24px;min-width:0}
+.card span,.funnel>span{color:var(--primary-text);font-weight:900;letter-spacing:.10em;font-size:14px}
+.card p{font-size:14px}
+.knowledge{display:grid;grid-template-columns:1fr 1fr;gap:21px;align-items:center;margin-top:56px}
+.knowledge>div:first-child{padding:12px 8px}
+.funnel{padding:26px;border-radius:22px;background:radial-gradient(ellipse at top right,rgba(185,255,44,.10),transparent 54%),var(--panel-solid);border:1px solid var(--line)}
+.funnel strong{display:block;font-size:19px;line-height:1.5;margin:14px 0}
+.funnel a{display:inline-block;margin-top:17px;color:var(--primary-text);font-size:14px;font-weight:800}
+.faq{margin-top:58px}
+.faq details{margin:11px 0;border-radius:16px;background:var(--panel-solid);border:1px solid var(--line);padding:18px 22px}
+.faq summary{font-size:15px;line-height:1.5;font-weight:800;cursor:pointer}
+.faq details p{margin-top:13px;font-size:14px}
+.nextStep{display:flex;gap:25px;justify-content:space-between;align-items:center;margin-top:65px;padding:35px;border-radius:25px;background:radial-gradient(ellipse at right top,rgba(255,79,216,.14),transparent 60%),var(--panel-solid);border:1px solid var(--line)}
+.nextStep>div:first-child{max-width:720px}
+.nextStep h2{margin-bottom:10px}
+.actions{display:flex;flex-direction:column;align-items:stretch;gap:10px;flex-shrink:0}
+.actions a{display:inline-flex;padding:13px 20px;min-height:46px;justify-content:center;border-radius:12px;font-weight:800;text-align:center;font-size:14px;white-space:nowrap}
+.mainLink{background:var(--primary);color:var(--primary-ink)}
+.altLink{border:1px solid var(--line);background:var(--sc-high);color:var(--text)}
+.actions a:hover,.funnel a:hover{text-decoration:underline}
+.actions a:focus-visible,.funnel a:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.knowledge{grid-template-columns:1fr}.nextStep{flex-direction:column;align-items:stretch}.actions{flex-direction:row;flex-wrap:wrap}}
+@media(max-width:520px){.guide{width:min(100% - 24px,1160px)}.card{padding:20px}.funnel{padding:21px}.nextStep{padding:23px}.actions{flex-direction:column}.actions a{white-space:normal}}
+
+/* Matched to the marketing landing's neon editorial surface */
+.guide{padding-top:36px;border-top:1px solid rgba(185,255,44,.12)}
+.kicker{display:inline-flex;gap:7px;align-items:center;padding:7px 13px;border-radius:999px;letter-spacing:.08em;color:var(--primary-text);background:linear-gradient(110deg,rgba(185,255,44,.10),rgba(255,79,216,.075));box-shadow:inset 0 0 0 1px rgba(185,255,44,.17)}
+.guide h2{letter-spacing:-.035em}
+.card,.funnel,.nextStep{background-image:radial-gradient(ellipse at top right,rgba(185,255,44,.08),transparent 62%)}
+.card{transition:transform .2s ease,box-shadow .2s ease}
+@media(hover:hover){.card:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px rgba(185,255,44,.18),0 15px 35px rgba(0,0,0,.12)}}
+@media(prefers-reduced-motion:reduce){.card{transition:none}}

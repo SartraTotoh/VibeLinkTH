@@ -8,10 +8,10 @@ const th = {
   "nav.login": "เข้าสู่ระบบ",
   "nav.signup": "สมัครฟรี",
 
-  "hero.title": "QR STUDIO",
-  "hero.sub": "สร้าง · แต่ง · เช็ก · โหลด",
+  "hero.title": "สร้าง QR Code ฟรี",
+  "hero.sub": "QR ที่มี Vibe · ลิงก์ที่ไปต่อ — แต่งสี ใส่โลโก้ เช็กก่อนแชร์ แล้วโหลด PNG / SVG",
 
-  "step1.title": "ปลายทาง",
+  "step1.title": "แปะลิงก์ให้พร้อม",
   "mode.url": "URL",
   "mode.vibe": "Vibe Page",
   "mode.booking": "Booking",
@@ -37,7 +37,7 @@ const th = {
   "dest.pick": "เลือก",
   "dest.shortNote": "นับคลิกที่ /go ตามเดิม",
 
-  "step2.title": "ดีไซน์",
+  "step2.title": "แต่ง QR ให้มีซีน",
   "style.preset": "Theme",
   "style.fg": "FG",
   "style.bg": "BG",
@@ -67,7 +67,7 @@ const th = {
   "frame.caption": "Caption",
   "frame.ticket": "Ticket",
 
-  "step3.title": "เช็กก่อนโหลด",
+  "step3.title": "เช็กให้ชัวร์ก่อนแชร์",
   "health.pass": "ผ่าน",
   "health.warn": "เตือน",
   "health.fail": "ไม่ผ่าน",
@@ -91,7 +91,7 @@ const th = {
   "anim.note": "พรีวิวเท่านั้น · ไฟล์นิ่งทุกครั้ง",
   "anim.reduced": "ลดการเคลื่อนไหวเปิดอยู่",
 
-  "actions.title": "ดาวน์โหลด",
+  "actions.title": "พร้อมแล้ว ปล่อยของ!",
   "actions.png": "PNG",
   "actions.svg": "SVG",
   "actions.copy": "คัดลอก",
@@ -132,8 +132,8 @@ const en: Record<QrTextKey, string> = {
   "nav.login": "Log in",
   "nav.signup": "Sign up free",
 
-  "hero.title": "QR STUDIO",
-  "hero.sub": "Make · Style · Check · Download",
+  "hero.title": "Free QR Code Generator",
+  "hero.sub": "QR with Vibe. Links that go further — style, scan-check, and download PNG / SVG",
 
   "step1.title": "Destination",
   "mode.url": "URL",

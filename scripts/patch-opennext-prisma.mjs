@@ -29,6 +29,8 @@ if (!handler.includes("getQueryCompilerWasmModule")) {
   process.exit(1);
 }
 
+import { mkdirSync } from "node:fs";
+mkdirSync(dirname(wasmDst), { recursive: true });
 copyFileSync(wasmSrc, wasmDst);
 
 let js = handler;
