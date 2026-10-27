@@ -24,12 +24,12 @@
     "AUTH_TRUST_HOST": "true",
     "NEXT_PUBLIC_SITE_URL": "https://app.vibelinkth.com",
     "EMAIL_FROM": "VibeLink <no-reply@vibelinkth.com>",
-    "EMAIL_REPLY_TO": "hello@vibelinkth.com",
+    "EMAIL_REPLY_TO": "help@vibelinkth.com",
     "REQUIRE_EMAIL_VERIFICATION": "true",
     "COMPANY_NAME": "VibeLink",
     "COMPANY_ADDRESS": "กรุงเทพมหานคร ประเทศไทย",
-    "COMPANY_CONTACT_EMAIL": "hello@vibelinkth.com",
-    "ADMIN_EMAILS": "sattra.th@gmail.com"
+    "COMPANY_CONTACT_EMAIL": "help@vibelinkth.com",
+    "ADMIN_EMAILS": "sattra.th@gmail.com,sartra.tapo@vibelinkth.com"
   },
   "observability": {
     "enabled": true

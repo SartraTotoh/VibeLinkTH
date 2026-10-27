@@ -18,16 +18,19 @@ export function AdminSupportWrapper({ lang, isAdminUser }: Props) {
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-      {/* Admin Mode Switcher */}
+    <div style={{ display: "flex", flexDirection: "column", gap: 24, width: "100%" }}>
+      {/* Admin Mode Switcher — Apple Segmented Frosted Glass Track */}
       <div
         style={{
           display: "inline-flex",
           alignSelf: "flex-start",
-          padding: 4,
+          padding: 5,
           borderRadius: 999,
           background: "rgba(255, 255, 255, 0.05)",
-          boxShadow: "inset 0 1px 1px rgba(255, 255, 255, 0.1)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+          boxShadow: "inset 0 1px 1px rgba(255, 255, 255, 0.12)",
+          border: "none",
           gap: 6,
         }}
       >
@@ -38,20 +41,27 @@ export function AdminSupportWrapper({ lang, isAdminUser }: Props) {
             display: "inline-flex",
             alignItems: "center",
             gap: 8,
-            padding: "8px 16px",
+            padding: "9px 18px",
             borderRadius: 999,
             fontSize: 14,
             fontWeight: 700,
             cursor: "pointer",
             border: "none",
-            background: activeTab === "admin" ? "radial-gradient(120% 120% at 30% 20%, #d4ff6b, var(--primary, #b9ff2c))" : "transparent",
+            background:
+              activeTab === "admin"
+                ? "radial-gradient(120% 120% at 30% 20%, #d4ff6b, var(--primary, #b9ff2c))"
+                : "transparent",
             color: activeTab === "admin" ? "#080a0f" : "#94a3b8",
-            boxShadow: activeTab === "admin" ? "0 0 20px rgba(185, 255, 44, 0.35)" : "none",
+            boxShadow:
+              activeTab === "admin"
+                ? "0 0 20px rgba(185, 255, 44, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.4)"
+                : "none",
             transition: "all 0.2s ease",
+            fontFamily: "inherit",
           }}
         >
           <span className="ms" style={{ fontSize: 18 }}>support_agent</span>
-          {lang === "th" ? "จัดการคำถาม Support (Admin Desk)" : "Support Admin Desk"}
+          <span>{lang === "th" ? "จัดการคำถาม Support (Admin Desk)" : "Support Admin Desk"}</span>
         </button>
 
         <button
@@ -61,20 +71,27 @@ export function AdminSupportWrapper({ lang, isAdminUser }: Props) {
             display: "inline-flex",
             alignItems: "center",
             gap: 8,
-            padding: "8px 16px",
+            padding: "9px 18px",
             borderRadius: 999,
             fontSize: 14,
             fontWeight: 700,
             cursor: "pointer",
             border: "none",
-            background: activeTab === "member" ? "radial-gradient(120% 120% at 30% 20%, #d4ff6b, var(--primary, #b9ff2c))" : "transparent",
+            background:
+              activeTab === "member"
+                ? "radial-gradient(120% 120% at 30% 20%, #d4ff6b, var(--primary, #b9ff2c))"
+                : "transparent",
             color: activeTab === "member" ? "#080a0f" : "#94a3b8",
-            boxShadow: activeTab === "member" ? "0 0 20px rgba(185, 255, 44, 0.35)" : "none",
+            boxShadow:
+              activeTab === "member"
+                ? "0 0 20px rgba(185, 255, 44, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.4)"
+                : "none",
             transition: "all 0.2s ease",
+            fontFamily: "inherit",
           }}
         >
           <span className="ms" style={{ fontSize: 18 }}>chat</span>
-          {lang === "th" ? "มุมมองผู้ใช้งาน (Member Chat)" : "Member Chat View"}
+          <span>{lang === "th" ? "มุมมองผู้ใช้งาน (Member Chat)" : "Member Chat View"}</span>
         </button>
       </div>
 
