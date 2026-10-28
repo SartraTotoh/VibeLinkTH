@@ -54,10 +54,10 @@
 }
 
 .tabActive {
-  background: radial-gradient(circle at 50% 0%, var(--primary) 0%, var(--primary-deep) 100%);
+  background: radial-gradient(140% 160% at 12% 0%, var(--primary) 0%, #ad5aff 54%, var(--violet) 100%);
   color: var(--primary-ink) !important;
   font-weight: 900;
-  box-shadow: var(--glow-lime), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+  box-shadow: 0 0 28px -4px rgba(185, 255, 44, 0.45), 0 0 28px -4px rgba(146, 112, 255, 0.4), inset 0 1px 1.5px rgba(255, 255, 255, 0.55);
   transform: translateY(-1px);
 }
 
