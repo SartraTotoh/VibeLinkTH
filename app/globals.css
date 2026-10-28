@@ -1,6 +1,6 @@
 :root {
-  --font-main: var(--font-ibm-sans-thai), var(--font-ibm-sans), "IBM Plex Sans Thai", "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: var(--font-ibm-mono), "IBM Plex Mono", monospace;
+  --font-main: var(--font-dm-sans), var(--font-noto-thai), "DM Sans", "Noto Sans Thai", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-mono), "JetBrains Mono", monospace;
   --bg: #090b10;
   --bg-deep: #06070a;
   --panel: rgba(17, 20, 28, 0.78);

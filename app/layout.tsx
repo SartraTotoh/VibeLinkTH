@@ -1,26 +1,26 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { IBM_Plex_Sans, IBM_Plex_Sans_Thai, IBM_Plex_Mono } from "next/font/google";
+import { DM_Sans, Noto_Sans_Thai, JetBrains_Mono } from "next/font/google";
 import { CookieBanner } from "@/components/consent/cookie-banner";
 
-const ibmSans = IBM_Plex_Sans({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-ibm-sans",
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-dm-sans",
   display: "swap",
 });
 
-const ibmSansThai = IBM_Plex_Sans_Thai({
+const notoThai = Noto_Sans_Thai({
   subsets: ["thai", "latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-ibm-sans-thai",
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-noto-thai",
   display: "swap",
 });
 
-const ibmMono = IBM_Plex_Mono({
+const jbMono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-ibm-mono",
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -53,7 +53,10 @@ export const metadata: Metadata = {
     images: ["/og-cover.png"],
   },
   icons: {
-    icon: "/logo.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/logo.png", type: "image/png" },
+    ],
     apple: "/logo.png",
   },
   robots: { index: true, follow: true },
@@ -69,7 +72,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..800&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
         <link
@@ -77,7 +80,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           rel="stylesheet"
         />
       </head>
-      <body className={`${ibmSans.variable} ${ibmSansThai.variable} ${ibmMono.variable}`}>
+      <body className={`${dmSans.variable} ${notoThai.variable} ${jbMono.variable}`}>
         {children}
         <CookieBanner />
       </body>

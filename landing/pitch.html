@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VibeLink · Pitch Email Studio & Campaign Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..800&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     /* CSS Reset & Variable Definitions */
     *, *::before, *::after {
@@ -30,7 +33,7 @@
     body {
       background-color: var(--bg);
       color: var(--fg);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'DM Sans', 'Noto Sans Thai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       padding: 24px;
       min-height: 100vh;
       line-height: 1.5;
@@ -80,7 +83,7 @@
       gap: 10px;
     }
     .badge-dev {
-      font-size: 11px;
+      font-size: 15px;
       font-weight: 700;
       padding: 2px 8px;
       border-radius: 9999px;
@@ -90,7 +93,7 @@
       letter-spacing: 0.05em;
     }
     .brand-sub {
-      font-size: 13px;
+      font-size: 15px;
       color: var(--muted);
       margin-top: 2px;
     }
@@ -108,7 +111,7 @@
       border-radius: 9999px;
       background: rgba(255, 255, 255, 0.04);
       box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.08) inset;
-      font-size: 12px;
+      font-size: 15px;
       color: #cbd5e1;
     }
     .status-chip strong {
@@ -146,7 +149,7 @@
       gap: 12px;
     }
     .card-title {
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
@@ -156,7 +159,7 @@
       gap: 8px;
     }
     .card-link {
-      font-size: 12px;
+      font-size: 15px;
       color: var(--primary);
       cursor: pointer;
       display: flex;
@@ -199,11 +202,11 @@
       color: var(--primary);
     }
     .tier-btn .tier-name {
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 800;
     }
     .tier-btn .tier-sub {
-      font-size: 10px;
+      font-size: 15px;
       color: var(--muted);
     }
     .tier-btn.active .tier-sub {
@@ -227,7 +230,7 @@
       gap: 12px;
     }
     .form-label {
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 600;
       color: #94a3b8;
       display: flex;
@@ -241,7 +244,7 @@
       background: var(--input-bg);
       box-shadow: 0 0 2px 1px rgba(255, 255, 255, 0.06) inset;
       color: #ffffff;
-      font-size: 13px;
+      font-size: 15px;
       font-family: inherit;
       outline: none;
       transition: all 0.2s;
@@ -274,7 +277,7 @@
     .seg-item {
       padding: 8px;
       border-radius: 8px;
-      font-size: 11.5px;
+      font-size: 15px;
       font-weight: 600;
       text-align: center;
       cursor: pointer;
@@ -299,7 +302,7 @@
       height: 48px;
       padding: 0 16px;
       border-radius: 9999px;
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 700;
       font-family: inherit;
       cursor: pointer;
@@ -333,7 +336,7 @@
     .status-badge {
       padding: 4px 12px;
       border-radius: 9999px;
-      font-size: 11px;
+      font-size: 15px;
       font-weight: 800;
       letter-spacing: 0.06em;
       text-transform: uppercase;
@@ -367,7 +370,7 @@
       border-radius: 12px;
       background: rgba(255, 255, 255, 0.035);
       box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.04) inset;
-      font-size: 12px;
+      font-size: 15px;
       color: #cbd5e1;
       cursor: pointer;
       user-select: none;
@@ -391,7 +394,7 @@
       justify-content: space-between;
       padding-bottom: 12px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      font-size: 12px;
+      font-size: 15px;
       color: var(--muted);
     }
     .subject-card {
@@ -404,14 +407,14 @@
       gap: 4px;
     }
     .subject-label {
-      font-size: 10px;
+      font-size: 15px;
       font-weight: 800;
       color: #64748b;
       text-transform: uppercase;
       letter-spacing: 0.1em;
     }
     .subject-text {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
       color: #ffffff;
       line-height: 1.4;
@@ -426,7 +429,7 @@
       box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.9);
       display: flex;
       flex-direction: column;
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1.6;
     }
 
@@ -476,7 +479,7 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
-      font-size: 13px;
+      font-size: 15px;
       color: #334155;
     }
     .sig-name {
@@ -485,7 +488,7 @@
       color: #0f172a;
     }
     .sig-role {
-      font-size: 13px;
+      font-size: 15px;
       color: #475569;
       font-weight: 500;
       margin-top: -2px;
@@ -494,7 +497,7 @@
       display: flex;
       flex-direction: column;
       gap: 3px;
-      font-size: 12.5px;
+      font-size: 15px;
       color: #334155;
     }
     .sig-contact-row strong {
@@ -529,12 +532,12 @@
       gap: 4px;
     }
     .sig-thanks {
-      font-size: 13.5px;
+      font-size: 15px;
       font-weight: 700;
       color: #0f172a;
     }
     .sig-team-name {
-      font-size: 13px;
+      font-size: 15px;
       color: #475569;
     }
 
@@ -543,7 +546,7 @@
       border-radius: 12px;
       background: rgba(255, 255, 255, 0.02);
       box-shadow: 0 0 1px 1px rgba(255, 255, 255, 0.03) inset;
-      font-size: 11px;
+      font-size: 15px;
       color: #64748b;
       line-height: 1.5;
     }
@@ -606,7 +609,7 @@
               <svg class="icon" style="color:#b9ff2c;" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
               1. เลือกระดับเป้าหมาย (Pitch Tier)
             </span>
-            <span id="tierDesc" style="font-size:11px;color:#b9ff2c;font-weight:600;">W1: Micro Tier</span>
+            <span id="tierDesc" style="font-size: 15px;color:#b9ff2c;font-weight:600;">W1: Micro Tier</span>
           </div>
 
           <div class="tier-group">
@@ -642,7 +645,7 @@
 
           <div id="bannerUploadArea" style="display:none;flex-direction:column;gap:8px;">
             <label class="form-label">อัปโหลดภาพ Banner จากเครื่อง หรือใส่ URL ภาพ</label>
-            <input type="file" id="bannerFileInput" accept="image/*" class="form-input" onchange="handleBannerUpload(event)" style="padding:6px 12px;font-size:11.5px;" />
+            <input type="file" id="bannerFileInput" accept="image/*" class="form-input" onchange="handleBannerUpload(event)" style="padding:6px 12px;font-size: 15px;" />
             <input type="url" id="bannerUrlInput" class="form-input" placeholder="หรือวางลิงก์ภาพ https://.../banner.png" oninput="handleBannerUrl(event)" />
           </div>
         </div>
@@ -975,7 +978,7 @@
             <div>
               <a href="${deepLink}" target="_blank" class="email-cta-btn">⚡ ลองเปิดใช้งานระบบจองคิวฟรีทันที &rarr;</a>
             </div>
-            <p style="font-size:12px;color:#64748b;">ยินดีให้คำแนะนำโดยไม่มีข้อผูกมัดใดๆ ทั้งสิ้นครับ</p>
+            <p style="font-size: 15px;color:#64748b;">ยินดีให้คำแนะนำโดยไม่มีข้อผูกมัดใดๆ ทั้งสิ้นครับ</p>
           `;
         } else {
           subject = `[เทคนิค] เสียดายยอดคอมมิชชัน Shopee จากคลิป TikTok ของ ${name}`;
@@ -992,7 +995,7 @@
             <div>
               <a href="${deepLink}" target="_blank" class="email-cta-btn">🚀 เริ่มสร้างหน้ารวมพิกัดสินค้าฟรี &rarr;</a>
             </div>
-            <p style="font-size:12px;color:#64748b;">ถ้า ${name} สนใจ ผมยินดีจัดหน้าพิกัดสินค้าตัวอย่างให้ทดลองใช้งานฟรีเลยครับ</p>
+            <p style="font-size: 15px;color:#64748b;">ถ้า ${name} สนใจ ผมยินดีจัดหน้าพิกัดสินค้าตัวอย่างให้ทดลองใช้งานฟรีเลยครับ</p>
           `;
         }
       } else if (activeTier === 'macro') {
@@ -1014,7 +1017,7 @@
           <div>
             <a href="${deepLink}" target="_blank" class="email-cta-btn">✨ ดูตัวอย่างหน้า VibeLink Pro Demo &rarr;</a>
           </div>
-          <p style="font-size:12px;color:#64748b;">ทางเราอยากมอบสิทธิ์ VibeLink Pro ให้ ${name} ใช้งานฟรีตลอดชีพ พร้อมทีมช่วยเซ็ตอัปทุกขั้นตอนครับ</p>
+          <p style="font-size: 15px;color:#64748b;">ทางเราอยากมอบสิทธิ์ VibeLink Pro ให้ ${name} ใช้งานฟรีตลอดชีพ พร้อมทีมช่วยเซ็ตอัปทุกขั้นตอนครับ</p>
         `;
       } else {
         // Ultimate Tier
@@ -1036,7 +1039,7 @@
           <div>
             <a href="${deepLink}" target="_blank" class="email-cta-btn">🏢 นัดหมายชมเดโม่ระบบ Agency Sandbox &rarr;</a>
           </div>
-          <p style="font-size:12px;color:#64748b;">สะดวกสละเวลา 15 นาทีผ่าน Google Meet ในสัปดาห์นี้เพื่อชมเดโม่ระบบหลังบ้านไหมครับ?</p>
+          <p style="font-size: 15px;color:#64748b;">สะดวกสละเวลา 15 นาทีผ่าน Google Meet ในสัปดาห์นี้เพื่อชมเดโม่ระบบหลังบ้านไหมครับ?</p>
         `;
       }
 

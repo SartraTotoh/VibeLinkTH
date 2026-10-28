@@ -502,12 +502,12 @@ export function SupportChat({ lang }: { lang: Lang }) {
               border: "none",
               background: busy
                 ? "rgba(255, 255, 255, 0.1)"
-                : "radial-gradient(120% 120% at 30% 20%, #d4ff6b 0%, var(--primary, #b9ff2c) 100%)",
-              color: busy ? "#71717a" : "#080a0f",
+                : "radial-gradient(120% 120% at 30% 20%, var(--secondary, #ff4fd8) 0%, var(--violet, #9270ff) 100%)",
+              color: busy ? "#71717a" : "#ffffff",
               fontWeight: 700,
               fontSize: 15,
               cursor: busy || !draft.trim() ? "default" : "pointer",
-              boxShadow: busy ? "none" : "0 0 20px rgba(185, 255, 44, 0.35)",
+              boxShadow: busy ? "none" : "0 0 24px rgba(255, 79, 216, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.35)",
               display: "inline-flex",
               alignItems: "center",
               gap: 8,
@@ -515,7 +515,7 @@ export function SupportChat({ lang }: { lang: Lang }) {
             }}
           >
             <span className="ms" style={{ fontSize: 18 }}>{busy ? "progress_activity" : "send"}</span>
-            <span>{busy ? t("กำลังส่ง…", "Sending…") : t("ส่งข้อความ", "Send")}</span>
+            <span>{busy ? t("กำลังส่ง…", "Sending…") : t("ส่ง", "Send")}</span>
           </button>
         </div>
 
@@ -709,7 +709,7 @@ export function SupportChat({ lang }: { lang: Lang }) {
                           }}
                         >
                           <span className="ms" style={{ fontSize: 16 }}>chat</span>
-                          <span>{t("ถามคำถามนี้ในแชท ↗", "Ask this question in chat ↗")}</span>
+                          <span>{t("ถาม AI ข้อนี้ ↗", "Ask AI ↗")}</span>
                         </button>
                       </div>
                     </div>
