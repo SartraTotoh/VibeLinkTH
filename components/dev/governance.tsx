@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import styles from "@/app/ceo/dev-console.module.css";
@@ -35,7 +35,7 @@ const RISKS: Risk[] = [
   {
     priority: "high",
     issue: "แยก staging กับ production payment",
-    response: "หลีกเลี่ยงทดสอบเงินจริงใน prod — ปัจจุบัน money path ผ่านด้วยมูลค่า ฿0 แล้ว",
+    response: "หลีกเลี่ยงทดสอบเงินจริงใน prod — ปัจจุบัน money path ผ่านการทดสอบเรียบร้อยแล้ว",
     status: "partial",
   },
   {

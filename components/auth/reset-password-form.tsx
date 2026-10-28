@@ -11,6 +11,8 @@ export function ResetPasswordForm({ token }: { token: string }) {
   const [lang] = useLang();
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -63,25 +65,69 @@ export function ResetPasswordForm({ token }: { token: string }) {
       <form onSubmit={onSubmit} className="auth-form">
         <label className="field">
           <span>{t(lang, "auth.newPass")}</span>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder={t(lang, "auth.passwordPh")}
-            autoComplete="new-password"
-            required
-          />
+          <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder={t(lang, "auth.passwordPh")}
+              autoComplete="new-password"
+              required
+              style={{ width: "100%", paddingRight: 48 }}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              aria-label={showPassword ? "ซ่อนรหัสผ่าน" : "แสดงรหัสผ่าน"}
+              title={showPassword ? "ซ่อนรหัสผ่าน" : "แสดงรหัสผ่าน"}
+              style={{
+                position: "absolute",
+                right: 12,
+                background: "none",
+                border: "none",
+                color: "var(--muted)",
+                cursor: "pointer",
+                display: "grid",
+                placeItems: "center",
+                padding: 4,
+              }}
+            >
+              <span className="ms" style={{ fontSize: 20 }}>{showPassword ? "visibility_off" : "visibility"}</span>
+            </button>
+          </div>
         </label>
         <label className="field">
           <span>{t(lang, "auth.confirmPass")}</span>
-          <input
-            type="password"
-            value={confirm}
-            onChange={(e) => setConfirm(e.target.value)}
-            placeholder={t(lang, "auth.passwordPh")}
-            autoComplete="new-password"
-            required
-          />
+          <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+            <input
+              type={showConfirm ? "text" : "password"}
+              value={confirm}
+              onChange={(e) => setConfirm(e.target.value)}
+              placeholder={t(lang, "auth.passwordPh")}
+              autoComplete="new-password"
+              required
+              style={{ width: "100%", paddingRight: 48 }}
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirm(!showConfirm)}
+              aria-label={showConfirm ? "ซ่อนรหัสผ่าน" : "แสดงรหัสผ่าน"}
+              title={showConfirm ? "ซ่อนรหัสผ่าน" : "แสดงรหัสผ่าน"}
+              style={{
+                position: "absolute",
+                right: 12,
+                background: "none",
+                border: "none",
+                color: "var(--muted)",
+                cursor: "pointer",
+                display: "grid",
+                placeItems: "center",
+                padding: 4,
+              }}
+            >
+              <span className="ms" style={{ fontSize: 20 }}>{showConfirm ? "visibility_off" : "visibility"}</span>
+            </button>
+          </div>
         </label>
 
         {error ? <div className="auth-error">{error}</div> : null}

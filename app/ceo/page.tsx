@@ -270,7 +270,7 @@ export default async function DevPage() {
       tone: "info",
       icon: "payments",
       title: "ยังไม่มีลูกค้าจ่ายเงิน",
-      detail: "money path ผ่านการทดสอบ ฿0 แล้ว — จ่ายจริงครั้งแรกค้างรอเปิด Stripe Live",
+      detail: "money path ผ่านการทดสอบเรียบร้อยแล้ว — จ่ายจริงครั้งแรกค้างรอเปิด Stripe Live",
       action: { label: "Stripe Dashboard", href: "https://dashboard.stripe.com/" },
     });
   }
@@ -333,6 +333,19 @@ export default async function DevPage() {
         <DevNav />
 
         <ZoneSection
+          id="zone-act"
+          icon="construction"
+          title="ACT"
+          purpose="ลงมือทำกับข้อมูลจริง"
+          question="ต้องทำอะไร?"
+          defaultOpen
+        >
+          <SupportChatModule initialUnread={openSupportTickets} />
+          <RulesManagerModule />
+          <SupportModule />
+        </ZoneSection>
+
+        <ZoneSection
           id="zone-check"
           icon="monitor_heart"
           title="CHECK"
@@ -363,19 +376,6 @@ export default async function DevPage() {
           />
           <UsersCrm fetchedAt={fetchedAt} />
           <RevenueModule fetchedAt={fetchedAt} />
-        </ZoneSection>
-
-        <ZoneSection
-          id="zone-act"
-          icon="construction"
-          title="ACT"
-          purpose="ลงมือทำกับข้อมูลจริง"
-          question="ต้องทำอะไร?"
-          defaultOpen={false}
-        >
-          <SupportChatModule initialUnread={openSupportTickets} />
-          <RulesManagerModule />
-          <SupportModule />
         </ZoneSection>
 
         <ZoneSection

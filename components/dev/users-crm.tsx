@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { Fragment, useCallback, useEffect, useState } from "react";
 import styles from "@/app/ceo/dev-console.module.css";
@@ -42,6 +42,7 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
   const [openId, setOpenId] = useState<string | null>(null);
   const [pinOpen, setPinOpen] = useState(false);
   const [pin, setPin] = useState("");
+  const [showPin, setShowPin] = useState(false);
   const [pinError, setPinError] = useState<string | null>(null);
   const [pinBusy, setPinBusy] = useState(false);
 
@@ -211,26 +212,48 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
         <div className={styles.kv} style={{ borderColor: "rgba(185,255,44,.3)" }}>
           <form onSubmit={exportFull} style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", width: "100%" }}>
             <b style={{ fontSize: 15 }}>กรอก PIN 6 หลักเพื่อดาวน์โหลดข้อมูลเต็ม</b>
-            <input
-              type="password"
-              value={pin}
-              onChange={(e) => setPin(e.target.value.replace(/\D/g, "").slice(0, 6))}
-              placeholder="••••••"
-              inputMode="numeric"
-              autoComplete="off"
-              required
-              style={{
-                width: 130,
-                padding: "9px 12px",
-                borderRadius: 10,
-                border: "1px solid rgba(255,255,255,.15)",
-                background: "rgba(0,0,0,.5)",
-                color: "#fff",
-                fontSize: 155,
-                letterSpacing: 4,
-                textAlign: "center",
-              }}
-            />
+            <div style={{ position: "relative", display: "inline-flex", alignItems: "center" }}>
+              <input
+                type={showPin ? "text" : "password"}
+                value={pin}
+                onChange={(e) => setPin(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                placeholder="••••••"
+                inputMode="numeric"
+                autoComplete="off"
+                required
+                style={{
+                  width: 140,
+                  padding: "9px 36px 9px 12px",
+                  borderRadius: 10,
+                  border: "none",
+                  boxShadow: "inset 0 1px 1px rgba(255,255,255,.15)",
+                  background: "rgba(0,0,0,.5)",
+                  color: "#fff",
+                  fontSize: 18,
+                  letterSpacing: 4,
+                  textAlign: "center",
+                }}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPin(!showPin)}
+                aria-label={showPin ? "ซ่อน PIN" : "แสดง PIN"}
+                title={showPin ? "ซ่อน PIN" : "แสดง PIN"}
+                style={{
+                  position: "absolute",
+                  right: 8,
+                  background: "none",
+                  border: "none",
+                  color: "var(--muted)",
+                  cursor: "pointer",
+                  display: "grid",
+                  placeItems: "center",
+                  padding: 2,
+                }}
+              >
+                <span className="ms" style={{ fontSize: 18 }}>{showPin ? "visibility_off" : "visibility"}</span>
+              </button>
+            </div>
             <button type="submit" className={styles.ghostBtn} style={{ width: "auto", padding: "0 16px", height: 38 }} disabled={pinBusy || pin.length !== 6}>
               <span className="ms">download</span>
             </button>

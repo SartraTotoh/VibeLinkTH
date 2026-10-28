@@ -12,6 +12,7 @@ export default function LoginPage() {
   const [lang] = useLang();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [verifyBlock, setVerifyBlock] = useState(false);
@@ -100,14 +101,36 @@ export default function LoginPage() {
                   {t(lang, "auth.forgot")}
                 </Link>
               </span>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder={t(lang, "auth.passwordPh")}
-                autoComplete="current-password"
-                required
-              />
+              <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder={t(lang, "auth.passwordPh")}
+                  autoComplete="current-password"
+                  required
+                  style={{ width: "100%", paddingRight: 48 }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "ซ่อนรหัสผ่าน" : "แสดงรหัสผ่าน"}
+                  title={showPassword ? "ซ่อนรหัสผ่าน" : "แสดงรหัสผ่าน"}
+                  style={{
+                    position: "absolute",
+                    right: 12,
+                    background: "none",
+                    border: "none",
+                    color: "var(--muted)",
+                    cursor: "pointer",
+                    display: "grid",
+                    placeItems: "center",
+                    padding: 4,
+                  }}
+                >
+                  <span className="ms" style={{ fontSize: 20 }}>{showPassword ? "visibility_off" : "visibility"}</span>
+                </button>
+              </div>
             </label>
 
             {notice ? <div className="notice">{notice}</div> : null}

@@ -11,6 +11,7 @@ export function SettingsActions({ hasSubscription }: { hasSubscription: boolean 
   const [error, setError] = useState<string | null>(null);
   const [confirming, setConfirming] = useState(false);
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   async function openPortal() {
     setBusy("portal");
@@ -85,14 +86,36 @@ export function SettingsActions({ hasSubscription }: { hasSubscription: boolean 
         </div>
         {confirming ? (
           <form onSubmit={deleteAccount} className="delete-form">
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder={t(lang, "set.deletePh")}
-              autoComplete="current-password"
-              required
-            />
+            <div style={{ position: "relative", display: "inline-flex", alignItems: "center" }}>
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder={t(lang, "set.deletePh")}
+                autoComplete="current-password"
+                required
+                style={{ paddingRight: 40 }}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "ซ่อนรหัสผ่าน" : "แสดงรหัสผ่าน"}
+                title={showPassword ? "ซ่อนรหัสผ่าน" : "แสดงรหัสผ่าน"}
+                style={{
+                  position: "absolute",
+                  right: 10,
+                  background: "none",
+                  border: "none",
+                  color: "var(--muted)",
+                  cursor: "pointer",
+                  display: "grid",
+                  placeItems: "center",
+                  padding: 2,
+                }}
+              >
+                <span className="ms" style={{ fontSize: 18 }}>{showPassword ? "visibility_off" : "visibility"}</span>
+              </button>
+            </div>
             <button className="mini-btn danger" type="submit" disabled={busy === "delete"}>
               {busy === "delete" ? t(lang, "set.deleting") : t(lang, "set.deleteConfirm")}
             </button>

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import styles from "@/app/ceo/dev-console.module.css";
@@ -6,9 +6,9 @@ import styles from "@/app/ceo/dev-console.module.css";
 type Mod = { id: string; label: string; zone: string; keys: string };
 
 const ZONES = [
+  { id: "zone-act", icon: "construction", label: "ลงมือ", en: "ACT" },
   { id: "zone-check", icon: "monitor_heart", label: "ตรวจ", en: "CHECK" },
   { id: "zone-understand", icon: "insights", label: "เข้าใจ", en: "UNDERSTAND" },
-  { id: "zone-act", icon: "construction", label: "ลงมือ", en: "ACT" },
   { id: "zone-control", icon: "settings", label: "ดูแล", en: "CONTROL" },
   { id: "zone-reference", icon: "menu_book", label: "อ้างอิง", en: "REFERENCE" },
 ] as const;
@@ -52,7 +52,7 @@ function scrollTo(id: string) {
 
 export function DevNav() {
   const [query, setQuery] = useState("");
-  const [activeZone, setActiveZone] = useState<string>("zone-check");
+  const [activeZone, setActiveZone] = useState<string>("zone-act");
 
   useEffect(() => {
     const sections = ZONES.map((z) => document.getElementById(z.id)).filter(

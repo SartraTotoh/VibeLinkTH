@@ -31,6 +31,24 @@ export function RulesManagerModule() {
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+
+  function toggleExpand(id: string) {
+    setExpandedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+
+  function toggleAllExpanded() {
+    if (expandedIds.size === rules.length) {
+      setExpandedIds(new Set());
+    } else {
+      setExpandedIds(new Set(rules.map((r) => r.id)));
+    }
+  }
 
   const load = useCallback(async () => {
     try {
@@ -229,16 +247,20 @@ export function RulesManagerModule() {
         <button type="button" className={`${styles.chip} ${styles.chipInfo}`} onClick={startCreate} disabled={busy === "new"}>
           <span className="ms">add</span> เพิ่มกฎใหม่
         </button>
+        <button type="button" className={styles.chip} onClick={toggleAllExpanded} disabled={rules.length === 0}>
+          <span className="ms">{expandedIds.size === rules.length ? "unfold_less" : "unfold_more"}</span>
+          {expandedIds.size === rules.length ? "ย่อทั้งหมด" : "ขยายทั้งหมด"}
+        </button>
         <button type="button" className={styles.chip} onClick={seed} disabled={busy === "seed" || rules.length > 0}>
           <span className="ms">restart_alt</span> Seed ชุดเริ่มต้น 12 ข้อ{rules.length > 0 ? " (ลบกฎทั้งหมดก่อน)" : ""}
         </button>
       </div>
 
       {editing ? (
-        <div className={styles.stack} style={{ marginTop: 12, padding: 14, border: "1px solid rgba(146,112,255,0.35)", borderRadius: 14 }}>
+        <div className={styles.stack} style={{ marginTop: 12, padding: 14, border: "none", borderRadius: 14, boxShadow: "inset 0 1px 1.5px rgba(255,255,255,0.15), 0 0 24px -4px rgba(146,112,255,0.3)" }}>
           <div className={styles.cardHead}>
             <span className="ms">edit_note</span>
-            <h2 style={{ fontSize: 155 }}>{creating ? "กฎใหม่" : "แก้ไขกฎ"}</h2>
+            <h2 style={{ fontSize: 18 }}>{creating ? "กฎใหม่" : "แก้ไขกฎ"}</h2>
             <button
               type="button"
               className={styles.ghostBtn}
@@ -276,35 +298,63 @@ export function RulesManagerModule() {
       ) : null}
 
       <div className={styles.stack} style={{ marginTop: 12 }}>
-        {rules.map((r) => (
-          <div key={r.id} className={styles.kv} style={{ opacity: r.enabled ? 1 : 0.55 }}>
-            <div style={{ minWidth: 0, flex: 1 }}>
-              <b>
-                P{r.priority} · {r.category} · {r.enabled ? "เปิด" : "ปิด"} · ใช้ {r.hitCount} ครั้ง
-              </b>
-              <span style={{ color: "#b9ff2c", fontSize: 15, marginTop: 3 }}>ค: {r.keywords}</span>
-              <div style={{ fontSize: 15, color: "#d4d4d8", lineHeight: 1.55, marginTop: 3 }}>
-                <span className={styles.cellMono}>TH</span> {r.replyTh}
+        {rules.map((r) => {
+          const isExpanded = expandedIds.has(r.id);
+          return (
+            <div key={r.id} className={styles.kv} style={{ opacity: r.enabled ? 1 : 0.55 }}>
+              <div
+                style={{ minWidth: 0, flex: 1, cursor: "pointer" }}
+                onClick={() => toggleExpand(r.id)}
+                title={isExpanded ? "คลิกเพื่อย่อ" : "คลิกเพื่อดูคำตอบ"}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <b style={{ fontSize: 15 }}>
+                    P{r.priority} · {r.category} · {r.enabled ? "เปิด" : "ปิด"} · ใช้ {r.hitCount} ครั้ง
+                  </b>
+                  <span style={{ fontSize: 14, color: isExpanded ? "var(--primary-text)" : "var(--muted)", display: "inline-flex", alignItems: "center", gap: 2 }}>
+                    <span className="ms" style={{ fontSize: 16 }}>{isExpanded ? "expand_less" : "expand_more"}</span>
+                    {isExpanded ? "ย่อ" : "ดูคำตอบ"}
+                  </span>
+                </div>
+                <div style={{ color: "#b9ff2c", fontSize: 15, marginTop: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: isExpanded ? "normal" : "nowrap" }}>
+                  ค: {r.keywords}
+                </div>
+                {isExpanded ? (
+                  <div style={{ marginTop: 8, padding: "8px 12px", borderRadius: 10, background: "rgba(0,0,0,0.25)", border: "none" }}>
+                    <div style={{ fontSize: 15, color: "#d4d4d8", lineHeight: 1.55 }}>
+                      <span className={styles.cellMono}>TH</span> {r.replyTh}
+                    </div>
+                    <div style={{ fontSize: 15, color: "#a1a1aa", lineHeight: 1.55, marginTop: 6 }}>
+                      <span className={styles.cellMono}>EN</span> {r.replyEn}
+                    </div>
+                  </div>
+                ) : null}
               </div>
-              <div style={{ fontSize: 15, color: "#a1a1aa", lineHeight: 1.55, marginTop: 3 }}>
-                <span className={styles.cellMono}>EN</span> {r.replyEn}
+              <div style={{ display: "flex", flexDirection: "column", gap: 6, flex: "none" }}>
+                <div style={{ display: "flex", gap: 6 }}>
+                  <button
+                    type="button"
+                    className={styles.ghostBtn}
+                    onClick={() => toggleExpand(r.id)}
+                    aria-label={isExpanded ? "ย่อ" : "ขยาย"}
+                    title={isExpanded ? "ย่อ" : "ขยายคำตอบ"}
+                  >
+                    <span className="ms">{isExpanded ? "expand_less" : "expand_more"}</span>
+                  </button>
+                  <button type="button" className={styles.ghostBtn} onClick={() => toggle(r)} disabled={busy === r.id} aria-label={r.enabled ? "ปิดกฎ" : "เปิดกฎ"} title={r.enabled ? "ปิด" : "เปิด"}>
+                    <span className="ms">{r.enabled ? "pause" : "play_arrow"}</span>
+                  </button>
+                  <button type="button" className={styles.ghostBtn} onClick={() => startEdit(r)} disabled={busy === r.id} aria-label="แก้ไข" title="แก้ไข">
+                    <span className="ms">edit</span>
+                  </button>
+                  <button type="button" className={`${styles.ghostBtn} ${notice === `ลบ ${r.id}?` ? styles.ghostDanger : ""}`} onClick={() => remove(r)} disabled={busy === r.id} aria-label="ลบ" title={notice === `ลบ ${r.id}?` ? "กดยืนยันลบ" : "ลบ"}>
+                    <span className="ms">delete</span>
+                  </button>
+                </div>
               </div>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 6, flex: "none" }}>
-              <div style={{ display: "flex", gap: 6 }}>
-                <button type="button" className={styles.ghostBtn} onClick={() => toggle(r)} disabled={busy === r.id} aria-label={r.enabled ? "ปิดกฎ" : "เปิดกฎ"} title={r.enabled ? "ปิด" : "เปิด"}>
-                  <span className="ms">{r.enabled ? "pause" : "play_arrow"}</span>
-                </button>
-                <button type="button" className={styles.ghostBtn} onClick={() => startEdit(r)} disabled={busy === r.id} aria-label="แก้ไข" title="แก้ไข">
-                  <span className="ms">edit</span>
-                </button>
-                <button type="button" className={`${styles.ghostBtn} ${notice === `ลบ ${r.id}?` ? styles.ghostDanger : ""}`} onClick={() => remove(r)} disabled={busy === r.id} aria-label="ลบ" title={notice === `ลบ ${r.id}?` ? "กดยืนยันลบ" : "ลบ"}>
-                  <span className="ms">delete</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {notice ? (

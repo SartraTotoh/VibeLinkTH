@@ -18,6 +18,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [vibeSlug, setVibeSlug] = useState("");
   const [accepted, setAccepted] = useState(false);
 
@@ -192,14 +193,36 @@ export default function SignupPage() {
 
                 <label className="field">
                   <span>{t(lang, "auth.password")} *</span>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="อย่างน้อย 8 ตัวอักษร"
-                    autoComplete="new-password"
-                    required
-                  />
+                  <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="อย่างน้อย 8 ตัวอักษร"
+                      autoComplete="new-password"
+                      required
+                      style={{ width: "100%", paddingRight: 48 }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      aria-label={showPassword ? "ซ่อนรหัสผ่าน" : "แสดงรหัสผ่าน"}
+                      title={showPassword ? "ซ่อนรหัสผ่าน" : "แสดงรหัสผ่าน"}
+                      style={{
+                        position: "absolute",
+                        right: 12,
+                        background: "none",
+                        border: "none",
+                        color: "var(--muted)",
+                        cursor: "pointer",
+                        display: "grid",
+                        placeItems: "center",
+                        padding: 4,
+                      }}
+                    >
+                      <span className="ms" style={{ fontSize: 20 }}>{showPassword ? "visibility_off" : "visibility"}</span>
+                    </button>
+                  </div>
                 </label>
 
                 <label className="consent" style={{ marginTop: 4 }}>
