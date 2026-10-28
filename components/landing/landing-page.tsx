@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { FeatureCard } from "./feature-card";
-import styles from "./landing-page.module.css";
 
 const features = [
   {
@@ -45,29 +44,29 @@ export function LandingPage() {
   return (
     <main className="shell">
       <nav className="nav">
-        <Link className="brand" href="/">
+        <Link className="brand" href="/" prefetch={false}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo.png" alt="VibeLink Logo" />
           Vibe<span>Link</span>
         </Link>
         <div className="navLinks">
-          <Link href="/qr">QR</Link>
-          <Link href="#features">ฟีเจอร์</Link>
-          <Link href="/support">ช่วยเหลือ</Link>
+          <Link href="/qr" prefetch={false}>QR</Link>
+          <Link href="#features" prefetch={false}>ฟีเจอร์</Link>
+          <Link href="/support" prefetch={false}>ช่วยเหลือ</Link>
         </div>
         <div className="dash-actions">
-          <Link className="mini-btn" href="/login">
+          <Link className="mini-btn" href="/login" prefetch={false}>
             <span className="ms">login</span>
             เข้าสู่ระบบ
           </Link>
-          <Link className="mini-btn copy-primary" href="/signup">
+          <Link className="mini-btn copy-primary" href="/signup" prefetch={false}>
             <span className="ms">person_add</span>
             สมัคร
           </Link>
         </div>
       </nav>
 
-      <section className={`hero ${styles.heroMotion}`}>
+      <section className="hero heroMotion">
         <div className="eyebrow">
           <span>FREE QR STUDIO · MAKE IT YOUR VIBE</span>
         </div>
@@ -80,18 +79,18 @@ export function LandingPage() {
         </p>
 
         <div className="actions">
-          <Link className="button primary" href="/qr" style={{ minHeight: 50, padding: "0 24px", fontSize: 16 }}>
+          <Link className="button primary" href="/qr" prefetch={false} style={{ minHeight: 50, padding: "0 24px", fontSize: 16 }}>
             <span className="ms" style={{ fontSize: 20 }}>qr_code_2</span>
             สร้าง QR
           </Link>
-          <Link className="button secondary" href="#features" style={{ minHeight: 50, padding: "0 22px", fontSize: 16 }}>
+          <Link className="button secondary" href="#features" prefetch={false} style={{ minHeight: 50, padding: "0 22px", fontSize: 16 }}>
             <span className="ms" style={{ fontSize: 20 }}>grid_view</span>
             ดูฟีเจอร์
           </Link>
         </div>
 
         {/* Feature Grid */}
-        <div className={`cards ${styles.cardMotion}`} id="features">
+        <div className="cards cardMotion" id="features">
           {features.map((feature) => (
             <FeatureCard key={feature.title} {...feature} />
           ))}
@@ -103,9 +102,9 @@ export function LandingPage() {
           <b>VibeLink Thailand</b> · แพลตฟอร์มรวมลิงก์ Bio Link และ Dynamic QR Code สำหรับครีเอเตอร์
         </div>
         <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-          <Link href="/terms">เงื่อนไขการใช้งาน</Link>
-          <Link href="/privacy">นโยบายความเป็นส่วนตัว</Link>
-          <Link href="/support">ฝ่ายบริการลูกค้า</Link>
+          <Link href="/terms" prefetch={false}>เงื่อนไขการใช้งาน</Link>
+          <Link href="/privacy" prefetch={false}>นโยบายความเป็นส่วนตัว</Link>
+          <Link href="/support" prefetch={false}>ฝ่ายบริการลูกค้า</Link>
         </div>
       </footer>
     </main>

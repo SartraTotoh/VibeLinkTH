@@ -4,6 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VibeLink · Pitch Email Studio & Campaign Builder</title>
+  <link rel="icon" href="/favicon.ico?v=2" sizes="any" />
+  <link rel="icon" type="image/png" href="/logo-mark.png?v=2" />
+  <script>
+    window.addEventListener("unhandledrejection", function(e) {
+      var m = e && e.reason && (e.reason.message || String(e.reason));
+      if (typeof m === "string" && m.indexOf("A listener indicated an asynchronous response") !== -1) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+      }
+    }, true);
+    window.addEventListener("error", function(e) {
+      if (e && typeof e.message === "string" && e.message.indexOf("A listener indicated an asynchronous response") !== -1) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+      }
+    }, true);
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..800&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />

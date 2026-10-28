@@ -228,7 +228,7 @@ export async function DashboardPageView({ activeTab }: Props) {
   return (
     <main className="shell">
       <nav className="nav">
-        <Link href="/" className="brand">
+        <Link href="/" className="brand" prefetch={false}>
           <img src="/logo.png" alt="" />
           Vibe<span>Link</span>
         </Link>
@@ -238,20 +238,20 @@ export async function DashboardPageView({ activeTab }: Props) {
           </span>
           <NavLangSwitcher />
           {isAdmin(session.user.email) ? (
-            <Link href="/ceo" className="mini-btn">
+            <Link href="/ceo" className="mini-btn" prefetch={false}>
               <span className="ms">terminal</span>
               Dev
             </Link>
           ) : null}
-          <Link href="/qr" className="mini-btn">
+          <Link href="/qr" className="mini-btn" prefetch={false}>
             <span className="ms">qr_code_2</span>
             QR
           </Link>
-          <Link href="/settings" className="mini-btn">
+          <Link href="/settings" className="mini-btn" prefetch={false}>
             <span className="ms">settings</span>
             {lang === "th" ? "ตั้งค่า" : "Settings"}
           </Link>
-          <Link href="/support" className="mini-btn" title={lang === "th" ? "ช่วยเหลือ" : "Support"}>
+          <Link href="/support" className="mini-btn" prefetch={false} title={lang === "th" ? "ช่วยเหลือ" : "Support"}>
             <span className="ms">help</span>
             {lang === "th" ? "ช่วยเหลือ" : "Support"}
           </Link>

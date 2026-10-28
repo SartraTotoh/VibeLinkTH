@@ -27,23 +27,23 @@ export default async function SupportPage() {
     <main className="shell">
       {/* Top Application Navigation */}
       <nav className="nav">
-        <Link href="/" className="brand">
+        <Link href="/" className="brand" prefetch={false}>
           <img src="/logo.png" alt="" />
           Vibe<span>Link</span>
         </Link>
         <div className="dash-actions">
           <span className="nav-user" style={{ fontSize: 15 }}>{session.user.email}</span>
           <NavLangSwitcher />
-          <Link href="/dashboard" className="mini-btn">
+          <Link href="/dashboard" className="mini-btn" prefetch={false}>
             <span className="ms">dashboard</span>
             {lang === "th" ? "แดชบอร์ด" : "Dashboard"}
           </Link>
-          <Link href="/settings" className="mini-btn">
+          <Link href="/settings" className="mini-btn" prefetch={false}>
             <span className="ms">settings</span>
             {lang === "th" ? "ตั้งค่า" : "Settings"}
           </Link>
           {userIsAdmin ? (
-            <Link href="/ceo" className="mini-btn">
+            <Link href="/ceo" className="mini-btn" prefetch={false}>
               <span className="ms">terminal</span>
               Dev
             </Link>

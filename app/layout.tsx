@@ -1,28 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { DM_Sans, Noto_Sans_Thai, JetBrains_Mono } from "next/font/google";
 import { CookieBanner } from "@/components/consent/cookie-banner";
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-dm-sans",
-  display: "swap",
-});
-
-const notoThai = Noto_Sans_Thai({
-  subsets: ["thai", "latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-noto-thai",
-  display: "swap",
-});
-
-const jbMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-mono",
-  display: "swap",
-});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://app.vibelinkth.com";
 
@@ -54,8 +32,8 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/logo.png", type: "image/png" },
+      { url: "/favicon.ico?v=2", sizes: "any" },
+      { url: "/logo-mark.png?v=2", type: "image/png" },
     ],
     apple: "/logo.png",
   },
@@ -69,18 +47,25 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="th">
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){window.addEventListener("unhandledrejection",function(e){var m=e&&e.reason&&(e.reason.message||String(e.reason));if(typeof m==="string"&&m.indexOf("A listener indicated an asynchronous response")!==-1){e.preventDefault();e.stopImmediatePropagation();}},true);window.addEventListener("error",function(e){if(e&&typeof e.message==="string"&&e.message.indexOf("A listener indicated an asynchronous response")!==-1){e.preventDefault();e.stopImmediatePropagation();}},true);function u(n){if(n&&n.tagName==="LINK"&&n.getAttribute("rel")==="preload"&&n.getAttribute("as")==="style"){n.setAttribute("rel","stylesheet");n.removeAttribute("as");}}if(typeof document!=="undefined"&&document.head){document.head.querySelectorAll('link[rel="preload"][as="style"]').forEach(u);new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(u);});}).observe(document.head,{childList:true});}})();`,
+          }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
           href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..800&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className={`${dmSans.variable} ${notoThai.variable} ${jbMono.variable}`}>
+      <body>
         {children}
         <CookieBanner />
       </body>

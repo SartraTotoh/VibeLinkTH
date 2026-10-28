@@ -540,18 +540,18 @@ export function QrStudio() {
   return (
     <main className={`shell ${styles.page}`}>
       <nav className="nav">
-        <Link href="/" className="brand">
+        <Link href="/" className="brand" prefetch={false}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo.png" alt="" />
           Vibe<span>Link</span>
         </Link>
         <div className="dash-actions">
           <NavLangSwitcher />
-          <Link href="/dashboard" className="mini-btn">
+          <Link href="/dashboard" className="mini-btn" prefetch={false}>
             <span className="ms">dashboard</span>
             {lang === "th" ? "แดชบอร์ด" : "Dashboard"}
           </Link>
-          <Link href="/support" className="mini-btn">
+          <Link href="/support" className="mini-btn" prefetch={false}>
             <span className="ms">help</span>
             {lang === "th" ? "ช่วยเหลือ" : "Support"}
           </Link>

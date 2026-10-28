@@ -293,15 +293,15 @@ export default async function DevPage() {
 
       <div className={styles.inner}>
         <nav className={styles.topnav}>
-          <Link href="/" className={styles.brand}>
+          <Link href="/" className={styles.brand} prefetch={false}>
             <img src="/logo.png" alt="" />
             Vibe<span>Link</span>
           </Link>
           <div className={styles.navActions}>
-            <Link href="/dashboard" className={styles.pill}>
+            <Link href="/dashboard" className={styles.pill} prefetch={false}>
               <span className="ms" style={{ fontSize: 15 }}>link</span> หน้าลิงก์
             </Link>
-            <Link href="/settings" className={styles.pill}>
+            <Link href="/settings" className={styles.pill} prefetch={false}>
               <span className="ms" style={{ fontSize: 15 }}>settings</span> ตั้งค่า
             </Link>
             <SignOutButton />

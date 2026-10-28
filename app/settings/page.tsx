@@ -57,7 +57,7 @@ export default async function SettingsPage() {
   return (
     <main className="shell">
       <nav className="nav">
-        <Link href="/" className="brand">
+        <Link href="/" className="brand" prefetch={false}>
           <img src="/logo.png" alt="VibeLink Logo" />
           Vibe<span>Link</span>
         </Link>
@@ -66,11 +66,11 @@ export default async function SettingsPage() {
             {session.user.email}
           </span>
           <NavLangSwitcher />
-          <Link href="/dashboard" className="mini-btn">
+          <Link href="/dashboard" className="mini-btn" prefetch={false}>
             <span className="ms">dashboard</span>
             {lang === "th" ? "แดชบอร์ด" : "Dashboard"}
           </Link>
-          <Link href="/support" className="mini-btn">
+          <Link href="/support" className="mini-btn" prefetch={false}>
             <span className="ms">help</span>
             {lang === "th" ? "ช่วยเหลือ" : "Support"}
           </Link>
@@ -120,7 +120,7 @@ export default async function SettingsPage() {
                 {user?.vibeSlug ? `vibelinkth.com/vibe/${user.vibeSlug}` : "ยังไม่ได้ตั้งค่า slug"}
               </small>
             </div>
-            <Link href="/dashboard/vibepage" className="mini-btn">
+            <Link href="/dashboard/vibepage" className="mini-btn" prefetch={false}>
               <span className="ms">edit</span>
               แก้ไข Vibe
             </Link>
@@ -159,9 +159,9 @@ export default async function SettingsPage() {
             <h2>{t(lang, "set.docs")}</h2>
           </div>
           <p className="panel-sub">
-            <Link href="/terms" style={{ color: "var(--primary-text)", fontWeight: 700 }}>{t(lang, "auth.terms")}</Link> ·{" "}
-            <Link href="/privacy" style={{ color: "var(--primary-text)", fontWeight: 700 }}>{t(lang, "auth.privacy")}</Link> ·{" "}
-            <Link href="/cookies" style={{ color: "var(--primary-text)", fontWeight: 700 }}>Cookies</Link>
+            <Link href="/terms" prefetch={false} style={{ color: "var(--primary-text)", fontWeight: 700 }}>{t(lang, "auth.terms")}</Link> ·{" "}
+            <Link href="/privacy" prefetch={false} style={{ color: "var(--primary-text)", fontWeight: 700 }}>{t(lang, "auth.privacy")}</Link> ·{" "}
+            <Link href="/cookies" prefetch={false} style={{ color: "var(--primary-text)", fontWeight: 700 }}>Cookies</Link>
           </p>
         </section>
       </div>

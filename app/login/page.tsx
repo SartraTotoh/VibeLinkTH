@@ -52,18 +52,18 @@ export default function LoginPage() {
   return (
     <main className="shell">
       <nav className="nav">
-        <Link href="/" className="brand">
+        <Link href="/" className="brand" prefetch={false}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo.png" alt="" />
           Vibe<span>Link</span>
         </Link>
         <div className="dash-actions">
           <LangSwitcher />
-          <Link href="/qr" className="mini-btn">
+          <Link href="/qr" className="mini-btn" prefetch={false}>
             <span className="ms">qr_code_2</span>
             QR
           </Link>
-          <Link href="/signup" className="mini-btn">
+          <Link href="/signup" className="mini-btn" prefetch={false}>
             <span className="ms">person_add</span>
             {lang === "th" ? "สมัคร" : "Sign Up"}
           </Link>
@@ -97,7 +97,7 @@ export default function LoginPage() {
             <label className="field">
               <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 {t(lang, "auth.password")}
-                <Link href="/forgot-password" style={{ color: "var(--primary-text)", fontWeight: 700, fontSize: 15 }}>
+                <Link href="/forgot-password" prefetch={false} style={{ color: "var(--primary-text)", fontWeight: 700, fontSize: 15 }}>
                   {t(lang, "auth.forgot")}
                 </Link>
               </span>
@@ -153,11 +153,11 @@ export default function LoginPage() {
           <div className="auth-alt" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap", marginTop: 24 }}>
             <span>
               {t(lang, "auth.noAccount")}{" "}
-              <Link href="/signup" style={{ color: "var(--primary-text)", fontWeight: 800 }}>
+              <Link href="/signup" prefetch={false} style={{ color: "var(--primary-text)", fontWeight: 800 }}>
                 {t(lang, "auth.signupHere")} ↗
               </Link>
             </span>
-            <Link href="/" style={{ color: "var(--muted)", fontSize: 15 }}>
+            <Link href="/" prefetch={false} style={{ color: "var(--muted)", fontSize: 15 }}>
               ← {t(lang, "nav.home")}
             </Link>
           </div>

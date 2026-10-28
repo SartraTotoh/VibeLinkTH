@@ -1,6 +1,6 @@
 :root {
-  --font-main: var(--font-dm-sans), var(--font-noto-thai), "DM Sans", "Noto Sans Thai", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: var(--font-mono), "JetBrains Mono", monospace;
+  --font-main: "DM Sans", "Noto Sans Thai", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
   --bg: #090b10;
   --bg-deep: #06070a;
   --panel: rgba(17, 20, 28, 0.78);
@@ -677,3 +677,44 @@ a { color: inherit; text-decoration: none; }
   .lrow .rowbtns .mini-btn { flex: 1; min-height: 44px; }
   .cookie-banner { flex-direction: column; align-items: stretch; }
 }
+
+/* Landing Motion */
+.heroMotion,
+.cardMotion {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: fadeUp 0.7s ease both;
+}
+
+.cardMotion {
+  animation-delay: 0.08s;
+}
+
+.heroMotion .actions a {
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.heroMotion .actions a:hover {
+  transform: translateY(-2px);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroMotion,
+  .cardMotion {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+

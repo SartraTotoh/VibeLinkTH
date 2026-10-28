@@ -117,18 +117,18 @@ export default function SignupPage() {
   return (
     <main className="shell">
       <nav className="nav">
-        <Link href="/" className="brand">
+        <Link href="/" className="brand" prefetch={false}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo.png" alt="" />
           Vibe<span>Link</span>
         </Link>
         <div className="dash-actions">
           <LangSwitcher />
-          <Link href="/qr" className="mini-btn">
+          <Link href="/qr" className="mini-btn" prefetch={false}>
             <span className="ms">qr_code_2</span>
             QR
           </Link>
-          <Link href="/login" className="mini-btn">
+          <Link href="/login" className="mini-btn" prefetch={false}>
             <span className="ms">login</span>
             {lang === "th" ? "เข้าสู่ระบบ" : "Sign In"}
           </Link>
@@ -234,11 +234,11 @@ export default function SignupPage() {
                   />
                   <span>
                     {t(lang, "auth.consent")}{" "}
-                    <Link href="/terms" target="_blank" style={{ color: "var(--primary-text)", fontWeight: 800 }}>
+                    <Link href="/terms" target="_blank" prefetch={false} style={{ color: "var(--primary-text)", fontWeight: 800 }}>
                       {t(lang, "auth.terms")}
                     </Link>{" "}
                     {lang === "th" ? "และ" : "and"}{" "}
-                    <Link href="/privacy" target="_blank" style={{ color: "var(--primary-text)", fontWeight: 800 }}>
+                    <Link href="/privacy" target="_blank" prefetch={false} style={{ color: "var(--primary-text)", fontWeight: 800 }}>
                       {t(lang, "auth.privacy")}
                     </Link>
                   </span>
@@ -391,11 +391,11 @@ export default function SignupPage() {
           <div className="auth-alt" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap", marginTop: 24 }}>
             <span>
               {t(lang, "auth.hasAccount")}{" "}
-              <Link href="/login" style={{ color: "var(--primary-text)", fontWeight: 800 }}>
+              <Link href="/login" prefetch={false} style={{ color: "var(--primary-text)", fontWeight: 800 }}>
                 {t(lang, "auth.toLogin")} ↗
               </Link>
             </span>
-            <Link href="/" style={{ color: "var(--muted)", fontSize: 15 }}>
+            <Link href="/" prefetch={false} style={{ color: "var(--muted)", fontSize: 15 }}>
               ← {t(lang, "nav.home")}
             </Link>
           </div>
