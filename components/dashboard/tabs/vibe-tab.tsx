@@ -118,7 +118,7 @@ export function VibeTab({ vibe, activeLinks, lang }: Props) {
                 boxShadow: "inset 0 1px 2px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.08)",
                 background: "var(--input)",
                 color: "var(--text)",
-                fontSize: 14,
+                fontSize: 15,
                 fontFamily: "inherit",
                 outline: "none",
                 resize: "vertical",
@@ -156,7 +156,7 @@ export function VibeTab({ vibe, activeLinks, lang }: Props) {
             </span>
             {previewUrl ? (
               <a className={styles.vibeLink} href={previewUrl} target="_blank" rel="noopener noreferrer">
-                <span className="ms" style={{ fontSize: 14, verticalAlign: -2 }}>open_in_new</span>{" "}
+                <span className="ms" style={{ fontSize: 15, verticalAlign: -2 }}>open_in_new</span>{" "}
                 {previewUrl}
               </a>
             ) : (

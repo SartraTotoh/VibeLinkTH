@@ -183,7 +183,7 @@ export function CampaignsTab({ initialCampaigns, perf, lang }: Props) {
                 <div className={styles.campHead}>
                   <b>{c.name}</b>
                   <span className={styles.campClicks}>
-                    <span className="ms" style={{ fontSize: 14, verticalAlign: -2 }}>bolt</span> {fmt(c.clicks)} {lang === "th" ? "คลิก" : "clicks"}
+                    <span className="ms" style={{ fontSize: 15, verticalAlign: -2 }}>bolt</span> {fmt(c.clicks)} {lang === "th" ? "คลิก" : "clicks"}
                   </span>
                 </div>
                 <div className={styles.campMeta}>

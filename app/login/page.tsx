@@ -49,75 +49,95 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="shell auth-shell">
-      <div className="auth-card">
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
-          <div className="eyebrow">
-            <span>VIBELINK IDENTITY</span>
-          </div>
+    <main className="shell">
+      <nav className="nav">
+        <Link href="/" className="brand">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="" />
+          Vibe<span>Link</span>
+        </Link>
+        <div className="dash-actions">
           <LangSwitcher />
+          <Link href="/qr" className="mini-btn">
+            <span className="ms">qr_code_2</span>
+            QR
+          </Link>
+          <Link href="/signup" className="mini-btn">
+            <span className="ms">person_add</span>
+            {lang === "th" ? "สมัคร" : "Sign Up"}
+          </Link>
         </div>
+      </nav>
 
-        <h1>{t(lang, "auth.loginTitle")}</h1>
-        <p className="auth-sub">{t(lang, "auth.loginSub")}</p>
+      <div className="auth-shell">
+        <div className="auth-card">
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+            <div className="eyebrow">
+              <span>VIBELINK IDENTITY</span>
+            </div>
+          </div>
 
-        <form onSubmit={onSubmit} className="auth-form">
-          <label className="field">
-            <span>{t(lang, "auth.email")}</span>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="yourname@email.com"
-              autoComplete="email"
-              required
-            />
-          </label>
+          <h1>{t(lang, "auth.loginTitle")}</h1>
+          <p className="auth-sub">{t(lang, "auth.loginSub")}</p>
 
-          <label className="field">
-            <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              {t(lang, "auth.password")}
-              <Link href="/forgot-password" style={{ color: "var(--primary-text)", fontWeight: 700, fontSize: 13.5 }}>
-                {t(lang, "auth.forgot")}
+          <form onSubmit={onSubmit} className="auth-form">
+            <label className="field">
+              <span>{t(lang, "auth.email")}</span>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="yourname@email.com"
+                autoComplete="email"
+                required
+              />
+            </label>
+
+            <label className="field">
+              <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                {t(lang, "auth.password")}
+                <Link href="/forgot-password" style={{ color: "var(--primary-text)", fontWeight: 700, fontSize: 15 }}>
+                  {t(lang, "auth.forgot")}
+                </Link>
+              </span>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder={t(lang, "auth.passwordPh")}
+                autoComplete="current-password"
+                required
+              />
+            </label>
+
+            {notice ? <div className="notice">{notice}</div> : null}
+            {verifyBlock ? (
+              <div className="notice">
+                {t(lang, "auth.verifyNeeded")}{" "}
+                <Link href="/verify-email" style={{ color: "var(--primary-text)", fontWeight: 800 }}>
+                  {t(lang, "auth.resendLink")}
+                </Link>
+              </div>
+            ) : null}
+            {error ? <div className="auth-error">{error}</div> : null}
+
+            <button type="submit" className="button primary" disabled={loading} style={{ marginTop: 8 }}>
+              <span className="ms">login</span>
+              {loading ? (lang === "th" ? "กำลังเข้า..." : "Signing in...") : (lang === "th" ? "เข้าสู่ระบบ" : "Sign In")}
+            </button>
+          </form>
+
+          <div className="auth-alt" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap", marginTop: 24 }}>
+            <span>
+              {t(lang, "auth.noAccount")}{" "}
+              <Link href="/signup" style={{ color: "var(--primary-text)", fontWeight: 800 }}>
+                {t(lang, "auth.signupHere")} ↗
               </Link>
             </span>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder={t(lang, "auth.passwordPh")}
-              autoComplete="current-password"
-              required
-            />
-          </label>
-
-          {notice ? <div className="notice">{notice}</div> : null}
-          {verifyBlock ? (
-            <div className="notice">
-              {t(lang, "auth.verifyNeeded")}{" "}
-              <Link href="/verify-email" style={{ color: "var(--primary-text)", fontWeight: 800 }}>
-                {t(lang, "auth.resendLink")}
-              </Link>
-            </div>
-          ) : null}
-          {error ? <div className="auth-error">{error}</div> : null}
-
-          <button type="submit" className="button primary" disabled={loading} style={{ marginTop: 8 }}>
-            <span className="ms">login</span>
-            {loading ? t(lang, "auth.loggingIn") : t(lang, "auth.loginBtn")}
-          </button>
-        </form>
-
-        <div className="auth-alt" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap", marginTop: 24 }}>
-          <span>
-            {t(lang, "auth.noAccount")}{" "}
-            <Link href="/signup" style={{ color: "var(--primary-text)", fontWeight: 800 }}>
-              {t(lang, "auth.signupHere")} ↗
+            <Link href="/" style={{ color: "var(--muted)", fontSize: 15 }}>
+              ← {t(lang, "nav.home")}
             </Link>
-          </span>
-          <Link href="/" style={{ color: "var(--muted)", fontSize: 14 }}>
-            ← {t(lang, "nav.home")}
-          </Link>
+          </div>
         </div>
       </div>
     </main>

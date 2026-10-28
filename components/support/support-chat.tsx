@@ -261,7 +261,7 @@ export function SupportChat({ lang }: { lang: Lang }) {
                     borderRadius: 999,
                     background: "rgba(185, 255, 44, 0.15)",
                     color: "var(--primary, #b9ff2c)",
-                    fontSize: 14,
+                    fontSize: 15,
                     fontWeight: 700,
                   }}
                 >
@@ -269,7 +269,7 @@ export function SupportChat({ lang }: { lang: Lang }) {
                   24/7 ONLINE
                 </span>
               </div>
-              <div style={{ fontSize: 14, color: "#94a3b8", marginTop: 3 }}>
+              <div style={{ fontSize: 15, color: "#94a3b8", marginTop: 3 }}>
                 {s?.autoReplyOn
                   ? t("ตอบอัตโนมัติทันทีใน 0.04 วินาที · ส่งต่อทีมงานเมื่อต้องการความช่วยเหลือเชิงลึก", "Instant 0.04s auto-reply · team escalates when needed")
                   : t("ช่องทางสนทนากับฝ่ายบริการลูกค้า", "Direct customer support channel")}
@@ -288,7 +288,7 @@ export function SupportChat({ lang }: { lang: Lang }) {
                 background: "rgba(255, 255, 255, 0.05)",
                 boxShadow: "inset 0 1px 1px rgba(255, 255, 255, 0.1)",
                 color: "#cbd5e1",
-                fontSize: 14,
+                fontSize: 15,
                 fontWeight: 600,
               }}
             >
@@ -342,7 +342,7 @@ export function SupportChat({ lang }: { lang: Lang }) {
                         borderRadius: 8,
                         background: meta.badgeBg,
                         color: meta.color,
-                        fontSize: 14,
+                        fontSize: 15,
                         fontWeight: 700,
                       }}
                     >
@@ -355,7 +355,7 @@ export function SupportChat({ lang }: { lang: Lang }) {
                     {m.body}
                   </div>
 
-                  <span style={{ fontSize: 14, opacity: 0.65, alignSelf: "flex-end", marginTop: 2 }}>
+                  <span style={{ fontSize: 15, opacity: 0.65, alignSelf: "flex-end", marginTop: 2 }}>
                     {fmtTime(m.createdAt)}
                   </span>
                 </div>
@@ -417,7 +417,7 @@ export function SupportChat({ lang }: { lang: Lang }) {
                       boxShadow: "inset 0 1px 1px rgba(255, 255, 255, 0.1)",
                       border: "none",
                       color: "#e2e8f0",
-                      fontSize: 14,
+                      fontSize: 15,
                       fontWeight: 600,
                       cursor: "pointer",
                       transition: "all 0.2s ease",
@@ -505,7 +505,7 @@ export function SupportChat({ lang }: { lang: Lang }) {
                 : "radial-gradient(120% 120% at 30% 20%, #d4ff6b 0%, var(--primary, #b9ff2c) 100%)",
               color: busy ? "#71717a" : "#080a0f",
               fontWeight: 700,
-              fontSize: 14,
+              fontSize: 15,
               cursor: busy || !draft.trim() ? "default" : "pointer",
               boxShadow: busy ? "none" : "0 0 20px rgba(185, 255, 44, 0.35)",
               display: "inline-flex",
@@ -521,7 +521,7 @@ export function SupportChat({ lang }: { lang: Lang }) {
 
         {error ? (
           <div style={{ padding: "10px 24px 16px", background: "rgba(239, 68, 68, 0.1)" }}>
-            <p style={{ margin: 0, color: "#fca5a5", fontSize: 14, display: "flex", alignItems: "center", gap: 6 }}>
+            <p style={{ margin: 0, color: "#fca5a5", fontSize: 15, display: "flex", alignItems: "center", gap: 6 }}>
               <span className="ms" style={{ fontSize: 16 }}>error</span>
               {error}
             </p>
@@ -545,7 +545,7 @@ export function SupportChat({ lang }: { lang: Lang }) {
             gap: 10,
           }}
         >
-          <span style={{ fontSize: 14, fontWeight: 700, color: "#94a3b8", display: "inline-flex", alignItems: "center", gap: 6 }}>
+          <span style={{ fontSize: 15, fontWeight: 700, color: "#94a3b8", display: "inline-flex", alignItems: "center", gap: 6 }}>
             <span className="ms" style={{ fontSize: 16 }}>history</span>
             {t("ประวัติการสนทนาก่อนหน้า:", "Previous chats:")}
           </span>
@@ -571,7 +571,7 @@ export function SupportChat({ lang }: { lang: Lang }) {
                     ? "inset 0 1px 1px rgba(185, 255, 44, 0.35), 0 2px 8px rgba(0, 0, 0, 0.3)"
                     : "inset 0 1px 1px rgba(255, 255, 255, 0.06)",
                   cursor: "pointer",
-                  fontSize: 14,
+                  fontSize: 15,
                   fontWeight: 600,
                   transition: "all 0.18s ease",
                 }}
@@ -607,13 +607,13 @@ export function SupportChat({ lang }: { lang: Lang }) {
                 <span className="ms" style={{ color: "var(--primary, #b9ff2c)", fontSize: 22 }}>quiz</span>
                 {t("คำถามที่พบบ่อยยอดฮิต", "Popular Frequently Asked Questions")}
               </h2>
-              <p style={{ margin: "4px 0 0", fontSize: 14.5, color: "#94a3b8" }}>
+              <p style={{ margin: "4px 0 0", fontSize: 15, color: "#94a3b8" }}>
                 {t("คลิกหัวข้อเพื่อดูคำอธิบาย หรือกดส่งคำถามให้ผู้ช่วย AI ตอบเพิ่มเติมได้ทันที", "Click a topic to view details or send it directly to the AI assistant")}
               </p>
             </div>
             <span
               style={{
-                fontSize: 14,
+                fontSize: 15,
                 color: "var(--primary, #b9ff2c)",
                 background: "rgba(185, 255, 44, 0.1)",
                 padding: "4px 12px",
@@ -680,7 +680,7 @@ export function SupportChat({ lang }: { lang: Lang }) {
                     <div
                       style={{
                         padding: "0 20px 20px 50px",
-                        fontSize: 14.5,
+                        fontSize: 15,
                         color: "#cbd5e1",
                         lineHeight: 1.7,
                         whiteSpace: "pre-wrap",
@@ -702,7 +702,7 @@ export function SupportChat({ lang }: { lang: Lang }) {
                             background: "radial-gradient(120% 120% at 30% 20%, rgba(185, 255, 44, 0.2), rgba(185, 255, 44, 0.06))",
                             color: "var(--primary, #b9ff2c)",
                             fontWeight: 700,
-                            fontSize: 14,
+                            fontSize: 15,
                             cursor: busy ? "default" : "pointer",
                             boxShadow: "inset 0 1px 1px rgba(185, 255, 44, 0.3)",
                             transition: "all 0.18s ease",

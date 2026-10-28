@@ -40,7 +40,7 @@ export function FileCharsetGuard({ value, field = "ฟิลด์นี้" }: 
         alignItems: "center",
         gap: 6,
         marginTop: 6,
-        fontSize: 12,
+        fontSize: 15,
         lineHeight: 1.4,
         color: "#b45309",
         background: "#fffbeb",

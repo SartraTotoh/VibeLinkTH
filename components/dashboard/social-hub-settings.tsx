@@ -184,7 +184,7 @@ export function SocialHubSettings({ lang }: { lang: Lang }) {
         <div style={{ gridColumn: "1 / -1", display: "flex", justifyContent: "flex-end", marginTop: 6 }}>
           <button type="submit" className="button primary" disabled={saving} style={{ minHeight: 46, padding: "0 24px" }}>
             <span className="ms">save</span>
-            {saving ? (lang === "th" ? "กำลังบันทึก..." : "Saving...") : (lang === "th" ? "บันทึกและซิงค์ลง Vibe Page" : "Save & Sync to Vibe Page")}
+            {saving ? (lang === "th" ? "กำลังบันทึก..." : "Saving...") : (lang === "th" ? "บันทึก" : "Save")}
           </button>
         </div>
       </form>

@@ -233,29 +233,29 @@ export async function DashboardPageView({ activeTab }: Props) {
           Vibe<span>Link</span>
         </Link>
         <div className="dash-actions">
-          <span className="nav-user" style={{ color: "var(--muted)", fontWeight: 700, fontSize: 14 }}>
+          <span className="nav-user" style={{ color: "var(--muted)", fontWeight: 700, fontSize: 15 }}>
             {session.user.email}
           </span>
           <NavLangSwitcher />
           {isAdmin(session.user.email) ? (
             <Link href="/ceo" className="mini-btn">
               <span className="ms">terminal</span>
-              {t(lang, "nav.dev")}
+              Dev
             </Link>
           ) : null}
           <Link href="/qr" className="mini-btn">
             <span className="ms">qr_code_2</span>
-            QR Studio
+            QR
           </Link>
           <Link href="/settings" className="mini-btn">
             <span className="ms">settings</span>
-            {t(lang, "nav.settings")}
+            {lang === "th" ? "ตั้งค่า" : "Settings"}
           </Link>
-          <Link href="/support" className="mini-btn" title={t(lang, "nav.support")}>
+          <Link href="/support" className="mini-btn" title={lang === "th" ? "ช่วยเหลือ" : "Support"}>
             <span className="ms">help</span>
-            {t(lang, "nav.support")}
+            {lang === "th" ? "ช่วยเหลือ" : "Support"}
           </Link>
-          <SignOutButton label={lang === "th" ? "ออกจากระบบ" : "Sign out"} />
+          <SignOutButton label={lang === "th" ? "ออก" : "Sign out"} />
         </div>
       </nav>
 

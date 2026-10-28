@@ -62,15 +62,19 @@ export default async function SettingsPage() {
           Vibe<span>Link</span>
         </Link>
         <div className="dash-actions">
-          <span className="nav-user" style={{ color: "var(--muted)", fontWeight: 700, fontSize: 14 }}>
+          <span className="nav-user" style={{ color: "var(--muted)", fontWeight: 700, fontSize: 15 }}>
             {session.user.email}
           </span>
           <NavLangSwitcher />
           <Link href="/dashboard" className="mini-btn">
             <span className="ms">dashboard</span>
-            {t(lang, "nav.links")}
+            {lang === "th" ? "แดชบอร์ด" : "Dashboard"}
           </Link>
-          <SignOutButton label={lang === "th" ? "ออกจากระบบ" : "Sign out"} />
+          <Link href="/support" className="mini-btn">
+            <span className="ms">help</span>
+            {lang === "th" ? "ช่วยเหลือ" : "Support"}
+          </Link>
+          <SignOutButton label={lang === "th" ? "ออก" : "Sign out"} />
         </div>
       </nav>
 
@@ -118,7 +122,7 @@ export default async function SettingsPage() {
             </div>
             <Link href="/dashboard/vibepage" className="mini-btn">
               <span className="ms">edit</span>
-              ตั้งค่า Vibe Page
+              แก้ไข Vibe
             </Link>
           </div>
           <div className="settings-row" style={{ marginTop: 8 }}>

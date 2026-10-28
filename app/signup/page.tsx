@@ -114,248 +114,268 @@ export default function SignupPage() {
   }
 
   return (
-    <main className="shell auth-shell">
-      <div className="auth-card" style={{ width: step === 2 ? "min(560px, 100%)" : "min(480px, 100%)" }}>
-        {/* Step Indicator Header */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-          <div className="eyebrow">
-            <span>{step === 1 ? "STEP 1 OF 2 · ACCOUNT SETUP" : "STEP 2 OF 2 · CONNECT SOCIALS"}</span>
-          </div>
+    <main className="shell">
+      <nav className="nav">
+        <Link href="/" className="brand">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="" />
+          Vibe<span>Link</span>
+        </Link>
+        <div className="dash-actions">
           <LangSwitcher />
-        </div>
-
-        {step === 1 ? (
-          <>
-            <h1>{t(lang, "auth.signupTitle")}</h1>
-            <p className="auth-sub">{t(lang, "auth.signupSub")}</p>
-
-            <form onSubmit={handleNextStep} className="auth-form">
-              <label className="field">
-                <span>{t(lang, "auth.email")} *</span>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="yourname@email.com"
-                  autoComplete="email"
-                  required
-                />
-              </label>
-
-              <label className="field">
-                <span>{t(lang, "auth.nickname")} (ชื่อแสดงบนหน้าโปรไฟล์)</span>
-                <input
-                  type="text"
-                  value={displayName}
-                  onChange={(e) => setDisplayName(e.target.value)}
-                  placeholder="เช่น มิ้นท์ มู้ดดี"
-                  maxLength={60}
-                  autoComplete="nickname"
-                />
-              </label>
-
-              <label className="field">
-                <span>จองชื่อ Vibe Link ประจำตัว (Claim your link slug)</span>
-                <div style={{ position: "relative" }}>
-                  <input
-                    type="text"
-                    value={vibeSlug}
-                    onChange={(e) => setVibeSlug(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ""))}
-                    placeholder="mintmood"
-                    maxLength={30}
-                    style={{ paddingLeft: 14 }}
-                  />
-                </div>
-                <small style={{ color: "var(--muted)", fontSize: 13, marginTop: 2 }}>
-                  {vibeSlug ? `ลิงก์ของคุณ: vibelinkth.com/vibe/${vibeSlug}` : "ลิงก์ของคุณ: vibelinkth.com/vibe/ชื่อคุณ"}
-                </small>
-              </label>
-
-              <label className="field">
-                <span>{t(lang, "auth.password")} *</span>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="อย่างน้อย 8 ตัวอักษร"
-                  autoComplete="new-password"
-                  required
-                />
-              </label>
-
-              <label className="consent" style={{ marginTop: 4 }}>
-                <input
-                  type="checkbox"
-                  checked={accepted}
-                  onChange={(e) => setAccepted(e.target.checked)}
-                  required
-                />
-                <span>
-                  {t(lang, "auth.consent")}{" "}
-                  <Link href="/terms" target="_blank" style={{ color: "var(--primary-text)", fontWeight: 800 }}>
-                    {t(lang, "auth.terms")}
-                  </Link>{" "}
-                  {lang === "th" ? "และ" : "and"}{" "}
-                  <Link href="/privacy" target="_blank" style={{ color: "var(--primary-text)", fontWeight: 800 }}>
-                    {t(lang, "auth.privacy")}
-                  </Link>
-                </span>
-              </label>
-
-              {error ? <div className="auth-error">{error}</div> : null}
-
-              <button type="submit" className="button primary" disabled={!accepted} style={{ marginTop: 8 }}>
-                <span>ต่อไป: เชื่อมต่อบัญชีโซเชียล & เบอร์โทร</span>
-                <span className="ms">arrow_forward</span>
-              </button>
-            </form>
-          </>
-        ) : (
-          <>
-            <h1>เชื่อมต่อโซเชียล & เบอร์โทร</h1>
-            <p className="auth-sub">
-              กรอกช่องทางที่คุณมีเพื่อให้ระบบสร้างปุ่มติดตามลงบน Vibe Page อัตโนมัติ (สามารถแก้ไขภายหลังใน Settings ได้ตลอดเวลา)
-            </p>
-
-            <div className="auth-form">
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
-                <label className="field">
-                  <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    <span className="ms" style={{ fontSize: 17, color: "var(--primary)" }}>call</span>
-                    เบอร์โทรศัพท์ (SMS / ติดต่อ)
-                  </span>
-                  <input
-                    type="tel"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="08X-XXX-XXXX"
-                  />
-                </label>
-
-                <label className="field">
-                  <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    <span className="ms" style={{ fontSize: 17, color: "var(--primary)" }}>music_note</span>
-                    TikTok Handle
-                  </span>
-                  <input
-                    type="text"
-                    value={tiktok}
-                    onChange={(e) => setTiktok(e.target.value)}
-                    placeholder="@username"
-                  />
-                </label>
-
-                <label className="field">
-                  <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    <span className="ms" style={{ fontSize: 17, color: "var(--secondary)" }}>photo_camera</span>
-                    Instagram Handle
-                  </span>
-                  <input
-                    type="text"
-                    value={instagram}
-                    onChange={(e) => setInstagram(e.target.value)}
-                    placeholder="@username"
-                  />
-                </label>
-
-                <label className="field">
-                  <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    <span className="ms" style={{ fontSize: 17, color: "#06c755" }}>chat</span>
-                    LINE ID หรือ LINE OA
-                  </span>
-                  <input
-                    type="text"
-                    value={lineId}
-                    onChange={(e) => setLineId(e.target.value)}
-                    placeholder="@lineoa"
-                  />
-                </label>
-
-                <label className="field">
-                  <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    <span className="ms" style={{ fontSize: 17, color: "#1877f2" }}>thumb_up</span>
-                    Facebook Page
-                  </span>
-                  <input
-                    type="text"
-                    value={facebook}
-                    onChange={(e) => setFacebook(e.target.value)}
-                    placeholder="ชื่อเพจหรือ URL"
-                  />
-                </label>
-
-                <label className="field">
-                  <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    <span className="ms" style={{ fontSize: 17, color: "#fff" }}>tag</span>
-                    X (Twitter) Handle
-                  </span>
-                  <input
-                    type="text"
-                    value={xHandle}
-                    onChange={(e) => setXHandle(e.target.value)}
-                    placeholder="@username"
-                  />
-                </label>
-              </div>
-
-              <label className="field" style={{ marginTop: 2 }}>
-                <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <span className="ms" style={{ fontSize: 17, color: "#ff0000" }}>smart_display</span>
-                  YouTube Channel (URL หรือ @channel)
-                </span>
-                <input
-                  type="text"
-                  value={youtube}
-                  onChange={(e) => setYoutube(e.target.value)}
-                  placeholder="@youtubechannel หรือ URL"
-                />
-              </label>
-
-              {error ? <div className="auth-error">{error}</div> : null}
-
-              <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 10 }}>
-                <button
-                  type="button"
-                  className="button primary"
-                  disabled={loading}
-                  onClick={() => completeRegistration(false)}
-                >
-                  <span className="ms">check_circle</span>
-                  {loading ? "กำลังสร้างบัญชี..." : "สร้างบัญชี & ซิงค์ลง Vibe Page ทันที ✨"}
-                </button>
-
-                <button
-                  type="button"
-                  className="button secondary"
-                  disabled={loading}
-                  onClick={() => completeRegistration(true)}
-                  style={{ minHeight: 44, fontSize: 14 }}
-                >
-                  <span>ข้ามขั้นตอนนี้ไปก่อน (จัดการใน Dashboard ทีหลัง)</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setStep(1)}
-                  style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", fontSize: 14, marginTop: 4 }}
-                >
-                  ← ย้อนกลับไปแก้ไขข้อมูลบัญชี
-                </button>
-              </div>
-            </div>
-          </>
-        )}
-
-        <div className="auth-alt" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap", marginTop: 24 }}>
-          <span>
-            {t(lang, "auth.hasAccount")}{" "}
-            <Link href="/login" style={{ color: "var(--primary-text)", fontWeight: 800 }}>
-              {t(lang, "auth.toLogin")} ↗
-            </Link>
-          </span>
-          <Link href="/" style={{ color: "var(--muted)", fontSize: 14 }}>
-            ← {t(lang, "nav.home")}
+          <Link href="/qr" className="mini-btn">
+            <span className="ms">qr_code_2</span>
+            QR
           </Link>
+          <Link href="/login" className="mini-btn">
+            <span className="ms">login</span>
+            {lang === "th" ? "เข้าสู่ระบบ" : "Sign In"}
+          </Link>
+        </div>
+      </nav>
+
+      <div className="auth-shell">
+        <div className="auth-card" style={{ width: step === 2 ? "min(560px, 100%)" : "min(480px, 100%)" }}>
+          {/* Step Indicator Header */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+            <div className="eyebrow">
+              <span>{step === 1 ? "STEP 1 OF 2 · ACCOUNT" : "STEP 2 OF 2 · SOCIALS"}</span>
+            </div>
+          </div>
+
+          {step === 1 ? (
+            <>
+              <h1>{t(lang, "auth.signupTitle")}</h1>
+              <p className="auth-sub">{t(lang, "auth.signupSub")}</p>
+
+              <form onSubmit={handleNextStep} className="auth-form">
+                <label className="field">
+                  <span>{t(lang, "auth.email")} *</span>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="yourname@email.com"
+                    autoComplete="email"
+                    required
+                  />
+                </label>
+
+                <label className="field">
+                  <span>{t(lang, "auth.nickname")}</span>
+                  <input
+                    type="text"
+                    value={displayName}
+                    onChange={(e) => setDisplayName(e.target.value)}
+                    placeholder="ชื่อที่แสดง"
+                    maxLength={60}
+                    autoComplete="nickname"
+                  />
+                </label>
+
+                <label className="field">
+                  <span>จองชื่อ Vibe Link (Slug)</span>
+                  <div style={{ position: "relative" }}>
+                    <input
+                      type="text"
+                      value={vibeSlug}
+                      onChange={(e) => setVibeSlug(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ""))}
+                      placeholder="username"
+                      maxLength={30}
+                      style={{ paddingLeft: 14 }}
+                    />
+                  </div>
+                  <small style={{ color: "var(--muted)", fontSize: 15, marginTop: 2 }}>
+                    {vibeSlug ? `vibelinkth.com/vibe/${vibeSlug}` : "vibelinkth.com/vibe/username"}
+                  </small>
+                </label>
+
+                <label className="field">
+                  <span>{t(lang, "auth.password")} *</span>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="อย่างน้อย 8 ตัวอักษร"
+                    autoComplete="new-password"
+                    required
+                  />
+                </label>
+
+                <label className="consent" style={{ marginTop: 4 }}>
+                  <input
+                    type="checkbox"
+                    checked={accepted}
+                    onChange={(e) => setAccepted(e.target.checked)}
+                    required
+                  />
+                  <span>
+                    {t(lang, "auth.consent")}{" "}
+                    <Link href="/terms" target="_blank" style={{ color: "var(--primary-text)", fontWeight: 800 }}>
+                      {t(lang, "auth.terms")}
+                    </Link>{" "}
+                    {lang === "th" ? "และ" : "and"}{" "}
+                    <Link href="/privacy" target="_blank" style={{ color: "var(--primary-text)", fontWeight: 800 }}>
+                      {t(lang, "auth.privacy")}
+                    </Link>
+                  </span>
+                </label>
+
+                {error ? <div className="auth-error">{error}</div> : null}
+
+                <button type="submit" className="button primary" disabled={!accepted} style={{ marginTop: 8 }}>
+                  <span>{lang === "th" ? "ถัดไป" : "Next"}</span>
+                  <span className="ms">arrow_forward</span>
+                </button>
+              </form>
+            </>
+          ) : (
+            <>
+              <h1>เชื่อมต่อโซเชียล</h1>
+              <p className="auth-sub">
+                ใส่เบอร์โทรหรือโซเชียลเพื่อสร้างปุ่มบน Vibe Page อัตโนมัติ (แก้ไขได้ตลอดเวลาใน Settings)
+              </p>
+
+              <div className="auth-form">
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
+                  <label className="field">
+                    <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <span className="ms" style={{ fontSize: 18, color: "var(--primary)" }}>call</span>
+                      เบอร์โทรศัพท์
+                    </span>
+                    <input
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="08X-XXX-XXXX"
+                    />
+                  </label>
+
+                  <label className="field">
+                    <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <span className="ms" style={{ fontSize: 18, color: "var(--primary)" }}>music_note</span>
+                      TikTok
+                    </span>
+                    <input
+                      type="text"
+                      value={tiktok}
+                      onChange={(e) => setTiktok(e.target.value)}
+                      placeholder="@username"
+                    />
+                  </label>
+
+                  <label className="field">
+                    <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <span className="ms" style={{ fontSize: 18, color: "var(--secondary)" }}>photo_camera</span>
+                      Instagram
+                    </span>
+                    <input
+                      type="text"
+                      value={instagram}
+                      onChange={(e) => setInstagram(e.target.value)}
+                      placeholder="@username"
+                    />
+                  </label>
+
+                  <label className="field">
+                    <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <span className="ms" style={{ fontSize: 18, color: "#06c755" }}>chat</span>
+                      LINE
+                    </span>
+                    <input
+                      type="text"
+                      value={lineId}
+                      onChange={(e) => setLineId(e.target.value)}
+                      placeholder="@lineoa"
+                    />
+                  </label>
+
+                  <label className="field">
+                    <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <span className="ms" style={{ fontSize: 18, color: "#1877f2" }}>thumb_up</span>
+                      Facebook
+                    </span>
+                    <input
+                      type="text"
+                      value={facebook}
+                      onChange={(e) => setFacebook(e.target.value)}
+                      placeholder="ชื่อเพจหรือ URL"
+                    />
+                  </label>
+
+                  <label className="field">
+                    <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <span className="ms" style={{ fontSize: 18, color: "#fff" }}>tag</span>
+                      X (Twitter)
+                    </span>
+                    <input
+                      type="text"
+                      value={xHandle}
+                      onChange={(e) => setXHandle(e.target.value)}
+                      placeholder="@username"
+                    />
+                  </label>
+                </div>
+
+                <label className="field" style={{ marginTop: 2 }}>
+                  <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                    <span className="ms" style={{ fontSize: 18, color: "#ff0000" }}>smart_display</span>
+                    YouTube
+                  </span>
+                  <input
+                    type="text"
+                    value={youtube}
+                    onChange={(e) => setYoutube(e.target.value)}
+                    placeholder="@channel หรือ URL"
+                  />
+                </label>
+
+                {error ? <div className="auth-error">{error}</div> : null}
+
+                <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 10 }}>
+                  <button
+                    type="button"
+                    className="button primary"
+                    disabled={loading}
+                    onClick={() => completeRegistration(false)}
+                  >
+                    <span className="ms">check_circle</span>
+                    {loading ? (lang === "th" ? "กำลังบันทึก..." : "Saving...") : (lang === "th" ? "บันทึก" : "Save")}
+                  </button>
+
+                  <button
+                    type="button"
+                    className="button secondary"
+                    disabled={loading}
+                    onClick={() => completeRegistration(true)}
+                    style={{ minHeight: 46, fontSize: 15 }}
+                  >
+                    <span>{lang === "th" ? "ข้าม" : "Skip"}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setStep(1)}
+                    style={{ background: "none", border: "none", color: "var(--muted)", cursor: "pointer", fontSize: 15, marginTop: 4 }}
+                  >
+                    {lang === "th" ? "← ย้อนกลับ" : "← Back"}
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
+
+          <div className="auth-alt" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap", marginTop: 24 }}>
+            <span>
+              {t(lang, "auth.hasAccount")}{" "}
+              <Link href="/login" style={{ color: "var(--primary-text)", fontWeight: 800 }}>
+                {t(lang, "auth.toLogin")} ↗
+              </Link>
+            </span>
+            <Link href="/" style={{ color: "var(--muted)", fontSize: 15 }}>
+              ← {t(lang, "nav.home")}
+            </Link>
+          </div>
         </div>
       </div>
     </main>

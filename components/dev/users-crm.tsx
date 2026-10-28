@@ -200,7 +200,7 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
           }}
         >
           <span className="ms">lock</span>
-          <span style={{ fontSize: 12, fontWeight: 700 }}>Export เต็ม (PIN)</span>
+          <span style={{ fontSize: 15, fontWeight: 700 }}>Export เต็ม (PIN)</span>
         </button>
       </form>
       <p className={styles.cardSub} style={{ margin: "0 0 12px" }}>
@@ -210,7 +210,7 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
       {pinOpen ? (
         <div className={styles.kv} style={{ borderColor: "rgba(185,255,44,.3)" }}>
           <form onSubmit={exportFull} style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", width: "100%" }}>
-            <b style={{ fontSize: 13 }}>กรอก PIN 6 หลักเพื่อดาวน์โหลดข้อมูลเต็ม</b>
+            <b style={{ fontSize: 15 }}>กรอก PIN 6 หลักเพื่อดาวน์โหลดข้อมูลเต็ม</b>
             <input
               type="password"
               value={pin}
@@ -226,7 +226,7 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
                 border: "1px solid rgba(255,255,255,.15)",
                 background: "rgba(0,0,0,.5)",
                 color: "#fff",
-                fontSize: 15,
+                fontSize: 155,
                 letterSpacing: 4,
                 textAlign: "center",
               }}
@@ -237,13 +237,13 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
             <button type="button" className={styles.ghostBtn} style={{ width: "auto", padding: "0 14px", height: 38 }} onClick={() => setPinOpen(false)}>
               <span className="ms">close</span>
             </button>
-            {pinError ? <span style={{ color: "#ff9b9b", fontSize: 12 }}>{pinError}</span> : null}
+            {pinError ? <span style={{ color: "#ff9b9b", fontSize: 15 }}>{pinError}</span> : null}
           </form>
         </div>
       ) : null}
 
       {loading ? <p className={styles.cardSub}>กำลังโหลด…</p> : null}
-      {error ? <p style={{ color: "#ff9b9b", fontSize: 13 }}>{error}</p> : null}
+      {error ? <p style={{ color: "#ff9b9b", fontSize: 15 }}>{error}</p> : null}
 
       {!loading && !error ? (
         <>
@@ -268,7 +268,7 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
                     >
                       <td>
                         <span className={styles.cellMono}>{u.email}</span>
-                        {u.displayName ? <div style={{ fontSize: 11, color: "#8e8e96" }}>{u.displayName}</div> : null}
+                        {u.displayName ? <div style={{ fontSize: 15, color: "#8e8e96" }}>{u.displayName}</div> : null}
                       </td>
                       <td>{u.plan}</td>
                       <td>{u.emailVerified ? "✓" : "—"}</td>
@@ -278,7 +278,7 @@ export function UsersCrm({ fetchedAt }: { fetchedAt?: string } = {}) {
                     </tr>
                     {openId === u.id ? (
                       <tr>
-                        <td colSpan={6} style={{ color: "#a1a1aa", fontSize: 12 }}>
+                        <td colSpan={6} style={{ color: "#a1a1aa", fontSize: 15 }}>
                           id: <span className={styles.cellMono}>{u.id}</span> · สมาชิก:{" "}
                           {u.subscription ? `${u.subscription.plan} (${u.subscription.status})` : "—"} ·
                           ยืนยันเมื่อ: {u.emailVerified ? fmtDate(u.emailVerified) : "—"}

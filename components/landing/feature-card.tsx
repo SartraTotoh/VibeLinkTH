@@ -29,7 +29,7 @@ export function FeatureCard({ title, description, icon = "auto_awesome", badge }
               borderRadius: 999,
               background: "radial-gradient(120% 120% at 50% 0%, rgba(255, 79, 216, 0.2), rgba(255, 79, 216, 0.05))",
               color: "var(--secondary)",
-              fontSize: 13,
+              fontSize: 15,
               fontWeight: 800,
               boxShadow: "inset 0 1px 1px rgba(255, 255, 255, 0.2)",
             }}
@@ -40,7 +40,7 @@ export function FeatureCard({ title, description, icon = "auto_awesome", badge }
       </div>
       <div>
         <h2 style={{ margin: "0 0 6px", fontSize: 18, fontWeight: 800, color: "#fff" }}>{title}</h2>
-        <p style={{ margin: 0, color: "var(--muted)", fontSize: 14.5, lineHeight: 1.6 }}>{description}</p>
+        <p style={{ margin: 0, color: "var(--muted)", fontSize: 15, lineHeight: 1.6 }}>{description}</p>
       </div>
     </article>
   );

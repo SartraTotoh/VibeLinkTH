@@ -68,14 +68,14 @@
 
 .title {
   margin: 4px 0 0;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   color: #ff9be6;
 }
 
 .bio {
   margin: 10px 0 0;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.7;
   color: #c2caae;
   white-space: pre-wrap;
@@ -130,20 +130,20 @@
 
 .linkBody b {
   display: block;
-  font-size: 14px;
+  font-size: 15px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .linkBody small {
-  font-size: 11.5px;
+  font-size: 15px;
   color: #8c947a;
 }
 
 .linkClicks {
   flex: none;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 800;
   color: #b9ff2c;
   font-variant-numeric: tabular-nums;
@@ -151,7 +151,7 @@
 
 .foot {
   margin-top: 26px;
-  font-size: 11.5px;
+  font-size: 15px;
   color: #8c947a;
 }
 

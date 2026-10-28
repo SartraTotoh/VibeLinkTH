@@ -208,13 +208,13 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
               color: "var(--primary, #b9ff2c)",
             }}
           >
-            <span className="ms" style={{ fontSize: 24 }}>support_agent</span>
+            <span className="ms" style={{ fontSize: 154 }}>support_agent</span>
           </div>
           <div>
-            <h2 style={{ margin: 0, fontSize: 20, fontWeight: 700, color: "#ffffff" }}>
+            <h2 style={{ margin: 0, fontSize: 150, fontWeight: 700, color: "#ffffff" }}>
               ศูนย์ควบคุมการตอบคำถาม (Admin Desk)
             </h2>
-            <div style={{ fontSize: 14, color: "#94a3b8", marginTop: 2 }}>
+            <div style={{ fontSize: 15, color: "#94a3b8", marginTop: 2 }}>
               จัดการเธรดคำถามสมาชิก ตอบกลับโดยตรง และตรวจสอบสถานะระบบ
             </div>
           </div>
@@ -233,13 +233,13 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
             boxShadow: "inset 0 1px 1px rgba(255, 255, 255, 0.12)",
             border: "none",
             color: "#e2e8f0",
-            fontSize: 14,
+            fontSize: 15,
             fontWeight: 700,
             cursor: "pointer",
             fontFamily: "inherit",
           }}
         >
-          <span className="ms" style={{ fontSize: 18, color: "var(--primary, #b9ff2c)" }}>tune</span>
+          <span className="ms" style={{ fontSize: 158, color: "var(--primary, #b9ff2c)" }}>tune</span>
           <span>{settingsOpen ? "ปิดการตั้งค่า" : "ตั้งค่าบอทอัตโนมัติ"}</span>
         </button>
       </div>
@@ -258,8 +258,8 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
         >
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14, flexWrap: "wrap" }}>
             <div>
-              <b style={{ fontSize: 15, color: "#ffffff" }}>Auto-reply Bot</b>
-              <div style={{ fontSize: 14, color: "#94a3b8" }}>ตอบอัตโนมัติทันทีเมื่อข้อความของสมาชิกตรงกับคีย์เวิร์ด</div>
+              <b style={{ fontSize: 155, color: "#ffffff" }}>Auto-reply Bot</b>
+              <div style={{ fontSize: 15, color: "#94a3b8" }}>ตอบอัตโนมัติทันทีเมื่อข้อความของสมาชิกตรงกับคีย์เวิร์ด</div>
             </div>
             <button
               type="button"
@@ -274,7 +274,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                   : "rgba(255, 255, 255, 0.1)",
                 color: feed?.settings?.autoReplyOn ? "#080a0f" : "#94a3b8",
                 fontWeight: 700,
-                fontSize: 14,
+                fontSize: 15,
                 cursor: "pointer",
                 fontFamily: "inherit",
               }}
@@ -285,8 +285,8 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14, flexWrap: "wrap" }}>
             <div>
-              <b style={{ fontSize: 15, color: "#ffffff" }}>แสดงคำถามยอดฮิต (FAQ) บนหน้า /support</b>
-              <div style={{ fontSize: 14, color: "#94a3b8" }}>คำถามที่สมาชิกสามารถคลิกเพื่อถามระบบได้ทันที</div>
+              <b style={{ fontSize: 155, color: "#ffffff" }}>แสดงคำถามยอดฮิต (FAQ) บนหน้า /support</b>
+              <div style={{ fontSize: 15, color: "#94a3b8" }}>คำถามที่สมาชิกสามารถคลิกเพื่อถามระบบได้ทันที</div>
             </div>
             <button
               type="button"
@@ -301,7 +301,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                   : "rgba(255, 255, 255, 0.1)",
                 color: feed?.settings?.faqOn ? "#080a0f" : "#94a3b8",
                 fontWeight: 700,
-                fontSize: 14,
+                fontSize: 15,
                 cursor: "pointer",
                 fontFamily: "inherit",
               }}
@@ -341,14 +341,14 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                 border: "none",
                 background: view === "inbox" ? "rgba(185, 255, 44, 0.18)" : "transparent",
                 color: view === "inbox" ? "var(--primary, #b9ff2c)" : "#94a3b8",
-                fontSize: 14,
+                fontSize: 15,
                 fontWeight: 700,
                 cursor: "pointer",
                 boxShadow: view === "inbox" ? "inset 0 1px 1px rgba(185, 255, 44, 0.3)" : "none",
                 fontFamily: "inherit",
               }}
             >
-              <span className="ms" style={{ fontSize: 16 }}>inbox</span>
+              <span className="ms" style={{ fontSize: 156 }}>inbox</span>
               <span>รอตอบ ({feed ? feed.inboxCount : "…"})</span>
             </button>
 
@@ -365,14 +365,14 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                 border: "none",
                 background: view === "all" ? "rgba(185, 255, 44, 0.18)" : "transparent",
                 color: view === "all" ? "var(--primary, #b9ff2c)" : "#94a3b8",
-                fontSize: 14,
+                fontSize: 15,
                 fontWeight: 700,
                 cursor: "pointer",
                 boxShadow: view === "all" ? "inset 0 1px 1px rgba(185, 255, 44, 0.3)" : "none",
                 fontFamily: "inherit",
               }}
             >
-              <span className="ms" style={{ fontSize: 16 }}>chat</span>
+              <span className="ms" style={{ fontSize: 156 }}>chat</span>
               <span>ทั้งหมด</span>
             </button>
 
@@ -389,14 +389,14 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                 border: "none",
                 background: view === "resolved" ? "rgba(185, 255, 44, 0.18)" : "transparent",
                 color: view === "resolved" ? "var(--primary, #b9ff2c)" : "#94a3b8",
-                fontSize: 14,
+                fontSize: 15,
                 fontWeight: 700,
                 cursor: "pointer",
                 boxShadow: view === "resolved" ? "inset 0 1px 1px rgba(185, 255, 44, 0.3)" : "none",
                 fontFamily: "inherit",
               }}
             >
-              <span className="ms" style={{ fontSize: 16 }}>task_alt</span>
+              <span className="ms" style={{ fontSize: 156 }}>task_alt</span>
               <span>ปิดแล้ว</span>
             </button>
           </div>
@@ -439,7 +439,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                   }}
                 >
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
-                    <b style={{ fontSize: 15, color: isSelected ? "var(--primary, #b9ff2c)" : "#ffffff" }}>
+                    <b style={{ fontSize: 155, color: isSelected ? "var(--primary, #b9ff2c)" : "#ffffff" }}>
                       {tk.user.displayName?.trim() ? tk.user.displayName : tk.user.email}
                     </b>
                     <span
@@ -448,7 +448,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                         borderRadius: 6,
                         background: tk.status === "OPEN" ? "rgba(185, 255, 44, 0.15)" : "rgba(255, 255, 255, 0.08)",
                         color: tk.status === "OPEN" ? "var(--primary, #b9ff2c)" : "#94a3b8",
-                        fontSize: 14,
+                        fontSize: 15,
                         fontWeight: 700,
                       }}
                     >
@@ -456,11 +456,11 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                     </span>
                   </div>
 
-                  <div style={{ fontSize: 14, color: "#cbd5e1", lineHeight: 1.5, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+                  <div style={{ fontSize: 15, color: "#cbd5e1", lineHeight: 1.5, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                     {tk.subjectPreview ?? "(ไม่มีหัวข้อ)"}
                   </div>
 
-                  <div style={{ fontSize: 14, color: "#71717a", display: "flex", alignItems: "center", gap: 8, marginTop: 2 }}>
+                  <div style={{ fontSize: 15, color: "#71717a", display: "flex", alignItems: "center", gap: 8, marginTop: 2 }}>
                     <span>{fmtTime(tk.lastMessageAt)}</span>
                     <span>·</span>
                     <span>{tk.messageCount} ข้อความ</span>
@@ -472,7 +472,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
             })}
 
             {showTickets.length === 0 ? (
-              <div style={{ padding: "32px 20px", textAlign: "center", color: "#94a3b8", fontSize: 14.5 }}>
+              <div style={{ padding: "32px 20px", textAlign: "center", color: "#94a3b8", fontSize: 15 }}>
                 {view === "resolved" ? "ยังไม่มีเธรดที่ปิดแล้ว" : "ไม่มีงานใน Inbox — ทุกเธรดได้รับการดูแลแล้ว"}
               </div>
             ) : null}
@@ -496,10 +496,10 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
               {/* Thread Info Header */}
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
                 <div>
-                  <h3 style={{ margin: 0, fontSize: 18, fontWeight: 700, color: "#ffffff" }}>
+                  <h3 style={{ margin: 0, fontSize: 158, fontWeight: 700, color: "#ffffff" }}>
                     {ticket.user.displayName?.trim() ? ticket.user.displayName : ticket.user.email}
                   </h3>
-                  <div style={{ fontSize: 14, color: "#94a3b8", marginTop: 2 }}>
+                  <div style={{ fontSize: 15, color: "#94a3b8", marginTop: 2 }}>
                     {ticket.user.email} · แผน {ticket.user.plan} {ticket.user.vibeSlug ? `· /${ticket.user.vibeSlug}` : ""}
                   </div>
                 </div>
@@ -520,13 +520,13 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                         background: "radial-gradient(120% 120% at 30% 20%, rgba(185, 255, 44, 0.2), rgba(185, 255, 44, 0.05))",
                         color: "var(--primary, #b9ff2c)",
                         boxShadow: "inset 0 1px 1px rgba(185, 255, 44, 0.3)",
-                        fontSize: 14,
+                        fontSize: 15,
                         fontWeight: 700,
                         cursor: "pointer",
                         fontFamily: "inherit",
                       }}
                     >
-                      <span className="ms" style={{ fontSize: 16 }}>check</span>
+                      <span className="ms" style={{ fontSize: 156 }}>check</span>
                       <span>ปิดงาน</span>
                     </button>
                   ) : (
@@ -544,13 +544,13 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                         background: "rgba(255, 255, 255, 0.08)",
                         color: "#ffffff",
                         boxShadow: "inset 0 1px 1px rgba(255, 255, 255, 0.12)",
-                        fontSize: 14,
+                        fontSize: 15,
                         fontWeight: 700,
                         cursor: "pointer",
                         fontFamily: "inherit",
                       }}
                     >
-                      <span className="ms" style={{ fontSize: 16 }}>replay</span>
+                      <span className="ms" style={{ fontSize: 156 }}>replay</span>
                       <span>เปิดใหม่</span>
                     </button>
                   )}
@@ -584,12 +584,12 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                       borderRadius: 14,
                       padding: "12px 16px",
                       maxWidth: "85%",
-                      fontSize: 14.5,
+                      fontSize: 15,
                       lineHeight: 1.6,
                       whiteSpace: "pre-wrap",
                     }}
                   >
-                    <div style={{ fontSize: 14, opacity: 0.7, marginBottom: 4, display: "flex", alignItems: "center", gap: 6 }}>
+                    <div style={{ fontSize: 15, opacity: 0.7, marginBottom: 4, display: "flex", alignItems: "center", gap: 6 }}>
                       <span>{m.sender === "ADMIN" ? "ทีมงาน" : m.sender === "MEMBER" ? "สมาชิก" : "VibeLink AI Bot"}</span>
                       <span>·</span>
                       <span>{fmtTime(m.createdAt)}</span>
@@ -621,7 +621,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                       border: "none",
                       boxShadow: "inset 0 1px 1px rgba(255, 255, 255, 0.08)",
                       color: "#ffffff",
-                      fontSize: 14.5,
+                      fontSize: 15,
                       padding: "10px 14px",
                       resize: "none",
                       fontFamily: "inherit",
@@ -640,7 +640,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                       background: "radial-gradient(120% 120% at 30% 20%, #d4ff6b 0%, var(--primary, #b9ff2c) 100%)",
                       color: "#080a0f",
                       fontWeight: 700,
-                      fontSize: 14,
+                      fontSize: 15,
                       cursor: busy || !draft.trim() ? "default" : "pointer",
                       boxShadow: "0 0 16px rgba(185, 255, 44, 0.3)",
                       display: "inline-flex",
@@ -649,13 +649,13 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                       fontFamily: "inherit",
                     }}
                   >
-                    <span className="ms" style={{ fontSize: 16 }}>send</span>
+                    <span className="ms" style={{ fontSize: 156 }}>send</span>
                     <span>ส่ง</span>
                   </button>
                 </div>
               ) : null}
 
-              {error ? <p style={{ margin: 0, color: "#fca5a5", fontSize: 14 }}>{error}</p> : null}
+              {error ? <p style={{ margin: 0, color: "#fca5a5", fontSize: 15 }}>{error}</p> : null}
             </div>
           ) : (
             <div
@@ -666,7 +666,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                 padding: "48px 24px",
                 textAlign: "center",
                 color: "#94a3b8",
-                fontSize: 15,
+                fontSize: 155,
               }}
             >
               เลือกเธรดจากคอลัมน์ซ้ายเพื่อเริ่มอ่านและตอบกลับคำถาม

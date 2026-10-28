@@ -28,7 +28,7 @@
   background: transparent;
   color: var(--muted);
   font-family: inherit;
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 800;
   cursor: pointer;
   white-space: nowrap;
@@ -74,7 +74,7 @@
 
 .paneSub {
   margin: 0;
-  font-size: 14.5px;
+  font-size: 15px;
   color: var(--muted);
   line-height: 1.6;
 }
@@ -99,7 +99,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
   color: var(--muted);
 }
@@ -122,7 +122,7 @@
 .kpiSub {
   display: block;
   margin-top: 6px;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--faint);
 }
 
@@ -130,7 +130,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
 }
 
@@ -189,7 +189,7 @@
 }
 
 .barDay {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--faint);
   white-space: nowrap;
 }
@@ -209,7 +209,7 @@
 }
 
 .sparkHint {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--muted);
 }
 
@@ -227,7 +227,7 @@
 }
 
 .breakName {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
   color: var(--text);
   white-space: nowrap;
@@ -250,7 +250,7 @@
 }
 
 .breakVal {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
   text-align: right;
   color: #fff;
@@ -281,7 +281,7 @@
 
 .recentRow .rt b {
   display: block;
-  font-size: 14.5px;
+  font-size: 15px;
   color: #fff;
   font-weight: 800;
   white-space: nowrap;
@@ -290,7 +290,7 @@
 }
 
 .recentRow .rt small {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--faint);
 }
 
@@ -328,7 +328,7 @@
 }
 
 .perfMain small {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--faint);
   white-space: nowrap;
   overflow: hidden;
@@ -345,13 +345,13 @@
 
 .perfNum small {
   display: block;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--faint);
   font-weight: 600;
 }
 
 .perfTrend {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
@@ -363,7 +363,7 @@
   justify-content: center;
   padding: 4px 12px;
   border-radius: 999px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
   border: none;
   background: radial-gradient(120% 120% at 50% 0%, rgba(146, 112, 255, 0.22), rgba(146, 112, 255, 0.06));
@@ -415,7 +415,7 @@
 
 .campNote {
   margin: 10px 0 0;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--faint);
 }
 
@@ -463,14 +463,14 @@
 
 .vibeTitle {
   margin: 0;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--secondary-soft);
 }
 
 .vibeBio {
   margin: 8px 0 0;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.6;
   color: var(--muted);
 }
@@ -491,7 +491,7 @@
   background: radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.14);
   color: #fff;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 800;
   text-decoration: none;
   transition: all 0.2s ease;
@@ -504,7 +504,7 @@
 }
 
 .vibeUrl {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--faint);
 }
 
@@ -531,7 +531,7 @@
   background: var(--input);
   color: var(--text);
   font: inherit;
-  font-size: 14.5px;
+  font-size: 15px;
   outline: none;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }

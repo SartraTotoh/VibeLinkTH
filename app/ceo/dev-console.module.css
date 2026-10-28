@@ -72,7 +72,7 @@
   padding: 5px 12px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 999px;
-  font-size: 11px;
+  font-size: 15px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #a1a1aa;
@@ -81,7 +81,7 @@
 }
 
 .kicker .ms {
-  font-size: 14px;
+  font-size: 15px;
   color: #9270ff;
 }
 
@@ -105,7 +105,7 @@
   max-width: 640px;
   margin: 0;
   color: #a1a1aa;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.6;
 }
 
@@ -118,7 +118,7 @@
 
 .meta .status-pill {
   padding: 5px 10px;
-  font-size: 11px;
+  font-size: 15px;
   white-space: nowrap;
 }
 
@@ -128,17 +128,17 @@
   }
   .kicker {
     padding: 4px 10px;
-    font-size: 10px;
+    font-size: 15px;
   }
   .kicker .ms {
-    font-size: 13px;
+    font-size: 15px;
   }
   .title {
     margin: 10px 0 6px;
     font-size: clamp(28px, 8vw, 48px);
   }
   .sub {
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1.55;
   }
   .meta {
@@ -149,7 +149,7 @@
     flex: 1;
     text-align: center;
     padding: 6px 4px;
-    font-size: 10px;
+    font-size: 15px;
   }
 }
 
@@ -217,7 +217,7 @@
 
 .zoneTitle i {
   font-style: normal;
-  font-size: 12.5px;
+  font-size: 15px;
   color: #8e8e96;
 }
 
@@ -230,13 +230,13 @@
   border-radius: 99px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(0, 0, 0, 0.35);
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 700;
   color: #c9c9cf;
 }
 
 .zoneQ .ms {
-  font-size: 14px;
+  font-size: 15px;
   color: #8e8e96;
 }
 
@@ -294,7 +294,7 @@
 
 .cardSub {
   margin: 4px 0 16px 30px;
-  font-size: 13px;
+  font-size: 15px;
   color: #8e8e96;
   line-height: 1.6;
 }
@@ -325,7 +325,7 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 600;
   color: #8e8e96;
 }
@@ -379,7 +379,7 @@
 
 .crowKey b {
   display: block;
-  font-size: 11.5px;
+  font-size: 15px;
   letter-spacing: 0.05em;
   color: #8e8e96;
   font-weight: 700;
@@ -395,7 +395,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   font-family: ui-monospace, "Cascadia Code", "JetBrains Mono", Menlo, Consolas, var(--font-noto-thai), "Noto Sans Thai", monospace;
-  font-size: 12px;
+  font-size: 15px;
   color: #e4e4e7;
   text-align: right;
 }
@@ -434,7 +434,7 @@
   background: none;
   color: #a1a1aa;
   font: inherit;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 800;
   cursor: pointer;
   white-space: nowrap;
@@ -474,7 +474,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   font-family: ui-monospace, "Cascadia Code", "JetBrains Mono", Menlo, Consolas, var(--font-noto-thai), "Noto Sans Thai", monospace;
-  font-size: 12.5px;
+  font-size: 15px;
   color: #fff;
   background: rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.09);
@@ -492,7 +492,7 @@
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.03);
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 700;
   color: #d4d4d8;
 }
@@ -523,7 +523,7 @@
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.03);
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 700;
   color: #d4d4d8;
 }
@@ -599,14 +599,14 @@
 
 .vaultMeta b {
   display: block;
-  font-size: 13.5px;
+  font-size: 15px;
   color: #fff;
 }
 
 .vaultMeta small {
   display: block;
   margin-top: 2px;
-  font-size: 11.5px;
+  font-size: 15px;
   color: #71717a;
 }
 
@@ -620,7 +620,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   font-family: ui-monospace, "Cascadia Code", "JetBrains Mono", Menlo, Consolas, var(--font-noto-thai), "Noto Sans Thai", monospace;
-  font-size: 12.5px;
+  font-size: 15px;
   color: #38bdf8;
   background: rgba(56, 189, 248, 0.07);
   border: 1px solid rgba(56, 189, 248, 0.16);
@@ -687,14 +687,14 @@
 .step b {
   display: block;
   margin-top: 8px;
-  font-size: 12.5px;
+  font-size: 15px;
   color: #fff;
 }
 
 .step small {
   display: block;
   margin-top: 2px;
-  font-size: 11px;
+  font-size: 15px;
   color: #71717a;
 }
 
@@ -757,7 +757,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 12.5px;
+  font-size: 15px;
   min-width: 640px;
 }
 
@@ -767,7 +767,7 @@
   color: #8e8e96;
   font-weight: 700;
   text-transform: uppercase;
-  font-size: 11px;
+  font-size: 15px;
   letter-spacing: 0.08em;
   background: rgba(255, 255, 255, 0.04);
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
@@ -790,7 +790,7 @@
 
 .cellMono {
   font-family: ui-monospace, "Cascadia Code", "JetBrains Mono", Menlo, Consolas, var(--font-noto-thai), "Noto Sans Thai", monospace;
-  font-size: 12px;
+  font-size: 15px;
   color: #e4e4e7;
   word-break: break-all;
 }
@@ -814,7 +814,7 @@
 
 .kv b {
   display: block;
-  font-size: 12px;
+  font-size: 15px;
   letter-spacing: 0.06em;
   color: #8e8e96;
   font-weight: 700;
@@ -823,7 +823,7 @@
 .kv span {
   display: block;
   margin-top: 2px;
-  font-size: 13px;
+  font-size: 15px;
   color: #fff;
   word-break: break-all;
 }
@@ -852,7 +852,7 @@
   border: 1px solid rgba(255, 255, 255, 0.07);
   background: rgba(255, 255, 255, 0.02);
   color: #fff;
-  font-size: 13.5px;
+  font-size: 15px;
   font-weight: 700;
   transition: all 0.2s ease;
 }
@@ -895,7 +895,7 @@
 }
 
 .linkText b {
-  font-size: 13.5px;
+  font-size: 15px;
   font-weight: 700;
   color: #fff;
   white-space: nowrap;
@@ -904,7 +904,7 @@
 }
 
 .linkText small {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 400;
   color: #8e8e96;
   line-height: 1.45;
@@ -934,7 +934,7 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(0, 0, 0, 0.4);
   color: #fff;
-  font-size: 13px;
+  font-size: 15px;
   font-family: inherit;
   outline: none;
 }
@@ -949,7 +949,7 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(0, 0, 0, 0.4);
   color: #fff;
-  font-size: 13px;
+  font-size: 15px;
   font-family: inherit;
 }
 
@@ -979,7 +979,7 @@
   gap: 10px;
   flex-wrap: wrap;
   margin-top: 10px;
-  font-size: 12px;
+  font-size: 15px;
   color: #8e8e96;
 }
 
@@ -1008,7 +1008,7 @@
 }
 
 .chip small {
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -1016,7 +1016,7 @@
 }
 
 .chip b {
-  font-size: 12.5px;
+  font-size: 15px;
   font-variant-numeric: tabular-nums;
 }
 
@@ -1103,7 +1103,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(0, 0, 0, 0.4);
   color: #fff;
-  font-size: 12.5px;
+  font-size: 15px;
   font-family: inherit;
   outline: none;
 }
@@ -1137,7 +1137,7 @@
   background: none;
   color: #d4d4d8;
   font: inherit;
-  font-size: 13px;
+  font-size: 15px;
   text-align: left;
   cursor: pointer;
 }
@@ -1161,7 +1161,7 @@
 
 .cmdresult small {
   flex: none;
-  font-size: 10.5px;
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1171,7 +1171,7 @@
 .cmdempty {
   display: block;
   padding: 9px 11px;
-  font-size: 12px;
+  font-size: 15px;
   color: #71717a;
 }
 
@@ -1201,7 +1201,7 @@
   background: rgba(255, 255, 255, 0.03);
   color: #a1a1aa;
   font: inherit;
-  font-size: 12.5px;
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: 0.03em;
   cursor: pointer;
@@ -1249,7 +1249,7 @@
 
 .breakdown h3 {
   margin: 0 0 10px;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: 0.04em;
   color: #a1a1aa;
@@ -1271,7 +1271,7 @@
 }
 
 .bname {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 700;
   color: #e4e4e7;
 }
@@ -1291,7 +1291,7 @@
 }
 
 .bnum {
-  font-size: 12px;
+  font-size: 15px;
   font-variant-numeric: tabular-nums;
   color: #a1a1aa;
   text-align: right;
@@ -1346,7 +1346,7 @@
   border-radius: 12px;
   border: 1px solid rgba(185, 255, 44, 0.2);
   background: rgba(185, 255, 44, 0.05);
-  font-size: 13.5px;
+  font-size: 15px;
   line-height: 1.65;
   color: #e4e4e7;
 }
@@ -1360,7 +1360,7 @@
   margin: 14px 0 0;
   padding-top: 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
-  font-size: 11px;
+  font-size: 15px;
   line-height: 1.6;
   color: #71717a;
 }
@@ -1405,14 +1405,14 @@
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.09);
   background: rgba(255, 255, 255, 0.03);
-  font-size: 11.5px;
+  font-size: 15px;
   font-weight: 700;
   color: #d4d4d8;
   white-space: nowrap;
 }
 
 .revPeriod .ms {
-  font-size: 14px;
+  font-size: 15px;
   color: #9270ff;
 }
 
@@ -1436,7 +1436,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 600;
   color: #8e8e96;
 }
@@ -1454,7 +1454,7 @@
 .revTrendRow {
   display: block;
   margin-top: 4px;
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .trend {
@@ -1485,7 +1485,7 @@
 .sparkEmpty {
   display: block;
   margin-top: 8px;
-  font-size: 12px;
+  font-size: 15px;
   color: #52525b;
 }
 
@@ -1502,7 +1502,7 @@
 
 .secLabel {
   margin: 0 0 10px;
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -1511,7 +1511,7 @@
 
 .revNote {
   margin: 8px 0 0;
-  font-size: 11.5px;
+  font-size: 15px;
   line-height: 1.55;
   color: #71717a;
 }
@@ -1534,7 +1534,7 @@
 
 .fstep b {
   display: block;
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: 0.04em;
   color: #8e8e96;
@@ -1551,7 +1551,7 @@
 .fstep small {
   display: block;
   margin-top: 2px;
-  font-size: 10.5px;
+  font-size: 15px;
   color: #52525b;
 }
 
@@ -1570,7 +1570,7 @@
 }
 
 .fconn small {
-  font-size: 10.5px;
+  font-size: 15px;
   color: #52525b;
   font-variant-numeric: tabular-nums;
 }
@@ -1639,12 +1639,12 @@
 }
 
 .insightBody b {
-  font-size: 13.5px;
+  font-size: 15px;
   color: #fff;
 }
 
 .insightBody small {
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1.5;
   color: #8e8e96;
 }
@@ -1660,13 +1660,13 @@
   background: none;
   color: #9270ff;
   font: inherit;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 800;
   cursor: pointer;
 }
 
 .insightAction .ms {
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .insightAction:hover {
@@ -1691,7 +1691,7 @@
 }
 
 .barName {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 700;
   color: #e4e4e7;
 }
@@ -1711,7 +1711,7 @@
 }
 
 .barNum {
-  font-size: 12px;
+  font-size: 15px;
   font-variant-numeric: tabular-nums;
   color: #a1a1aa;
   text-align: right;
@@ -1741,12 +1741,12 @@
 }
 
 .kvRow span {
-  font-size: 13px;
+  font-size: 15px;
   color: #d4d4d8;
 }
 
 .kvRow b {
-  font-size: 13px;
+  font-size: 15px;
   color: #fff;
   font-variant-numeric: tabular-nums;
 }
@@ -1777,7 +1777,7 @@
 .retBlock > small {
   display: block;
   margin-top: 2px;
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: 0.08em;
   color: #8e8e96;
@@ -1786,7 +1786,7 @@
 .retBlock > span {
   display: block;
   margin-top: 6px;
-  font-size: 11.5px;
+  font-size: 15px;
   line-height: 1.5;
   color: #71717a;
 }
@@ -1844,13 +1844,13 @@
 }
 
 .exBody b {
-  font-size: 13.5px;
+  font-size: 15px;
   color: #e4e4e7;
 }
 
 .exBody i {
   font-style: normal;
-  font-size: 12px;
+  font-size: 15px;
   color: #8e8e96;
   line-height: 1.5;
 }
@@ -1861,7 +1861,7 @@
   border-radius: 99px;
   border: 1px solid rgba(146, 112, 255, 0.45);
   color: #bea6ff;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 800;
   text-decoration: none;
   white-space: nowrap;
@@ -1902,7 +1902,7 @@
   background: rgba(0, 0, 0, 0.4);
   color: #fff;
   font: inherit;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .devInput:focus {
@@ -1923,7 +1923,7 @@
   margin: 0;
   padding: 10px 12px;
   border-radius: 10px;
-  font-size: 12.5px;
+  font-size: 15px;
   line-height: 1.5;
 }
 
@@ -1946,7 +1946,7 @@
   margin: 0;
   padding: 10px 12px;
   border-radius: 10px;
-  font-size: 12.5px;
+  font-size: 15px;
   line-height: 1.5;
   border: 1px solid rgba(255, 125, 125, 0.4);
   color: #ff9b9b;
@@ -1982,7 +1982,7 @@
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 800;
   color: #090a0c;
   background: #9270ff;
@@ -2000,7 +2000,7 @@
   grid-column: 2;
   justify-self: start;
   margin-top: 2px;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 700;
   color: #9270ff;
   display: inline-flex;
@@ -2019,12 +2019,12 @@
 }
 
 .ordered b {
-  font-size: 13.5px;
+  font-size: 15px;
   color: #e4e4e7;
 }
 
 .ordered span {
-  font-size: 12px;
+  font-size: 15px;
   color: #8e8e96;
   line-height: 1.55;
 }
@@ -2033,7 +2033,7 @@
   display: inline-block;
   padding: 1px 7px;
   border-radius: 99px;
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -2063,7 +2063,7 @@
 }
 
 .fresh .ms {
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .freshLink {
@@ -2076,7 +2076,7 @@
 }
 
 .freshLink .ms {
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .freshLink:hover {
@@ -2094,7 +2094,7 @@
   margin-top: 26px;
   padding: 18px 4px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.07);
-  font-size: 12px;
+  font-size: 15px;
   color: #71717a;
 }
 
@@ -2141,7 +2141,7 @@
 
 .navActions .pill {
   padding: 6px 12px;
-  font-size: 11px;
+  font-size: 15px;
   white-space: nowrap;
 }
 
@@ -2151,7 +2151,7 @@
     padding: 10px 0;
   }
   .brand {
-    font-size: 14px;
+    font-size: 15px;
     gap: 6px;
   }
   .brand img {
@@ -2168,7 +2168,7 @@
     text-align: center;
     justify-content: center;
     padding: 8px 6px;
-    font-size: 10.5px;
+    font-size: 15px;
   }
   .stats {
     grid-template-columns: 1fr;
@@ -2179,11 +2179,11 @@
     padding: 14px;
   }
   .stat small {
-    font-size: 11px;
+    font-size: 15px;
     gap: 5px;
   }
   .stat small .ms {
-    font-size: 14px;
+    font-size: 15px;
   }
   .stat b {
     font-size: 26px;
@@ -2233,12 +2233,12 @@
     min-width: 0;
     min-height: 40px;
     padding: 8px 10px !important;
-    font-size: 12px;
+    font-size: 15px;
   }
   .confirmNote,
   .resultNote,
   .errorNote {
-    font-size: 12px;
+    font-size: 15px;
     padding: 10px;
   }
   .kv > div[style*="minWidth: 0"] {
@@ -2260,10 +2260,10 @@
     font-size: 17px !important;
   }
   .linkText b {
-    font-size: 13px;
+    font-size: 15px;
   }
   .linkText small {
-    font-size: 11.5px;
+    font-size: 15px;
     white-space: normal;
   }
   .linkGo {
@@ -2285,7 +2285,7 @@
   }
   .cardSub {
     margin: 4px 0 12px 28px;
-    font-size: 12px;
+    font-size: 15px;
   }
   /* Zone head */
   .zoneHead {
@@ -2298,11 +2298,11 @@
     font-size: 18px;
   }
   .zoneTitle i {
-    font-size: 11.5px;
+    font-size: 15px;
   }
   .zoneQ {
     padding: 4px 10px;
-    font-size: 11px;
+    font-size: 15px;
   }
   .zoneBody {
     padding: 4px 16px 20px;
@@ -2312,10 +2312,10 @@
     padding: 12px 8px;
   }
   .step b {
-    font-size: 11.5px;
+    font-size: 15px;
   }
   .step small {
-    font-size: 10px;
+    font-size: 15px;
   }
   /* Vault row */
   .vaultRow {
@@ -2337,15 +2337,15 @@
     max-width: 40%;
   }
   .crowKey b {
-    font-size: 10.5px;
+    font-size: 15px;
   }
   .crowVal {
-    font-size: 11.5px;
+    font-size: 15px;
   }
   /* Tabs */
   .tab {
     min-height: 44px;
-    font-size: 12.5px;
+    font-size: 15px;
     padding: 9px 8px;
   }
   .tab .ms {
@@ -2353,17 +2353,17 @@
   }
   /* Deploy command row */
   .cmdRow code {
-    font-size: 11.5px;
+    font-size: 15px;
     padding: 8px 10px;
   }
   .vaultMeta b {
-    font-size: 12.5px;
+    font-size: 15px;
   }
   .vaultMeta small {
-    font-size: 11px;
+    font-size: 15px;
   }
   .secretValue {
-    font-size: 11.5px;
+    font-size: 15px;
     padding: 6px 10px;
   }
   .ghostBtn {
@@ -2376,27 +2376,27 @@
   /* Chips */
   .chip {
     padding: 6px 10px;
-    font-size: 11px;
+    font-size: 15px;
   }
   .chip .ms {
-    font-size: 13px;
+    font-size: 15px;
   }
   .chip small {
-    font-size: 10px;
+    font-size: 15px;
   }
   .chip b {
-    font-size: 11.5px;
+    font-size: 15px;
   }
   /* Table */
   .table {
-    font-size: 11.5px;
+    font-size: 15px;
   }
   .table th,
   .table td {
     padding: 9px 10px;
   }
   .cellMono {
-    font-size: 11px;
+    font-size: 15px;
   }
   /* Pager */
   .pager {
@@ -2433,7 +2433,7 @@
   }
   .cmdsearch input[type="search"] {
     padding: 8px 10px;
-    font-size: 12px;
+    font-size: 15px;
   }
   .cmdresults {
     left: 18px;
@@ -2447,10 +2447,10 @@
     flex: 1 0 auto;
     min-width: fit-content;
     padding: 8px 10px;
-    font-size: 11.5px;
+    font-size: 15px;
   }
   .zonepill .ms {
-    font-size: 13px;
+    font-size: 15px;
   }
   /* Footer */
   .foot {
@@ -2458,7 +2458,7 @@
     align-items: flex-start;
     gap: 6px;
     padding: 14px 2px 0;
-    font-size: 11px;
+    font-size: 15px;
   }
   /* Revenue Performance */
   .rev {

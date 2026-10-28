@@ -540,33 +540,28 @@ export function QrStudio() {
   return (
     <main className={`shell ${styles.page}`}>
       <nav className="nav">
-        <Link href="https://vibelinkth.com/" className="brand">
+        <Link href="/" className="brand">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo.png" alt="" />
           Vibe<span>Link</span>
         </Link>
-        <div className={styles.navActions}>
+        <div className="dash-actions">
           <NavLangSwitcher />
-          <Link href="https://vibelinkth.com/" className={styles.homeLink}>
-            {lang === "th" ? "รู้จัก VibeLink" : "Explore VibeLink"}
-          </Link>
           <Link href="/dashboard" className="mini-btn">
             <span className="ms">dashboard</span>
-            {t("nav.dashboard")}
+            {lang === "th" ? "แดชบอร์ด" : "Dashboard"}
+          </Link>
+          <Link href="/support" className="mini-btn">
+            <span className="ms">help</span>
+            {lang === "th" ? "ช่วยเหลือ" : "Support"}
           </Link>
         </div>
       </nav>
 
       <header className={styles.hero}>
-        <span className={styles.brandKicker}>✳ MAKE IT YOUR VIBE · VIBELINKTH</span>
+        <span className={styles.brandKicker}>✳ QR STUDIO · VIBELINK</span>
         <h1>{t("hero.title")}</h1>
         <p>{t("hero.sub")}</p>
-        <div className={styles.relatedPath}>
-          <span>{lang === "th" ? "แต่ง QR ให้มีซีน → เช็กให้ชัวร์ → แชร์ไปให้สุด" : "Free QR → Vibe Page / VibeBook → Short Link and Analytics"}</span>
-          <Link href="https://vibelinkth.com/#growth-cases">
-            {lang === "th" ? "สแกนแล้วไปต่อยังไง? รู้จัก VibeLink ↗" : "Explore the VibeLink toolkit ↗"}
-          </Link>
-        </div>
       </header>
 
       <div className={styles.studio}>

@@ -1,17 +1,26 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Inter, Noto_Sans_Thai } from "next/font/google";
+import { IBM_Plex_Sans, IBM_Plex_Sans_Thai, IBM_Plex_Mono } from "next/font/google";
 import { CookieBanner } from "@/components/consent/cookie-banner";
 
-const inter = Inter({
+const ibmSans = IBM_Plex_Sans({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-ibm-sans",
   display: "swap",
 });
 
-const notoThai = Noto_Sans_Thai({
-  subsets: ["latin", "thai"],
-  variable: "--font-noto-thai",
+const ibmSansThai = IBM_Plex_Sans_Thai({
+  subsets: ["thai", "latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-ibm-sans-thai",
+  display: "swap",
+});
+
+const ibmMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-ibm-mono",
   display: "swap",
 });
 
@@ -57,12 +66,18 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="th">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+          rel="stylesheet"
+        />
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
           rel="stylesheet"
         />
       </head>
-      <body className={`${inter.variable} ${notoThai.variable}`}>
+      <body className={`${ibmSans.variable} ${ibmSansThai.variable} ${ibmMono.variable}`}>
         {children}
         <CookieBanner />
       </body>

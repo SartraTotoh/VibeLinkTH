@@ -191,7 +191,7 @@ export function RulesManagerModule() {
     hint?: string,
   ) => (
     <label style={{ display: "grid", gap: 4, minWidth: 0 }}>
-      <b style={{ fontSize: 12, color: "#8e8e96", textTransform: "uppercase", letterSpacing: "0.05em" }}>{label}</b>
+      <b style={{ fontSize: 15, color: "#8e8e96", textTransform: "uppercase", letterSpacing: "0.05em" }}>{label}</b>
       {textarea ? (
         <textarea
           className={styles.devInput}
@@ -207,7 +207,7 @@ export function RulesManagerModule() {
         />
       )}
       {hint ? (
-        <span style={{ fontSize: 11, color: "#71717a", lineHeight: 1.5 }}>{hint}</span>
+        <span style={{ fontSize: 15, color: "#71717a", lineHeight: 1.5 }}>{hint}</span>
       ) : null}
     </label>
   );
@@ -238,7 +238,7 @@ export function RulesManagerModule() {
         <div className={styles.stack} style={{ marginTop: 12, padding: 14, border: "1px solid rgba(146,112,255,0.35)", borderRadius: 14 }}>
           <div className={styles.cardHead}>
             <span className="ms">edit_note</span>
-            <h2 style={{ fontSize: 15 }}>{creating ? "กฎใหม่" : "แก้ไขกฎ"}</h2>
+            <h2 style={{ fontSize: 155 }}>{creating ? "กฎใหม่" : "แก้ไขกฎ"}</h2>
             <button
               type="button"
               className={styles.ghostBtn}
@@ -259,7 +259,7 @@ export function RulesManagerModule() {
                 checked={editing.enabled}
                 onChange={(e) => setEditing((v) => (v ? { ...v, enabled: e.target.checked } : v))}
               />
-              <b style={{ fontSize: 12.5, color: "#d4d4d8" }}>เปิดใช้งานกฎนี้</b>
+              <b style={{ fontSize: 15, color: "#d4d4d8" }}>เปิดใช้งานกฎนี้</b>
             </label>
             {field("คำตอบภาษาไทย", "replyTh", true)}
             {field("คำตอบภาษาอังกฤษ", "replyEn", true)}
@@ -282,11 +282,11 @@ export function RulesManagerModule() {
               <b>
                 P{r.priority} · {r.category} · {r.enabled ? "เปิด" : "ปิด"} · ใช้ {r.hitCount} ครั้ง
               </b>
-              <span style={{ color: "#b9ff2c", fontSize: 11.5, marginTop: 3 }}>ค: {r.keywords}</span>
-              <div style={{ fontSize: 12.5, color: "#d4d4d8", lineHeight: 1.55, marginTop: 3 }}>
+              <span style={{ color: "#b9ff2c", fontSize: 15, marginTop: 3 }}>ค: {r.keywords}</span>
+              <div style={{ fontSize: 15, color: "#d4d4d8", lineHeight: 1.55, marginTop: 3 }}>
                 <span className={styles.cellMono}>TH</span> {r.replyTh}
               </div>
-              <div style={{ fontSize: 12.5, color: "#a1a1aa", lineHeight: 1.55, marginTop: 3 }}>
+              <div style={{ fontSize: 15, color: "#a1a1aa", lineHeight: 1.55, marginTop: 3 }}>
                 <span className={styles.cellMono}>EN</span> {r.replyEn}
               </div>
             </div>
