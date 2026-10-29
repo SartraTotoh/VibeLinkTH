@@ -28,14 +28,16 @@
     "@prisma/client": "^6.16.2",
     "bcryptjs": "^3.0.3",
     "jsqr": "^1.4.0",
+    "livekit-client": "^2.23.0",
+    "livekit-server-sdk": "^2.19.2",
     "next": "^15.5.28",
     "next-auth": "^5.0.0-beta.32",
     "qrcode": "^1.5.4",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "sharp": "^0.35.5",
     "stripe": "^22.6.2",
-    "zod": "^4.6.7",
-    "sharp": "^0.35.5"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",

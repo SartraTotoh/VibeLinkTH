@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { publicShow } from "@/lib/live/store.server";
 
 export async function GET() {
   const session = await auth();
@@ -51,6 +52,7 @@ export async function GET() {
     subscription,
     links,
     events,
+    liveShows: process.env.LIVE_SCHEMA_READY === "true" ? (await prisma.liveShow.findMany({ where: { userId: session.user.id }, include: { output: true }, orderBy: { createdAt: "desc" } })).map(publicShow) : [],
     note: "ไฟล์นี้เป็นสำเนาข้อมูลส่วนบุคคลของคุณจาก VibeLink",
   };
 

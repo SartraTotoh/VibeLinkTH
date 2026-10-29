@@ -3,10 +3,12 @@ import { act, create, type ReactTestRenderer } from "react-test-renderer";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { LiveStudio } from "../components/live/live-studio";
 
+vi.mock("../components/live/cloud-output", () => ({ CloudOutput: () => React.createElement("button", {disabled: true}, "ส่งไลฟ์ · รอเปิดบริการทดสอบ") }));
 vi.mock("next/link", () => ({ default: (props: Record<string, unknown>) => React.createElement("a", props) }));
 class Track {
   enabled = true; readyState = "live"; onended: (() => void) | null = null;
   constructor(public kind: string) {}
+  getSettings() { return {}; }
   stop = vi.fn(() => { this.readyState = "ended"; });
   clone() { const t = new Track(this.kind); t.enabled = this.enabled; return t; }
 }
@@ -31,6 +33,7 @@ class Recorder {
 let ui: ReactTestRenderer | undefined;
 let host: Stream;
 let captured: Stream;
+let audioInput: Stream;
 let getUserMedia: ReturnType<typeof vi.fn>;
 let listeners: Record<string, () => void>;
 let local: Map<string, string>;
@@ -41,8 +44,8 @@ const button = (text: string) => ui!.root.findAllByType("button").find(b => chil
 beforeEach(() => {
   vi.useFakeTimers(); vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
   local = new Map(); listeners = {}; hidden = false;
-  host = new Stream([new Track("video"), new Track("audio")]); captured = new Stream([new Track("video")]);
-  getUserMedia = vi.fn(async () => host);
+  host = new Stream([new Track("video")]); audioInput = new Stream([new Track("audio")]); captured = new Stream([new Track("video")]);
+  getUserMedia = vi.fn(async (constraints: {video: unknown}) => constraints.video === false ? audioInput : host);
   vi.stubGlobal("navigator", { mediaDevices: { getUserMedia, enumerateDevices: async () => [] } });
   vi.stubGlobal("localStorage", { getItem: (k: string) => local.get(k) ?? null, setItem: (k: string, v: string) => local.set(k, v) });
   vi.stubGlobal("document", { get hidden() { return hidden; }, addEventListener: (e: string, fn: () => void) => { listeners[e] = fn; }, removeEventListener: vi.fn() });
@@ -61,7 +64,7 @@ async function mount() {
     } });
   });
 }
-async function openHost() { await act(async () => button("เปิดกล้อง").props.onClick()); }
+async function openHost() { await act(async () => button("เปิด Source").props.onClick()); }
 
 describe("Live device and recording lifecycle", () => {
   it("does not ask for camera access or enable streaming on load", async () => {
@@ -73,27 +76,28 @@ describe("Live device and recording lifecycle", () => {
     let resolve!: (s: Stream) => void;
     getUserMedia.mockImplementation(() => new Promise(r => { resolve = r; }));
     await mount(); await openHost();
-    await act(async () => button("ปิดกล้องและไมค์ทั้งหมด").props.onClick());
+    await act(async () => button("ปิดภาพและเสียงทั้งหมด").props.onClick());
     await act(async () => resolve(host));
     expect(host.getTracks().every(t => t.stop.mock.calls.length === 1)).toBe(true);
     expect(button("เริ่มบันทึกซ้อม").props.disabled).toBe(true);
   });
   it("records only the host audio, follows mute changes and releases captured tracks on stop", async () => {
-    await mount(); await openHost(); await act(async () => button("เริ่มบันทึกซ้อม").props.onClick());
+    await mount(); await openHost(); await act(async () => button("เปิดแหล่งเสียง").props.onClick()); await act(async () => button("เริ่มบันทึกซ้อม").props.onClick());
     expect(Recorder.last.stream.getAudioTracks()).toHaveLength(1);
-    expect(ui!.root.findAllByType("select").every(n => n.props.disabled)).toBe(true);
+    expect(ui!.root.findByProps({"aria-label":"เลือก Source A"}).props.disabled).toBe(true);
     await act(async () => button("ปิดไมค์").props.onClick());
-    expect(host.getAudioTracks()[0].enabled).toBe(false); expect(captured.getAudioTracks()[0].enabled).toBe(false);
+    expect(audioInput.getAudioTracks()[0].enabled).toBe(false); expect(captured.getAudioTracks()[0].enabled).toBe(false);
     await act(async () => button("หยุดบันทึก").props.onClick());
     expect(captured.getTracks().every(t => t.readyState === "ended")).toBe(true);
     expect(host.getTracks().every(t => t.readyState === "live")).toBe(true);
     expect(textOf()).toContain("ดาวน์โหลดวิดีโอ");
     await act(async () => ui!.unmount()); ui = undefined;
     expect(host.getTracks().every(t => t.readyState === "ended")).toBe(true);
+    expect(audioInput.getTracks().every(t => t.readyState === "ended")).toBe(true);
     expect(URL.revokeObjectURL).toHaveBeenCalledWith("blob:recorded");
   });
   it("stops recording if the source disconnects or the tab becomes hidden", async () => {
-    await mount(); await openHost(); await act(async () => button("เริ่มบันทึกซ้อม").props.onClick());
+    await mount(); await openHost(); await act(async () => button("เปิดแหล่งเสียง").props.onClick()); await act(async () => button("เริ่มบันทึกซ้อม").props.onClick());
     await act(async () => { hidden = true; listeners.visibilitychange(); });
     expect(Recorder.last.state).toBe("inactive"); expect(textOf()).toContain("หยุดบันทึกเมื่อออกจากแท็บ");
     await act(async () => host.getVideoTracks()[0].onended?.());

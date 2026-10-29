@@ -1,7 +1,12 @@
-import { describe, expect, it } from "vitest";
-import { clock, coverCrop, dimensions, readDraft } from "../lib/live/studio";
+import { describe, expect, it, vi } from "vitest";
+import { clock, coverCrop, dimensions, readDraft, newLiveId } from "../lib/live/studio";
 
 describe("Live local preparation", () => {
+  it("creates IDs without crashing browsers that do not expose randomUUID", () => {
+    vi.stubGlobal("crypto", { getRandomValues: (bytes: Uint8Array) => bytes.fill(1) });
+    try { expect(newLiveId()).toMatch(/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/); }
+    finally { vi.unstubAllGlobals(); }
+  });
   it("restores only bounded preparation data and strips unrelated fields", () => {
     expect(readDraft(JSON.stringify({ title: "ขายสินค้า", aspect: "portrait", secret: "discard", products: [{ id: "1", name: "Daily", price: "฿390", extra: "discard" }] })))
       .toEqual({ title: "ขายสินค้า", aspect: "portrait", products: [{ id: "1", name: "Daily", price: "฿390" }] });

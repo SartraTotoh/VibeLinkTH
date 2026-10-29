@@ -2,13 +2,15 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { clock, coverCrop, dimensions, readDraft, RECORDING_LIMIT_BYTES, RECORDING_LIMIT_MS, type Aspect, type Product, type Scene } from "@/lib/live/studio";
+import { clock, coverCrop, dimensions, readDraft, RECORDING_LIMIT_BYTES, RECORDING_LIMIT_MS, newLiveId, type Aspect, type Product, type Scene, type ProgramMode } from "@/lib/live/studio";
 import s from "./live-studio.module.css";
+import { useStudioInputs } from "./use-studio-inputs";
+import { CloudOutput } from "./cloud-output";
 
 type Source = "host" | "product";
 type Result = { url: string; extension: string; bytes: number; title: string; startedAt: string; endedAt: string; durationMs: number };
 const scenes: { id: Scene; icon: string; label: string }[] = [
-  { id: "host", icon: "person", label: "ผู้ขาย" }, { id: "product", icon: "inventory_2", label: "สินค้า" },
+  { id: "host", icon: "person", label: "Source A" }, { id: "product", icon: "inventory_2", label: "Source B" },
   { id: "split", icon: "view_column", label: "ภาพคู่" }, { id: "waiting", icon: "hourglass_top", label: "หน้ารอ" },
 ];
 
@@ -20,11 +22,11 @@ export function LiveStudio({ ownerId }: { ownerId: string }) {
   const [activeProduct, setActiveProduct] = useState<string | null>(null);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-  const [ready, setReady] = useState<Record<Source, boolean>>({ host: false, product: false });
-  const [busy, setBusy] = useState<Record<Source, boolean>>({ host: false, product: false });
-  const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
-  const [camera, setCamera] = useState<Record<Source, string>>({ host: "", product: "" });
-  const [muted, setMuted] = useState(false);
+  const [programMode, setProgramMode] = useState<ProgramMode>("studio");
+  const [externalSlot, setExternalSlot] = useState<Source>("host");
+  const [cloudActive, setCloudActive] = useState(false);
+  const [stopSignal, setStopSignal] = useState(0);
+  const cloudActiveRef = useRef(cloudActive); cloudActiveRef.current = cloudActive;
   const [recording, setRecording] = useState(false);
   const [stopping, setStopping] = useState(false);
   const [elapsed, setElapsed] = useState(0);
@@ -33,46 +35,56 @@ export function LiveStudio({ ownerId }: { ownerId: string }) {
   const [draftLoaded, setDraftLoaded] = useState(false);
   const [saved, setSaved] = useState(false);
   const canvas = useRef<HTMLCanvasElement>(null);
-  const host = useRef<HTMLVideoElement>(null);
-  const product = useRef<HTMLVideoElement>(null);
-  const streams = useRef<Partial<Record<Source, MediaStream>>>({});
   const images = useRef<Record<string, { image: HTMLImageElement; url: string }>>({});
   const recorder = useRef<MediaRecorder | null>(null);
   const capture = useRef<MediaStream | null>(null);
   const outputUrl = useRef<string | null>(null);
   const mounted = useRef(false);
-  const requests = useRef({ host: 0, product: 0 });
-  const visual = useRef({ scene, products, activeProduct, title });
-  visual.current = { scene, products, activeProduct, title };
+  const inputs = useStudioInputs(slot => {
+    const other: Source = slot === "host" ? "product" : "host";
+    const alternate = slot !== "audio" && inputs.controller.current?.get(other)?.getVideoTracks().some(t => t.readyState === "live");
+    if (alternate) {
+      setScene(other); setExternalSlot(other);
+      setMessage(`Source ${slot === "host" ? "A" : "B"} หลุด สลับไป Source ${other === "host" ? "A" : "B"} แล้ว`);
+    } else {
+      setScene("waiting"); setStopSignal(value => value + 1);
+      if (recorder.current?.state === "recording") { setStopping(true); recorder.current.stop(); }
+      setMessage(slot === "audio" ? "แหล่งเสียงหลุด หยุดบันทึกและสั่งหยุดส่งแล้ว กรุณาเชื่อมเสียงใหม่" : "ไม่มี Source ภาพที่พร้อม หยุดบันทึกและสั่งหยุดส่งแล้ว");
+    }
+  }, setMessage);
+  const { ready, busy, devices, muted } = inputs;
+  const host = inputs.videos.host; const product = inputs.videos.product;
+  const videoReady = programMode === "external" ? ready[externalSlot] : scene === "waiting" ? ready.host || ready.product : scene === "split" ? ready.host && ready.product : ready[scene];
+  const programReady = ready.audio && videoReady;
+  const visual = useRef({ scene, products, activeProduct, title, programMode, externalSlot });
+  visual.current = { scene, products, activeProduct, title, programMode, externalSlot };
   const key = `vibelink-live-draft-v1:${ownerId}`;
-  const locked = recording || stopping;
+  const locked = recording || stopping || cloudActive;
 
   useEffect(() => {
     mounted.current = true;
-    const requestIds = requests.current;
     const loadedImages = images.current;
     try {
       const draft = readDraft(localStorage.getItem(key));
-      if (draft) { setTitle(draft.title); setAspect(draft.aspect); setProducts(draft.products); }
+      if (draft) { setTitle(draft.title); setAspect(draft.aspect); setProducts(draft.products); setProgramMode(draft.programMode ?? "studio"); }
     } catch { setMessage("เบราว์เซอร์ไม่อนุญาตให้เก็บฉบับร่าง ยังใช้สตูดิโอได้"); }
     setDraftLoaded(true);
     const hide = () => {
+      if (document.hidden && cloudActiveRef.current) { setStopSignal(value => value + 1); setMessage("ออกจากแท็บแล้ว สั่งหยุดส่งเพื่อป้องกันภาพค้าง"); }
       if (document.hidden && recorder.current?.state === "recording") {
         setMessage("หยุดบันทึกเมื่อออกจากแท็บ เพื่อไม่ให้ได้ไฟล์ที่ภาพค้าง กรุณาเปิดแท็บนี้ไว้ระหว่างบันทึก");
         setStopping(true); recorder.current.stop();
       }
     };
     const leave = (event: BeforeUnloadEvent) => {
-      if (recorder.current && recorder.current.state !== "inactive") { event.preventDefault(); event.returnValue = ""; }
+      if (cloudActiveRef.current || (recorder.current && recorder.current.state !== "inactive")) { event.preventDefault(); event.returnValue = ""; }
     };
     document.addEventListener("visibilitychange", hide);
     window.addEventListener("beforeunload", leave);
     return () => {
       mounted.current = false;
-      requestIds.host++; requestIds.product++;
       if (recorder.current && recorder.current.state !== "inactive") recorder.current.stop();
       capture.current?.getTracks().forEach(t => t.stop());
-      Object.values(streams.current).forEach(stream => stream?.getTracks().forEach(t => t.stop()));
       Object.values(loadedImages).forEach(i => URL.revokeObjectURL(i.url));
       if (outputUrl.current) URL.revokeObjectURL(outputUrl.current);
       document.removeEventListener("visibilitychange", hide);
@@ -82,9 +94,9 @@ export function LiveStudio({ ownerId }: { ownerId: string }) {
 
   useEffect(() => {
     if (!draftLoaded) return;
-    try { localStorage.setItem(key, JSON.stringify({ title, aspect, products })); setSaved(true); }
+    try { localStorage.setItem(key, JSON.stringify({ title, aspect, products, programMode })); setSaved(true); }
     catch { setSaved(false); }
-  }, [title, aspect, products, draftLoaded, key]);
+  }, [title, aspect, products, programMode, draftLoaded, key]);
 
   useEffect(() => {
     const element = canvas.current;
@@ -105,7 +117,15 @@ export function LiveStudio({ ownerId }: { ownerId: string }) {
     const draw = () => {
       const v = visual.current;
       ctx.fillStyle = "#080b12"; ctx.fillRect(0, 0, w, h);
-      if (v.scene === "waiting") {
+      if (v.programMode === "external") {
+        // Keep the complete prepared program visible, including upstream lower thirds.
+        const video = v.externalSlot === "host" ? host.current : product.current;
+        if (video && video.readyState >= 2 && video.videoWidth && (video.srcObject as MediaStream | null)?.getVideoTracks().some(t => t.readyState === "live")) {
+          const scale = Math.min(w / video.videoWidth, h / video.videoHeight);
+          const width = video.videoWidth * scale; const height = video.videoHeight * scale;
+          ctx.drawImage(video, (w - width) / 2, (h - height) / 2, width, height);
+        } else { ctx.fillStyle = "#bfc6d4"; ctx.font = "28px sans-serif"; ctx.textAlign = "center"; ctx.fillText("รอภาพพร้อมใช้จาก Source ที่เลือก", w / 2, h / 2, w - 60); }
+      } else if (v.scene === "waiting") {
         ctx.fillStyle = "#b9ff2c"; ctx.font = "bold 28px sans-serif"; ctx.textAlign = "center";
         ctx.fillText("VibeLinkTH Live", w / 2, h / 2 - 60);
         ctx.fillStyle = "#ffffff"; ctx.font = "bold 42px sans-serif";
@@ -122,7 +142,7 @@ export function LiveStudio({ ownerId }: { ownerId: string }) {
         }
       } else paintVideo(v.scene === "host" ? host.current : product.current, 0, 0, w, h, v.scene === "host" ? "รอกล้องผู้ขาย" : "รอกล้องสินค้า");
       const item = v.products.find(p => p.id === v.activeProduct);
-      if (item && v.scene !== "waiting") {
+      if (item && v.scene !== "waiting" && v.programMode === "studio") {
         const y = h - 150;
         ctx.fillStyle = "#080b12ee"; ctx.fillRect(24, y, w - 48, 126);
         const image = images.current[item.id]?.image;
@@ -141,57 +161,16 @@ export function LiveStudio({ ownerId }: { ownerId: string }) {
     draw();
     const interval = window.setInterval(draw, 1000 / 30);
     return () => window.clearInterval(interval);
-  }, [aspect]);
+  }, [aspect, host, product]);
 
-  async function openCamera(source: Source) {
-    if (busy[source] || locked || !mounted.current) return;
-    const request = ++requests.current[source];
-    setBusy(v => ({ ...v, [source]: true })); setMessage("");
-    try {
-      if (!navigator.mediaDevices?.getUserMedia) throw new Error("ต้องเปิดผ่าน HTTPS และใช้เบราว์เซอร์ที่รองรับกล้อง");
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: camera[source] ? { deviceId: { exact: camera[source] }, width: { ideal: 1280 }, height: { ideal: 720 } } : { facingMode: source === "product" ? "environment" : "user", width: { ideal: 1280 }, height: { ideal: 720 } },
-        audio: source === "host" ? { echoCancellation: true, noiseSuppression: true } : false,
-      });
-      if (!mounted.current || request !== requests.current[source]) { stream.getTracks().forEach(t => t.stop()); return; }
-      streams.current[source]?.getTracks().forEach(t => t.stop());
-      streams.current[source] = stream;
-      if (source === "host") stream.getAudioTracks().forEach(t => { t.enabled = !muted; });
-      const video = source === "host" ? host.current : product.current;
-      if (video) { video.srcObject = stream; await video.play(); }
-      stream.getTracks().forEach(track => {
-        track.onended = () => {
-          if (!mounted.current || requests.current[source] !== request) return;
-          if (source === "host" && recorder.current?.state === "recording") { setStopping(true); recorder.current.stop(); }
-          stream.getTracks().forEach(t => t.stop());
-          delete streams.current[source];
-          setReady(v => ({ ...v, [source]: false }));
-          setMessage(source === "host" ? "กล้องหรือไมค์ผู้ขายหยุดทำงาน กรุณาเปิดใหม่ บันทึกที่กำลังทำจะหยุด" : "กล้องสินค้าหลุด กรุณาเปิดกล้องใหม่หรือเลือกฉากผู้ขาย");
-        };
-      });
-      setReady(v => ({ ...v, [source]: true }));
-      if (source === "host") setScene("host");
-      try { setDevices((await navigator.mediaDevices.enumerateDevices()).filter(d => d.kind === "videoinput")); } catch { /* Device list is optional. */ }
-    } catch (error) {
-      if (mounted.current && request === requests.current[source]) {
-        streams.current[source]?.getTracks().forEach(t => t.stop()); delete streams.current[source];
-        setReady(v => ({ ...v, [source]: false }));
-        setMessage(error instanceof DOMException && error.name === "NotAllowedError" ? "ยังไม่ได้รับสิทธิ์กล้องและไมค์ กรุณาอนุญาตในเบราว์เซอร์แล้วลองใหม่" : "เปิดกล้องไม่ได้ กรุณาตรวจว่ามีอุปกรณ์และไม่มีแอปอื่นใช้อยู่ แล้วลองใหม่");
-      }
-    } finally { if (mounted.current && request === requests.current[source]) setBusy(v => ({ ...v, [source]: false })); }
-  }
+  useEffect(() => {
+    capture.current?.getAudioTracks().forEach(t => { t.enabled = !muted; });
+  }, [muted]);
 
-  function closeCameras() {
-    requests.current.host++; requests.current.product++;
-    Object.values(streams.current).forEach(stream => stream?.getTracks().forEach(t => t.stop()));
-    streams.current = {};
-    if (host.current) host.current.srcObject = null;
-    if (product.current) product.current.srcObject = null;
-    setReady({ host: false, product: false }); setBusy({ host: false, product: false }); setScene("waiting");
-  }
+  function closeCameras() { inputs.closeAll(); setScene("waiting"); }
 
   function startRecording() {
-    if (recorder.current?.state === "recording" || stopping || !ready.host || !canvas.current) return;
+    if (recorder.current?.state === "recording" || stopping || cloudActive || !programReady || !canvas.current) return;
     setMessage("");
     if (!window.MediaRecorder || !canvas.current.captureStream) { setMessage("เบราว์เซอร์นี้ยังบันทึกภาพจากสตูดิโอไม่ได้ ลอง Chrome หรือ Edge รุ่นที่รองรับ"); return; }
     const mimeType = ["video/webm;codecs=vp8,opus", "video/webm", "video/mp4"].find(t => MediaRecorder.isTypeSupported(t));
@@ -200,7 +179,7 @@ export function LiveStudio({ ownerId }: { ownerId: string }) {
     try {
       const stream = canvas.current.captureStream(30);
       capture.current = stream;
-      const mic = streams.current.host?.getAudioTracks().find(t => t.readyState === "live");
+      const mic = inputs.audio.current?.getAudioTracks().find(t => t.readyState === "live");
       if (!mic) throw new Error("ไม่มีไมค์ผู้ขาย");
       const audio = mic.clone(); stream.addTrack(audio);
       const rec = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: 2_500_000 });
@@ -246,12 +225,6 @@ export function LiveStudio({ ownerId }: { ownerId: string }) {
     }
   }
 
-  function toggleMic() {
-    const next = !muted; setMuted(next);
-    streams.current.host?.getAudioTracks().forEach(t => { t.enabled = !next; });
-    capture.current?.getAudioTracks().forEach(t => { t.enabled = !next; });
-  }
-
   function downloadReport() {
     if (!result) return;
     const report = { version: 1, mode: "local-rehearsal", title: result.title, startedAtClient: result.startedAt, endedAtClient: result.endedAt, elapsedClientMs: Math.round(result.durationMs), recordingBytes: result.bytes, destinations: [], billed: false, note: "Local browser timing only. Not a server usage record or invoice." };
@@ -275,62 +248,74 @@ export function LiveStudio({ ownerId }: { ownerId: string }) {
   return <main className={s.studio}>
     <header className={s.header}>
       <Link href="/dashboard" className={s.brand}>Vibe<span>LinkTH</span> <small>Live</small></Link>
-      <div className={s.row}><span className={s.badge}>LOCAL REHEARSAL · ALPHA</span><Link className={s.link} href="/dashboard">กลับ Dashboard</Link></div>
+      <div className={s.row}><span className={s.badge}>2 SOURCES · ALPHA</span><Link className={s.link} href="/dashboard">กลับ Dashboard</Link></div>
     </header>
     <section className={s.intro}><div className={s.eyebrow}>YOUR VIBE. ON SCREEN.</div><h1>จัดซีนให้พร้อม แล้วลองรายการของคุณ</h1><p className={s.muted}>เตรียมกล้อง สลับฉาก และโชว์สินค้าจากเว็บเดียว</p></section>
-    <div className={s.notice}>รุ่นทดลองซ้อมในเครื่อง — ยังไม่ส่งภาพไปแพลตฟอร์ม ไม่เปิดห้องบนคลาวด์ และยังไม่คิดค่าบริการ มือถืออีกเครื่องและผู้ช่วยจะเชื่อมได้หลังเปิดระบบห้องรายการ</div>
+    <div className={s.notice}>รับภาพสูงสุด 2 Source — เลือกกล้อง, USB Capture/Switcher หรือ Virtual Camera ที่ระบบมองเห็นเป็นกล้องได้ ภาพที่จัดจากอุปกรณ์ภายนอกใช้เต็มจอได้ทันที การส่งออกคลาวด์เปิดเฉพาะบัญชีทดสอบเมื่อบริการพร้อม</div>
     <div className={s.grid}>
       <aside className={s.stack}>
         <section className={s.panel}><h2>เตรียมรายการ</h2>
           <label>ชื่อรายการ<input value={title} maxLength={100} disabled={locked} onChange={e => setTitle(e.target.value)} /></label>
           <label>รูปแบบภาพ<select value={aspect} disabled={locked} onChange={e => setAspect(e.target.value as Aspect)}><option value="landscape">16:9 แนวนอน</option><option value="portrait">9:16 แนวตั้ง</option></select></label>
+          <label>วิธีจัดภาพ<select value={programMode} disabled={locked} onChange={e => setProgramMode(e.target.value as ProgramMode)}><option value="studio">จัดฉากใน VibeLinkTH</option><option value="external">ใช้ภาพพร้อมจาก Switcher / OBS</option></select></label>
           <p className={s.muted}>{saved ? "บันทึกชื่อและสินค้าไว้ในเบราว์เซอร์นี้แล้ว" : "ฉบับร่างยังไม่ถูกบันทึก"} รูปและวิดีโอไม่ถูกเก็บในฉบับร่าง</p>
         </section>
-        <section className={s.panel}><h2>แหล่งภาพ</h2>
-          {(["host", "product"] as Source[]).map(source => <div key={source}>
-            <label>{source === "host" ? "กล้องและไมค์ผู้ขาย" : "กล้องสินค้าในเครื่องนี้ · ไม่มีเสียง"}<select aria-label={source === "host" ? "เลือกกล้องผู้ขาย" : "เลือกกล้องสินค้า"} value={camera[source]} disabled={locked || busy[source]} onChange={e => setCamera(v => ({ ...v, [source]: e.target.value }))}><option value="">กล้องเริ่มต้น</option>{devices.map((d, i) => <option key={d.deviceId} value={d.deviceId}>{d.label || `กล้อง ${i + 1}`}</option>)}</select></label>
-            <button className={s.wide} disabled={locked || busy[source]} onClick={() => void openCamera(source)}><span className="ms" aria-hidden="true">videocam</span>{busy[source] ? "กำลังขอสิทธิ์…" : ready[source] ? "เปิดใหม่ / ใช้กล้องที่เลือก" : "เปิดกล้อง"}</button>
-            <p className={s.muted}>{ready[source] ? "เชื่อมอุปกรณ์แล้ว" : "ยังไม่เชื่อม"}</p>
+        <section className={s.panel}><div className={s.heading}><h2>แหล่งภาพ 0–2 Source</h2><button aria-label="รีเฟรชอุปกรณ์" onClick={() => void inputs.refreshDevices()}><span className="ms" aria-hidden="true">refresh</span></button></div>
+          {!inputs.mediaSupported && <p className={s.message}>เบราว์เซอร์ยังเปิดอุปกรณ์ไม่ได้ ต้องใช้ HTTPS และเบราว์เซอร์ที่รองรับกล้อง/ไมค์</p>}
+          <p className={s.muted}>ใช้ 1 Source ก็เริ่มได้ ถ้ากล้องหลายตัวผ่าน Switcher เว็บจะเห็นเป็นภาพรวมหนึ่ง Source อุปกรณ์ต้องมี USB video output หรือ Capture Card; HDMI splitter อย่างเดียวไม่แปลงเป็นกล้องเว็บ</p>
+          {(["host", "product"] as Source[]).map(source => <div className={s.source} key={source}>
+            <h3>Source {source === "host" ? "A" : "B"}</h3>
+            <label>ประเภท Source<select aria-label={`ประเภท Source ${source === "host" ? "A" : "B"}`} value={inputs.kinds[source]} disabled={locked || busy[source]} onChange={e => inputs.setKinds(v => ({ ...v, [source]: e.target.value as "camera" | "screen" }))}><option value="camera">กล้อง / USB Capture / Virtual Camera</option><option value="screen" disabled={!inputs.screenSupported}>แชร์หน้าจอหรือหน้าต่าง</option></select></label>
+            {inputs.kinds[source] === "camera" && <label>เลือกอุปกรณ์ภาพ<select aria-label={source === "host" ? "เลือก Source A" : "เลือก Source B"} value={inputs.selected[source]} disabled={locked || busy[source]} onChange={e => inputs.setSelected(v => ({ ...v, [source]: e.target.value }))}><option value="">อุปกรณ์เริ่มต้น</option>{devices.filter(d => d.kind === "videoinput").map((d, i) => <option key={d.deviceId} value={d.deviceId}>{d.label || `กล้อง / Capture ${i + 1}`}</option>)}</select></label>}
+            <button className={s.wide} disabled={locked || busy[source] || !inputs.mediaSupported} onClick={() => void inputs.openVideo(source)}><span className="ms" aria-hidden="true">videocam</span>{busy[source] ? "กำลังขอสิทธิ์…" : ready[source] ? "เปลี่ยน / เปิด Source ใหม่" : "เปิด Source"}</button>
+            <p className={s.muted}>{ready[source] ? "รับภาพแล้ว" : "ยังไม่เชื่อม"} · ไม่มีเสียงจากส่วนนี้</p>
           </div>)}
-          <button className={s.wide} disabled={locked || (!ready.host && !ready.product && !busy.host && !busy.product)} onClick={closeCameras}>ปิดกล้องและไมค์ทั้งหมด</button>
+          <button className={s.wide} disabled={locked || (!ready.host && !ready.product && !ready.audio && !busy.host && !busy.product && !busy.audio)} onClick={closeCameras}>ปิดภาพและเสียงทั้งหมด</button>
+        </section>
+        <section className={s.panel}><h2>แหล่งเสียงหลัก</h2>
+          <label>เลือกไมค์ / เสียงจาก Capture<select value={inputs.selected.audio} disabled={locked || busy.audio} onChange={e => inputs.setSelected(v => ({ ...v, audio: e.target.value }))}><option value="">เสียงเริ่มต้นของระบบ</option>{devices.filter(d => d.kind === "audioinput").map((d, i) => <option key={d.deviceId} value={d.deviceId}>{d.label || `แหล่งเสียง ${i + 1}`}</option>)}</select></label>
+          <label>ลักษณะเสียง<select value={inputs.audioProfile} disabled={locked || busy.audio} onChange={e => inputs.setAudioProfile(e.target.value as "microphone" | "mixer")}><option value="microphone">ไมค์พูด · ลดเสียงสะท้อน</option><option value="mixer">เสียงมิกซ์จากอุปกรณ์ · ไม่แต่งเสียงซ้ำ</option></select></label>
+          <button className={s.wide} disabled={locked || busy.audio || !inputs.mediaSupported} onClick={() => void inputs.openAudio()}>{busy.audio ? "กำลังขอสิทธิ์…" : ready.audio ? "เปลี่ยน / เปิดเสียงใหม่" : "เปิดแหล่งเสียง"}</button>
+          <label className={s.meterLabel}>ระดับเสียง<meter className={s.meter} min={0} max={100} low={5} high={85} optimum={55} value={muted ? 0 : inputs.level ?? 0} aria-label="ระดับเสียงขาเข้า" /></label>
+          <p className={s.muted}>{!ready.audio ? "ยังไม่เชื่อมเสียง" : muted ? "เสียงปิดอยู่" : inputs.level === null ? "เชื่อมแล้ว · ตรวจเสียงจากไฟล์ซ้อม" : inputs.level < 3 ? "ยังไม่มีเสียงเข้า ลองพูดหรือตรวจ Mixer" : "มีสัญญาณเสียงเข้า"} ไม่เปิดเสียงย้อนออกลำโพง</p>
         </section>
       </aside>
       <section className={`${s.panel} ${s.center}`}>
-        <div className={s.heading}><h2>ภาพรายการ</h2><span className={s.badge}>{recording ? "● RECORDING IN DEVICE" : "PREVIEW ONLY"}</span></div>
+        <div className={s.heading}><h2>ภาพรายการ</h2><span className={s.badge}>{cloudActive ? "PROGRAM TO CLOUD" : recording ? "● RECORDING IN DEVICE" : "PREVIEW ONLY"}</span></div>
         <div className={s.preview}><canvas ref={canvas} className={s.canvas} aria-label="ภาพรายการที่ใช้บันทึก" /></div>
         <video ref={host} className={s.hidden} muted playsInline autoPlay aria-hidden="true" />
         <video ref={product} className={s.hidden} muted playsInline autoPlay aria-hidden="true" />
         <div className={s.toolbar}><div><div className={s.timer}>{clock(elapsed)}</div><span className={s.muted}>เวลาบันทึกในเครื่อง · ไม่ใช่หน่วยคิดเงิน</span></div>
-          <div className={s.row}><button aria-pressed={muted} disabled={!ready.host} onClick={toggleMic}><span className="ms" aria-hidden="true">{muted ? "mic_off" : "mic"}</span>{muted ? "เปิดไมค์" : "ปิดไมค์"}</button>
-            {locked ? <button className={s.danger} disabled={stopping} onClick={() => { if (recorder.current?.state === "recording") { setStopping(true); recorder.current.stop(); } }}>{stopping ? "เตรียมไฟล์…" : "หยุดบันทึก"}</button> : <button className={s.primary} disabled={!ready.host || busy.host || busy.product} onClick={startRecording}>เริ่มบันทึกซ้อม</button>}
+          <div className={s.row}><button aria-pressed={muted} disabled={!ready.audio} onClick={inputs.toggleMute}><span className="ms" aria-hidden="true">{muted ? "mic_off" : "mic"}</span>{muted ? "เปิดไมค์" : "ปิดไมค์"}</button>
+            {recording || stopping ? <button className={s.danger} disabled={stopping} onClick={() => { if (recorder.current?.state === "recording") { setStopping(true); recorder.current.stop(); } }}>{stopping ? "เตรียมไฟล์…" : "หยุดบันทึก"}</button> : <button className={s.primary} disabled={!programReady || busy.host || busy.product || busy.audio || cloudActive} onClick={startRecording}>เริ่มบันทึกซ้อม</button>}
           </div>
         </div>
-        <p className={s.muted}>บันทึกสูงสุด 15 นาทีหรือ 256 MB ต่อครั้ง เปิดแท็บนี้ไว้ตลอดและดาวน์โหลดก่อนปิดหน้า เสียงมาจากไมค์ผู้ขาย รวมถึงตอนแสดงหน้ารอ</p>
-        <h2>เลือกฉาก</h2><div className={s.buttons}>{scenes.map(item => <button key={item.id} className={`${s.scene} ${scene === item.id ? s.selected : ""}`} aria-pressed={scene === item.id} onClick={() => setScene(item.id)}><span className="ms" aria-hidden="true">{item.icon}</span>{item.label}</button>)}</div>
+        <p className={s.muted}>บันทึกสูงสุด 15 นาทีหรือ 256 MB ต่อครั้ง เปิดแท็บนี้ไว้ตลอดและดาวน์โหลดก่อนปิดหน้า เสียงมาจากแหล่งเสียงหลักที่เลือก รวมถึงตอนแสดงหน้ารอ</p>
+        {programMode === "external" && <label>ภาพพร้อมใช้จาก<select value={externalSlot} onChange={e => setExternalSlot(e.target.value as Source)}><option value="host">Source A</option><option value="product">Source B</option></select><span className={s.muted}>ใช้ภาพเต็มโดยรักษาสัดส่วน ป้ายและฉากในเว็บจะไม่ทับภาพที่จัดมาแล้ว</span></label>}
+        <h2>เลือกฉาก</h2><div className={s.buttons}>{scenes.map(item => <button key={item.id} className={`${s.scene} ${scene === item.id ? s.selected : ""}`} aria-pressed={scene === item.id} disabled={programMode === "external" || (item.id === "host" && !ready.host) || (item.id === "product" && !ready.product) || (item.id === "split" && (!ready.host || !ready.product))} onClick={() => setScene(item.id)}><span className="ms" aria-hidden="true">{item.icon}</span>{item.label}</button>)}</div>
         <div role="status" aria-live="polite" className={s.message}>{message}</div>
         {result && <section className={s.result}><h2>ไฟล์ซ้อมล่าสุด</h2><p className={s.muted}>{result.title} · {clock(result.durationMs)} · {(result.bytes / 1024 / 1024).toFixed(1)} MB</p><video src={result.url} controls playsInline aria-label="เปิดดูไฟล์ซ้อมล่าสุด" /><div className={s.buttons}><a className={s.link} href={result.url} download={`vibelink-live.${result.extension}`}>ดาวน์โหลดวิดีโอ</a><button onClick={downloadReport}>ดาวน์โหลดสรุปการซ้อม</button></div><p className={s.muted}>ตรวจภาพและเสียงด้วยการเล่นไฟล์ก่อนนำไปใช้ ไฟล์รอบก่อนจะถูกแทนที่เมื่อบันทึกรอบใหม่เสร็จ</p></section>}
       </section>
       <aside className={`${s.stack} ${s.right}`}>
         <section className={s.panel}><h2>คิวสินค้า <span className={s.muted}>{products.length}/20</span></h2>
-          <form onSubmit={e => { e.preventDefault(); if (!name.trim() || products.length >= 20) return; setProducts(v => [...v, { id: crypto.randomUUID(), name: name.trim(), price: price.trim() }]); setName(""); setPrice(""); }}>
+          <form onSubmit={e => { e.preventDefault(); if (!name.trim() || products.length >= 20) return; setProducts(v => [...v, { id: newLiveId(), name: name.trim(), price: price.trim() }]); setName(""); setPrice(""); }}>
             <label>ชื่อสินค้า<input required maxLength={80} value={name} onChange={e => setName(e.target.value)} placeholder="เช่น กระเป๋ารุ่น Daily" /></label>
             <label>ราคา / ข้อความสั้น<input maxLength={24} value={price} onChange={e => setPrice(e.target.value)} placeholder="เช่น ฿390" /></label>
             <button className={`${s.primary} ${s.wide}`} disabled={!name.trim() || products.length >= 20}>เพิ่มสินค้า</button>
           </form>
           <p className={s.muted}>ป้ายบนวิดีโอ ยังไม่ใช่ตะกร้าสินค้าของแพลตฟอร์ม</p>
           {!products.length && <p className={s.empty}>เพิ่มสินค้าชิ้นแรก แล้วเลือกแสดงป้ายในรายการ</p>}
-          {products.map(p => <article key={p.id} className={s.product}><strong>{p.name}</strong><span className={s.muted}>{p.price}</span><label>รูปสินค้า<input type="file" accept="image/png,image/jpeg,image/webp" onChange={e => void attachImage(p.id, e.target.files?.[0])} /></label><div className={s.buttons}><button className={activeProduct === p.id ? s.selected : ""} aria-pressed={activeProduct === p.id} onClick={() => setActiveProduct(v => v === p.id ? null : p.id)}>{activeProduct === p.id ? "ซ่อนป้าย" : "แสดงป้าย"}</button><button onClick={() => { setProducts(v => v.filter(item => item.id !== p.id)); if (activeProduct === p.id) setActiveProduct(null); if (images.current[p.id]) { URL.revokeObjectURL(images.current[p.id].url); delete images.current[p.id]; } }}>ลบ</button></div></article>)}
+          {products.map((p, index) => <article key={p.id} className={s.product}><strong>{p.name}</strong><span className={s.muted}>{p.price}</span><div className={s.buttons}><button aria-label={`เลื่อน ${p.name} ขึ้น`} disabled={index === 0} onClick={() => setProducts(v => { const next = [...v]; [next[index - 1], next[index]] = [next[index], next[index - 1]]; return next; })}>↑ ขึ้น</button><button aria-label={`เลื่อน ${p.name} ลง`} disabled={index === products.length - 1} onClick={() => setProducts(v => { const next = [...v]; [next[index + 1], next[index]] = [next[index], next[index + 1]]; return next; })}>↓ ลง</button></div><label>รูปสินค้า<input type="file" accept="image/png,image/jpeg,image/webp" onChange={e => void attachImage(p.id, e.target.files?.[0])} /></label><div className={s.buttons}><button className={activeProduct === p.id ? s.selected : ""} aria-pressed={activeProduct === p.id} disabled={programMode === "external"} onClick={() => setActiveProduct(v => v === p.id ? null : p.id)}>{activeProduct === p.id ? "ซ่อนป้าย" : "แสดงป้าย"}</button><button onClick={() => { setProducts(v => v.filter(item => item.id !== p.id)); if (activeProduct === p.id) setActiveProduct(null); if (images.current[p.id]) { URL.revokeObjectURL(images.current[p.id].url); delete images.current[p.id]; } }}>ลบ</button></div></article>)}
         </section>
         <section className={s.panel}><h2>ตรวจความพร้อม</h2>{[
-          { label: ready.host ? "กล้องผู้ขายพร้อม" : "รอกล้องผู้ขาย", ok: ready.host },
-          { label: ready.host ? muted ? "ไมค์ผู้ขายปิดอยู่" : "ไมค์ผู้ขายเปิดอยู่ · ตรวจเสียงจากไฟล์ซ้อม" : "รอไมค์ผู้ขาย", ok: ready.host && !muted },
-          { label: ready.product ? "กล้องสินค้าพร้อม" : "กล้องสินค้าเป็นตัวเลือกเสริม", ok: ready.product },
+          { label: ready.host ? "Source A รับภาพแล้ว" : "Source A ยังไม่เชื่อม", ok: ready.host },
+          { label: ready.audio ? muted ? "เสียงหลักปิดอยู่" : "เสียงหลักเชื่อมแล้ว" : "ยังไม่เชื่อมแหล่งเสียง", ok: ready.audio && !muted },
+          { label: ready.product ? "Source B รับภาพแล้ว" : "Source B เป็นตัวเลือกเสริม", ok: ready.product },
           { label: recording ? "กำลังบันทึกในเครื่อง" : "ไม่ได้บันทึก", ok: recording },
-          { label: "ช่องปลายทางยังไม่เชื่อม", ok: false },
         ].map(item => <div className={s.status} key={item.label}><span className={`${s.dot} ${item.ok ? s.good : ""}`} /><span>{item.label}</span></div>)}
-          <button className={s.wide} disabled>ส่งไลฟ์ · รอเชื่อมบริการสื่อ</button>
-          <p className={s.muted}>ขั้นถัดไป: ห้องหลายอุปกรณ์ ผู้ช่วย ส่งออกหนึ่งช่อง บันทึกบนคลาวด์ และเวลาอ้างอิงเซิร์ฟเวอร์</p>
+          <p className={s.muted}>ภาพหนึ่ง Source และเสียงหลักก็เพียงพอ ใช้ไฟล์ซ้อมตรวจภาพและเสียงก่อนส่งออก</p>
         </section>
+        <CloudOutput canvas={canvas} audio={inputs.audio} audioMuted={muted} title={title} aspect={aspect} ready={programReady} localRecording={recording || stopping} stopSignal={stopSignal} onActive={setCloudActive} />
       </aside>
     </div>
   </main>;
