@@ -55,6 +55,8 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           PAGES_PROJECT: ${{ steps.targets.outputs.pages_project }}
           PAGES_BRANCH: ${{ steps.targets.outputs.pages_branch }}
+      - name: Verify legacy recipient CSV paths are not publicly accessible
+        run: node scripts/check-public-pitch-exposure.mjs
       - name: Verify deployed release
         env:
           RELEASE_SHA: ${{ github.sha }}
