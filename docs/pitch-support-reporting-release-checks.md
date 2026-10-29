@@ -98,3 +98,20 @@ Console ที่อ่านได้ก่อน login มีข้อคว�
 แหล่งอ้างอิงประกอบการเลือกแพตช์:
 - https://nextjs.org/blog/nextjs-security-update-october-14-2026
 - dependency advisory metadata จาก npm audit และ implementation ของไดรเวอร์ใน node_modules/@prisma/adapter-neon
+
+## ทางเลือกเมื่อ Device OAuth ไม่สำเร็จ
+
+หลังพบ CSRF session-cookie error และ `10404 No route for that URI` ให้ใช้ deployment workflow `.github/workflows/deploy.yml` แทนการสร้าง user code ซ้ำ ขั้นตอนนี้ไม่ใช้ device-login session ของเครื่องตรวจงาน
+
+เจ้าของบัญชีเพิ่ม repository Secrets ใน SartraTotoh/VibeLinkTH:
+
+- `CLOUDFLARE_API_TOKEN`: ใช้ Edit Cloudflare Workers template พร้อม Cloudflare Pages Edit และจำกัดทรัพยากรเฉพาะบัญชี/zone โครงการ
+- `CLOUDFLARE_ACCOUNT_ID`: Account ID ของบัญชีที่ถือ Worker และ Landing
+
+อย่าส่งค่า token ในแชตหรือ commit ลงไฟล์ โค้ด workflow อ้างอิงชื่อ Secrets เท่านั้น Token ถูกส่งให้เฉพาะขั้นตอนตรวจเป้าหมายและ deploy ไม่อยู่ใน environment ของขั้นตอน npm install/build/test
+
+Workflow ทำงานเมื่อ push ไป main หรือสั่ง manual บน main ตรวจโค้ดและ build ก่อน ใช้ API แบบอ่านเพื่อค้นหา Pages project ที่ผูกกับ vibelinkth.com อย่างชัดเจน และใช้ production branch ที่โครงการตั้งไว้ หากไม่พบเป้าหมายเดียวหรือ metadata ไม่ครบ จะหยุดก่อน deploy แอป ไม่สร้าง Pages project/เปลี่ยน DNS โดยเดา จากนั้น deploy Worker พร้อม release SHA และ deploy Landing แล้วตรวจ health SHA และเส้นทาง /pitch
+
+Workflow นี้ยังไม่ได้รันจริงจนกว่าเจ้าของจะเพิ่ม Secrets และรวมชุดแก้ไขเข้า main การ deploy สองบริการไม่ใช่ transaction เดียว หากบริการที่สองหรือการตรวจหลัง deploy ล้มเหลว ต้องตรวจสถานะบริการแต่ละตัวจาก run logs ก่อน retry/rollback ทดสอบ target discovery เพิ่ม 6 กรณีและตรวจ YAML/TypeScript/source security ผ่าน
+
+อ้างอิง: https://developers.cloudflare.com/workers/ci-cd/external-cicd/github-actions/ และ https://developers.cloudflare.com/pages/configuration/api/
