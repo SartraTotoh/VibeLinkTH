@@ -9,6 +9,7 @@ import {
   ticketPreview,
   DEFAULT_SETTINGS,
 } from "@/lib/support";
+import { writeMemberTurn } from "@/lib/support-writes";
 import { writeAudit } from "@/lib/audit";
 
 const MESSAGE_LIMIT = 2400;
@@ -190,52 +191,27 @@ export async function POST(req: Request) {
 
   const match = settings.autoReplyOn ? matchRule(rules, body) : null;
 
-  const ticket = await prisma.supportTicket.update({
-    where: { id: ticketId },
-    data: {
-      status: "OPEN",
-      needsAdmin: match ? false : true,
-      lastSender: "MEMBER",
-      subjectPreview: ticketPreview(body),
-      lastMessageAt: new Date(),
-    },
-    select: { id: true },
+  await writeMemberTurn({
+    ticketId,
+    body,
+    reply: match ? ruleReply(match, lang) : lang === "en" ? settings.noMatchEn : settings.noMatchTh,
+    ruleId: match?.id ?? null,
+    preview: ticketPreview(body),
   });
 
-  await prisma.supportMessage.create({
-    data: { ticketId: ticket.id, sender: "MEMBER", body },
-  });
-
-  if (match) {
-    await prisma.$transaction([
-      prisma.supportMessage.create({
-        data: { ticketId: ticket.id, sender: "AUTO", body: ruleReply(match, lang), ruleId: match.id },
-      }),
-      prisma.autoReplyRule.update({
-        where: { id: match.id },
-        data: { hitCount: { increment: 1 } },
-      }),
-    ]);
-  } else {
-    await prisma.supportMessage.create({
-      data: {
-        ticketId: ticket.id,
-        sender: "AUTO",
-        body: lang === "en" ? settings.noMatchEn : settings.noMatchTh,
-      },
-    });
+  if (!match) {
     await writeAudit({
       actorEmail: session.user.email ?? undefined,
       action: "support.ticket_needs_admin",
       subjectType: "SUPPORT",
-      subjectRef: ticket.id,
+      subjectRef: ticketId,
       detail: `คำถามที่ auto-reply ตอบไม่ได้: ${ticketPreview(body, 120)}`,
       result: "open",
     });
   }
 
   const withMessages = await prisma.supportTicket.findUnique({
-    where: { id: ticket.id },
+    where: { id: ticketId },
     include: { messages: { orderBy: { createdAt: "asc" } } },
   });
 

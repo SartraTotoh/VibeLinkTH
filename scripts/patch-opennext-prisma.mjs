@@ -15,6 +15,7 @@
 
 import { copyFileSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
+import { patchPrismaWasm } from "./lib/prisma-wasm-patch.mjs";
 
 const root = join(process.cwd(), ".open-next", "server-functions", "default");
 const handlerPath = join(root, "handler.mjs");
@@ -33,25 +34,7 @@ import { mkdirSync } from "node:fs";
 mkdirSync(dirname(wasmDst), { recursive: true });
 copyFileSync(wasmSrc, wasmDst);
 
-let js = handler;
-
-const importLine = 'import __prismaWasmModule from "./node_modules/.prisma/client/query_compiler_bg.wasm";';
-const desired = "getQueryCompilerWasmModule:async()=>__prismaWasmModule";
-if (!js.includes(desired)) {
-  const reBlock = /getQueryCompilerWasmModule:async\(\)=>\{[^}]*?query_compiler_bg\.wasm[^}]*\}/;
-  if (!reBlock.test(js)) {
-    console.error("[prisma-patch] could not locate the inlined getQueryCompilerWasmModule (fs.readFileSync) block");
-    process.exit(1);
-  }
-  js = js.replace(reBlock, desired);
-}
-
-// strip any leftover injected helper const (old base64 approach) so the file stays clean
-js = js.replace(/const __prismaWasmModule=new WebAssembly[^;]*;/, "");
-
-if (!js.includes(importLine)) {
-  js = importLine + "\n" + js;
-}
+const js = patchPrismaWasm(handler);
 
 writeFileSync(handlerPath, js, "utf8");
 console.log(`[prisma-patch] handler.mjs now imports pre-compiled wasm (copied to ${join(stagingDir, wasmFile)})`);

@@ -26,12 +26,18 @@ jobs:
       - run: npm run typecheck
       - run: npm run test:unit
       - run: npm run check:charset
+      - run: npm run check:security
+      - run: npm audit --omit=dev --audit-level=high
       - run: npm run build
 
   e2e:
     runs-on: ubuntu-latest
     env:
-      APP_TEST_URL: "https://app.vibelinkth.com"
+      APP_TEST_URL: "http://127.0.0.1:3000"
+      DATABASE_URL: "postgresql://ci:ci@localhost:5432/ci?schema=public"
+      AUTH_SECRET: "ci-only-secret-ci-only-secret-ci-only"
+      APP_URL: "http://127.0.0.1:3000"
+      AUTH_TRUST_HOST: "true"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -39,6 +45,8 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      - run: npx prisma generate
+      - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
       - run: npm run test:a11y

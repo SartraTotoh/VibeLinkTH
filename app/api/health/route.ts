@@ -5,6 +5,7 @@ export function GET() {
   return NextResponse.json({
     ok: true,
     service: "vibelink",
+    release: process.env.RELEASE_SHA ?? null,
     timestamp: new Date().toISOString(),
     integrations: {
       email: Boolean(process.env.RESEND_API_KEY),

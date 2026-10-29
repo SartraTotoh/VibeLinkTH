@@ -65,3 +65,36 @@ Console ที่อ่านได้ก่อน login มีข้อคว�
 ตัวนับรอตอบมาจาก count แยกจาก filter และรายการ “ทั้งหมด” ไม่ตัดเธรดที่ปิดแล้วเกิน 7 วันออก รายการยังจำกัด 500 เธรดตาม API เดิม
 
 เพิ่ม regression tests 8 กรณี ครอบคลุม component ที่ render จริงด้วย API จำลองและ API settings/counts โดยไม่มีการส่งข้อความหาสมาชิกจริง ทั้งชุดผ่าน 173 tests จาก 25 ไฟล์, TypeScript และ production build ผ่าน ยังรอการตรวจ Console/ภาพหน้าจอหลัง login บน production เพราะการเข้าถึง Session ยังไม่สำเร็จ
+
+## Deep review และ deploy attempt — 29 ตุลาคม 2026
+
+ผล source/deployment audit รอบเพิ่มเติม:
+
+- พบ `PrismaNeonHttp.startTransaction()` ใน dependency ปัจจุบัน reject ด้วย `Transactions are not supported in HTTP mode` แต่ทั้ง member auto-reply และ admin reply เรียก Prisma `$transaction` อยู่ จึงเปลี่ยนเป็น parameterized PostgreSQL CTE statement เดียวต่อหนึ่ง turn เพื่อให้ message, ticket status และ rule counter สำเร็จ/rollback พร้อมกัน ไม่เปลี่ยน schema หรือ migrate production
+- ทดสอบ SQL ที่ใช้งานจริงกับ PostgreSQL ผ่าน PGlite: ภาษาไทย/อักขระ SQL ถูกเก็บเป็นข้อมูล, ลำดับ MEMBER→AUTO ถูกต้อง, matched/unmatched queue ถูกต้อง และข้อผิดพลาดตอนอัปเดต ticket ย้อนกลับ message ได้จริง
+- ฝั่งสมาชิกแสดงข้อผิดพลาดโหลดข้อมูลพร้อม retry, ไม่เปิดส่งก่อนโหลดสำเร็จ, กันส่งซ้ำและ stale polling response, รองรับ IME และเลื่อนเฉพาะกล่องข้อความ
+- พบ `cf:build` ล้มเหลวหลัง Next build ผ่าน เพราะ Prisma WASM patch รองรับเฉพาะ loader รุ่นเก่า แก้ให้รองรับ generated edge loader และเอา absolute build-machine WASM path ออก พร้อม fail-closed เมื่อพบรูปแบบไม่รู้จัก และ regression tests
+- อัปเดต Next เป็น 15.5.28, sharp เป็น 0.35.5 และ Zod ตั้งแต่ 4.6.7 รวมถึง overrides สำหรับ PostCSS, source-map-js และ deepmerge-ts แก้ advisory โดยไม่ย้าย major Prisma/schema ทั้งระบบ ตรวจ Prisma validate/generate, TypeScript และ Worker build หลังแก้แล้ว
+- Override deepmerge-ts ข้าม major ใช้เฉพาะ dependency ของ Prisma config ในต้นไม้ปัจจุบัน ตรวจ Prisma CLI validate/generate กับ schema โครงการผ่านแล้ว ควรลบ override เมื่ออัปเกรด Prisma ที่อ้างอิง dependency ที่แก้ไขโดยตรงในรอบถัดไป
+- CI ตรวจ source security และ npm production audit เพิ่มเติม ส่วน E2E ใช้ localhost และชุด public smoke แบบ read-only แทนการส่ง request ที่อาจสร้างบัญชี/ส่งเมลบน production
+- ตั้ง `PITCH_EMAIL_ENABLED=false` ใน Worker config โดยชัดแจ้ง และเพิ่ม health release field ซึ่งรับ `RELEASE_SHA` เมื่อ deploy
+
+ผลตรวจ:
+
+| การตรวจ | ผล |
+| --- | --- |
+| Unit/component/PostgreSQL regression | 183 tests / 28 files ผ่าน |
+| Public smoke บน build จริงที่ localhost | 12 ผ่าน (HTTP request checks ไม่ใช่ visual/a11y acceptance) |
+| Prisma schema validate + generate | ผ่าน ไม่มีการเปลี่ยนฐานข้อมูลจริง |
+| TypeScript / charset / source security / diff whitespace | ผ่าน |
+| OpenNext Cloudflare build รวม WASM patch | ผ่าน |
+| Wrangler deploy --dry-run | ผ่าน |
+| npm audit --omit=dev | 0 รายการที่รายงาน ณ เวลาตรวจ ไม่ใช่การรับประกันว่าไม่มีช่องโหว่ทุกชนิด |
+| Production deploy | ไม่สำเร็จ: ไม่มี CLOUDFLARE_API_TOKEN และไม่มี Wrangler login |
+| Authenticated production Console / visual acceptance / live Neon round-trip | ยังไม่ได้ตรวจ: ไม่มี authenticated session/production credentials |
+
+ได้ลอง `CI=1 npx wrangler deploy` จริงแล้ว CLI หยุดด้วยข้อความว่าใน non-interactive environment ต้องตั้ง CLOUDFLARE_API_TOKEN ก่อน ไม่ได้อัปโหลดหรือเปลี่ยน production ไม่สร้าง temporary account เพราะไม่ใช่บัญชี/โดเมน production ของโครงการ การอนุญาต deploy จากผู้ใช้มีแล้ว สิ่งที่ยังขาดคือข้อมูลยืนยันตัวตน Cloudflare ในสภาพแวดล้อม deploy และข้อมูลโครงการ static landing ที่ผูกโดเมนอยู่
+
+แหล่งอ้างอิงประกอบการเลือกแพตช์:
+- https://nextjs.org/blog/nextjs-security-update-october-14-2026
+- dependency advisory metadata จาก npm audit และ implementation ของไดรเวอร์ใน node_modules/@prisma/adapter-neon

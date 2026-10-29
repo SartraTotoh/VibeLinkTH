@@ -134,23 +134,31 @@ export function SupportChat({ lang }: { lang: Lang }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
-  const bottomRef = useRef<HTMLDivElement | null>(null);
+  const messagesRef = useRef<HTMLDivElement | null>(null);
+  const sendingRef = useRef(false);
+  const refreshRef = useRef(0);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   const active = activeId
     ? loaded?.tickets.find((tk) => tk.id === activeId) ?? null
     : loaded?.tickets[0] ?? null;
 
   const refresh = useCallback(async () => {
+    if (sendingRef.current) return;
+    const request = ++refreshRef.current;
     try {
       const res = await fetch("/api/support", { cache: "no-store" });
-      if (!res.ok) return;
+      if (!res.ok) throw new Error(`โหลดแชทไม่สำเร็จ (${res.status})`);
       const data = (await res.json()) as Loaded;
+      if (!Array.isArray(data.tickets) || !data.settings) throw new Error("ข้อมูลแชทไม่ถูกต้อง");
+      if (sendingRef.current || request !== refreshRef.current) return;
       setLoaded(data);
-      if (data.tickets.length > 0 && !activeId) setActiveId(data.tickets[0]!.id);
+      setLoadError(null);
+      if (data.tickets.length > 0) setActiveId((current) => current ?? data.tickets[0]!.id);
     } catch {
-      // transient — keep last state
+      if (request === refreshRef.current) setLoadError("โหลดแชทไม่สำเร็จ กรุณาลองใหม่หรือตรวจการเข้าสู่ระบบ");
     }
-  }, [activeId]);
+  }, []);
 
   useEffect(() => {
     refresh();
@@ -159,11 +167,14 @@ export function SupportChat({ lang }: { lang: Lang }) {
   }, [refresh]);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    const el = messagesRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
   }, [active?.messages.length, activeId]);
 
   async function sendMessage(body: string) {
-    if (!body.trim() || busy) return;
+    if (!body.trim() || sendingRef.current || !loaded) return;
+    sendingRef.current = true;
+    ++refreshRef.current;
     setBusy(true);
     setError(null);
     try {
@@ -175,6 +186,10 @@ export function SupportChat({ lang }: { lang: Lang }) {
       const data = await res.json().catch(() => null);
       if (!res.ok) {
         setError(data?.error ?? t("ส่งข้อความไม่สำเร็จ", "Failed to send message"));
+        return;
+      }
+      if (!data?.ticket || !Array.isArray(data.ticket.messages)) {
+        setError(t("ข้อมูลตอบกลับไม่ถูกต้อง กรุณาโหลดแชทใหม่", "Invalid response. Reload the chat."));
         return;
       }
       setLoaded((prev) => {
@@ -191,6 +206,7 @@ export function SupportChat({ lang }: { lang: Lang }) {
     } catch {
       setError(t("เกิดข้อผิดพลาด ลองอีกครั้ง", "An error occurred. Please try again."));
     } finally {
+      sendingRef.current = false;
       setBusy(false);
     }
   }
@@ -299,8 +315,10 @@ export function SupportChat({ lang }: { lang: Lang }) {
           </div>
         </div>
 
+        {loadError ? <p role="alert">{loadError} <button type="button" onClick={() => void refresh()}>ลองใหม่</button></p> : null}
         {/* Message Stream Area */}
         <div
+          ref={messagesRef}
           style={{
             minHeight: 360,
             maxHeight: 520,
@@ -441,7 +459,7 @@ export function SupportChat({ lang }: { lang: Lang }) {
               </div>
             </div>
           )}
-          <div ref={bottomRef} />
+
         </div>
 
         {/* Composer Area */}
@@ -469,8 +487,11 @@ export function SupportChat({ lang }: { lang: Lang }) {
             <textarea
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
+              disabled={busy || !loaded}
+              maxLength={2400}
+              aria-label="ข้อความถึงทีมช่วยเหลือ"
               onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
+                if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing && e.keyCode !== 229) {
                   e.preventDefault();
                   if (draft.trim() && !busy) sendMessage(draft);
                 }
@@ -494,7 +515,7 @@ export function SupportChat({ lang }: { lang: Lang }) {
           <button
             type="button"
             onClick={() => draft.trim() && sendMessage(draft)}
-            disabled={busy || !draft.trim()}
+            disabled={busy || !loaded || !draft.trim()}
             style={{
               flex: "none",
               height: 48,
@@ -556,7 +577,8 @@ export function SupportChat({ lang }: { lang: Lang }) {
               <button
                 key={tk.id}
                 type="button"
-                onClick={() => setActiveId(tk.id)}
+                disabled={busy}
+                onClick={() => { setActiveId(tk.id); setDraft(""); }}
                 style={{
                   display: "inline-flex",
                   alignItems: "center",

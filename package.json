@@ -17,7 +17,7 @@
     "cf:build": "opennextjs-cloudflare build --dangerouslyUseUnsupportedNextVersion && node scripts/patch-opennext-prisma.mjs && node scripts/patch-opennext-middleware.mjs",
     "cf:deploy": "npm run check:charset && npm run check:security && npm run cf:build && wrangler deploy",
     "test:unit": "vitest run",
-    "test:e2e": "playwright test e2e/smoke.spec.ts",
+    "test:e2e": "playwright test e2e/public-smoke.spec.ts",
     "test:a11y": "playwright test e2e/a11y.spec.ts",
     "lighthouse:app": "npx -y lighthouse https://app.vibelinkth.com --preset=desktop --quiet --chrome-flags=--headless"
   },
@@ -28,34 +28,35 @@
     "@prisma/client": "^6.16.2",
     "bcryptjs": "^3.0.3",
     "jsqr": "^1.4.0",
-    "next": "^15.5.4",
+    "next": "^15.5.28",
     "next-auth": "^5.0.0-beta.32",
     "qrcode": "^1.5.4",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "stripe": "^22.6.2",
-    "zod": "^4.1.5"
+    "zod": "^4.6.7",
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
+    "@electric-sql/pglite": "^0.5.13",
     "@opennextjs/cloudflare": "^1.20.6",
     "@playwright/test": "^1.63.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^22.18.6",
-    "eslint": "^9.0.0",
-    "eslint-config-next": "^15.5.4",
     "@types/pngjs": "^6.0.5",
     "@types/qrcode": "^1.5.6",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
+    "@types/react-test-renderer": "^19.3.0",
     "esbuild": "^0.28.1",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^15.5.4",
     "pngjs": "^5.0.0",
     "prisma": "^6.16.2",
-    "sharp": "^0.35.4",
-    "typescript": "^5.9.2",
-    "vitest": "^5.0.1",
     "react-test-renderer": "19.3.0",
-    "@types/react-test-renderer": "^19.3.0"
+    "typescript": "^5.9.2",
+    "vitest": "^5.0.1"
   },
   "allowScripts": {
     "@prisma/client@6.19.3": true,
@@ -64,5 +65,10 @@
     "esbuild@0.25.4": true,
     "esbuild@0.28.1": true,
     "workerd@1.20260918.1": true
+  },
+  "overrides": {
+    "postcss": "^8.5.28",
+    "source-map-js": "^1.2.2",
+    "deepmerge-ts": "^8.0.0"
   }
 }
