@@ -20,7 +20,7 @@ for (const host of hosts) {
         response.status === 200 ||
         (redirect && /(?:vibelink-pitch-leads\.csv)(?:$|[?#])/i.test(redirect.pathname))
       );
-      const inconclusive = response.status >= 500 || response.status === 429;
+      const inconclusive = response.status >= 500 || response.status === 429 || (csvPaths.includes(path) && response.status >= 300 && response.status < 400 && !redirect);
       console.log(JSON.stringify({
         host, path, status: response.status,
         redirectOrigin: redirect?.origin ?? null,
