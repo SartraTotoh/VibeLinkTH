@@ -57,3 +57,11 @@ Console ที่อ่านได้ก่อน login มีข้อคว�
 - [ ] ตรวจ Console และ UI ซ้ำบน deployed SHA พร้อมหลักฐานที่ไม่เผยข้อมูลผู้รับ
 - [ ] ยังไม่ส่ง Wave 1 จนกว่าจะผ่าน contact verification, claims/CTA review และ readiness ของแต่ละราย; วันที่ follow-up 30 ต.ค. ไม่ใช่เส้นตายส่ง
 - [ ] ไม่มี automatic write-back ไป Workbook และไม่มีการส่งอีเมลในงานชุดนี้
+
+## Admin Desk follow-up (29 ตุลาคม 2026)
+
+แก้ปุ่มตั้งค่าให้ PUT /api/dev/support ซึ่งเป็น route ที่รองรับจริง (เดิมส่งไป /rules ซึ่งไม่มี PUT) และแก้ partial settings update ไม่ให้ล้างเวลาทำการที่ไม่ได้ส่งมา เพิ่มการ refresh เธรดที่เปิดทุก 8 วินาทีโดยเก็บร่างที่ยังไม่ส่งไว้ รีเฟรช Inbox หลังตอบกลับ และล็อกการสลับเธรด/ส่งซ้ำระหว่าง mutation รวมถึงไม่ส่ง Enter ขณะ IME กำลังประกอบข้อความ
+
+ตัวนับรอตอบมาจาก count แยกจาก filter และรายการ “ทั้งหมด” ไม่ตัดเธรดที่ปิดแล้วเกิน 7 วันออก รายการยังจำกัด 500 เธรดตาม API เดิม
+
+เพิ่ม regression tests 8 กรณี ครอบคลุม component ที่ render จริงด้วย API จำลองและ API settings/counts โดยไม่มีการส่งข้อความหาสมาชิกจริง ทั้งชุดผ่าน 173 tests จาก 25 ไฟล์, TypeScript และ production build ผ่าน ยังรอการตรวจ Console/ภาพหน้าจอหลัง login บน production เพราะการเข้าถึง Session ยังไม่สำเร็จ

@@ -7,3 +7,6 @@
 .notice button { margin-left: 12px; color: inherit; font: inherit; background: transparent; border: 0; text-decoration: underline; cursor: pointer; }
 @media (max-width: 900px) { .columns { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 480px) { .desk { padding: 16px !important; } }
+
+.desk button:disabled { cursor: wait; opacity: .6; }
+.desk button:focus-visible, .desk textarea:focus-visible { outline: 2px solid #b9ff2c !important; outline-offset: 3px; }

@@ -82,6 +82,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
   const messagesRef = useRef<HTMLDivElement | null>(null);
   const requestRef = useRef(0);
   const detailRequestRef = useRef(0);
+  const mutationRef = useRef(false);
   const [feedError, setFeedError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -124,30 +125,46 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
     if (el) el.scrollTop = el.scrollHeight;
   }, [ticket?.id, ticket?.messages.length]);
 
-  async function openTicket(id: string) {
+  const openTicket = useCallback(async (id: string, refresh = false) => {
+    if (mutationRef.current) return;
     const request = ++detailRequestRef.current;
-    setBusy(true);
-    setError(null);
+    if (!refresh) setBusy(true);
+    if (!refresh) setError(null);
     try {
-      const res = await fetch(`/api/dev/support/tickets/${id}`, { cache: "no-store" });
+      const res = await fetch(`/api/dev/support/tickets/${encodeURIComponent(id)}`, { cache: "no-store" });
       const data = await res.json().catch(() => null);
       if (request !== detailRequestRef.current) return;
       if (!res.ok) {
         setError(data?.error ?? "เปิดเธรดไม่สำเร็จ");
         return;
       }
-      setDraft("");
+      if (!data?.ticket || !Array.isArray(data.ticket.messages)) {
+        setError("ข้อมูลเธรดไม่ถูกต้อง กรุณาลองเปิดใหม่");
+        return;
+      }
+      if (!refresh) setDraft("");
       setTicket(data.ticket as TicketDetail);
     } catch {
       if (request === detailRequestRef.current) setError("เกิดข้อผิดพลาด");
     } finally {
-      if (request === detailRequestRef.current) setBusy(false);
+      if (!refresh && request === detailRequestRef.current) setBusy(false);
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    if (!ticket?.id || busy) return;
+    const id = ticket.id;
+    const timer = setInterval(() => void openTicket(id, true), POLL_MS);
+    return () => clearInterval(timer);
+  }, [ticket?.id, busy, openTicket]);
+
+  useEffect(() => () => { ++detailRequestRef.current; }, []);
 
   async function act(action: "reply" | "resolve" | "reopen") {
-    if (!ticket) return;
+    if (!ticket || mutationRef.current) return;
+    ++detailRequestRef.current;
     if (action === "reply" && !draft.trim()) return;
+    mutationRef.current = true;
     setBusy(true);
     setError(null);
     try {
@@ -161,25 +178,24 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
         setError(data?.error ?? "ดำเนินการไม่สำเร็จ");
         return;
       }
-      if (action === "reply") {
-        setDraft("");
-        if (data.ticket) setTicket(data.ticket as TicketDetail);
-      } else {
-        await loadFeed();
-        if (data.ticket) setTicket(data.ticket as TicketDetail);
-      }
+      if (action === "reply") setDraft("");
+      if (data.ticket) setTicket(data.ticket as TicketDetail);
+      await loadFeed();
     } catch {
       setError("เกิดข้อผิดพลาด");
     } finally {
+      mutationRef.current = false;
       setBusy(false);
     }
   }
 
   async function applySettings(patch: Partial<NonNullable<Feed["settings"]>>) {
+    if (mutationRef.current || !feed) return;
+    mutationRef.current = true;
     setBusy(true);
     setError(null);
     try {
-      const res = await fetch("/api/dev/support/rules", {
+      const res = await fetch("/api/dev/support", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(patch),
@@ -193,6 +209,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
     } catch {
       setError("เกิดข้อผิดพลาด");
     } finally {
+      mutationRef.current = false;
       setBusy(false);
     }
   }
@@ -287,7 +304,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
             <button
               type="button"
               onClick={() => applySettings({ autoReplyOn: !(feed?.settings?.autoReplyOn ?? true) })}
-              disabled={busy}
+              disabled={busy || !feed}
               style={{
                 padding: "8px 18px",
                 borderRadius: 10,
@@ -314,7 +331,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
             <button
               type="button"
               onClick={() => applySettings({ faqOn: !(feed?.settings?.faqOn ?? true) })}
-              disabled={busy}
+              disabled={busy || !feed}
               style={{
                 padding: "8px 18px",
                 borderRadius: 10,
@@ -346,7 +363,9 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
           <div className={styles.filters} aria-label="ตัวกรองเธรด">
             <button
               type="button"
-              onClick={() => { ++detailRequestRef.current; setBusy(false); setView("inbox"); setTicket(null); }}
+              disabled={busy}
+              aria-pressed={view === "inbox"}
+              onClick={() => { if (mutationRef.current) return; ++detailRequestRef.current; setView("inbox"); setTicket(null); setDraft(""); setError(null); }}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -370,7 +389,9 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
 
             <button
               type="button"
-              onClick={() => { ++detailRequestRef.current; setBusy(false); setView("all"); setTicket(null); }}
+              disabled={busy}
+              aria-pressed={view === "all"}
+              onClick={() => { if (mutationRef.current) return; ++detailRequestRef.current; setView("all"); setTicket(null); setDraft(""); setError(null); }}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -394,7 +415,9 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
 
             <button
               type="button"
-              onClick={() => { ++detailRequestRef.current; setBusy(false); setView("resolved"); setTicket(null); }}
+              disabled={busy}
+              aria-pressed={view === "resolved"}
+              onClick={() => { if (mutationRef.current) return; ++detailRequestRef.current; setView("resolved"); setTicket(null); setDraft(""); setError(null); }}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -434,7 +457,9 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                 <button
                   key={tk.id}
                   type="button"
-                  onClick={() => openTicket(tk.id)}
+                  disabled={busy}
+                  aria-pressed={ticket?.id === tk.id}
+                  onClick={() => void openTicket(tk.id)}
                   style={{
                     display: "flex",
                     flexDirection: "column",
@@ -624,9 +649,12 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                     value={draft}
                     onChange={(e) => setDraft(e.target.value)}
                     rows={2}
+                    aria-label="ข้อความตอบกลับสมาชิก"
+                    maxLength={2400}
+                    disabled={busy}
                     placeholder="พิมพ์ข้อความตอบกลับสมาชิก… (กด Enter เพื่อส่ง)"
                     onKeyDown={(e) => {
-                      if (e.key === "Enter" && !e.shiftKey) {
+                      if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing && e.keyCode !== 229) {
                         e.preventDefault();
                         if (draft.trim() && !busy) act("reply");
                       }
