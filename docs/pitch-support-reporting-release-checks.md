@@ -115,3 +115,25 @@ Workflow ทำงานเมื่อ push ไป main หรือสั่�
 Workflow นี้ยังไม่ได้รันจริงจนกว่าเจ้าของจะเพิ่ม Secrets และรวมชุดแก้ไขเข้า main การ deploy สองบริการไม่ใช่ transaction เดียว หากบริการที่สองหรือการตรวจหลัง deploy ล้มเหลว ต้องตรวจสถานะบริการแต่ละตัวจาก run logs ก่อน retry/rollback ทดสอบ target discovery เพิ่ม 6 กรณีและตรวจ YAML/TypeScript/source security ผ่าน
 
 อ้างอิง: https://developers.cloudflare.com/workers/ci-cd/external-cicd/github-actions/ และ https://developers.cloudflare.com/pages/configuration/api/
+
+
+## Production closeout gate (2026-10-29)
+
+**Current status: BLOCKED — not production accepted.** GitHub CI run 40858829204 passed for commit `85f10e751a021b88a60efbf63d086d5f6a99531a`; PR #2 remains draft and unmerged. This is evidence of automated tests only, not a successful deployment.
+
+### Required operator evidence before marking production PASSED
+
+- [ ] Rotate exposed Cloudflare API and R2 S3 credentials; verify old credentials are revoked and dependent applications use replacements. Never paste secret values into issues, source, logs, or reports.
+- [ ] Confirm repository Actions secrets `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` exist and have least-privilege permissions for the exact Workers/Pages targets; do not disclose values.
+- [ ] Verify Cloudflare Pages project, production branch, custom domains, Worker route, and rollback version before deployment.
+- [ ] Approve PR review and clear draft status only after release criteria pass; merge using the repository's standard protections.
+- [ ] Capture successful production workflow run ID, Worker deployment identifier, Pages deployment identifier, release SHA, and UTC timestamp.
+- [ ] Deny access to legacy recipient CSV URLs at every configured public hostname and path; test from an unauthenticated external client. Do not print or download recipient records.
+- [ ] Purge exact affected URLs in the relevant Cloudflare zones after access controls are effective; verify edge responses again. Purging cache alone does not remove files from origin or Git history.
+- [ ] Run `node scripts/check-public-pitch-exposure.mjs` against production; record exit code and status-only output. Review redirects and unexpected content types separately.
+- [ ] Confirm `/api/health` reports the deployed release SHA; verify `/pitch` routing and `/pitch.html` behavior on root, www, and app hosts.
+- [ ] Perform authenticated functional acceptance for Support, Admin/CEO, reporting timezone and aggregation, QR redirect, and Pitch Studio. Validate authorization and fail-closed delivery controls without sending bulk messages.
+- [ ] Record incident/retention decisions for historical Git objects, search indexes, and copies, with owner approval before any destructive history rewrite.
+- [ ] Document rollback test or rollback procedure and obtain owner sign-off.
+
+**Acceptance rule:** CI success alone is insufficient. Mark `Production PASSED` only after all applicable checks above have linked evidence. If access is missing or a result is inconclusive, leave the item blocked rather than assuming success.
