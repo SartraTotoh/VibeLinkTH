@@ -39,6 +39,13 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "รหัสผ่านไม่ถูกต้อง" }, { status: 400 });
   }
 
+  if (process.env.LIVE_SCHEMA_READY === "true") {
+    const openShows = await prisma.liveShow.count({ where: { userId: session.user.id, closedAt: null } });
+    if (openShows) return NextResponse.json({ error: "กรุณาหยุดส่งและปิดห้อง Live ให้เรียบร้อยก่อนลบบัญชี" }, { status: 409 });
+    // Only closed records may be removed. The DB foreign key also guards a racing new show.
+    await prisma.$executeRaw`DELETE FROM "LiveShow" WHERE "userId"=${session.user.id} AND "closedAt" IS NOT NULL`;
+  }
+
   try {
     const customer = await getStripeCustomerId(session.user.id);
     if (customer) {

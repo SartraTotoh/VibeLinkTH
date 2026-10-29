@@ -71,6 +71,7 @@ model User {
   sessions      Session[]
   emailTokens   EmailToken[]
   supportTickets SupportTicket[]
+  liveShows     LiveShow[]
 }
 
 model EmailToken {
@@ -259,4 +260,48 @@ model SupportMessage {
   ticket    SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
 
   @@index([ticketId, createdAt])
+}
+
+model LiveShow {
+  id          String    @id
+  userId      String
+  title       String
+  aspect      String
+  createdAt   DateTime  @default(now())
+  connectedAt DateTime?
+  lastSeenAt  DateTime?
+  closingAt   DateTime?
+  closedAt    DateTime?
+  user        User      @relation(fields: [userId], references: [id], onDelete: Restrict)
+  output      LiveOutput?
+
+  @@index([userId, createdAt])
+}
+
+model LiveOutput {
+  showId          String    @id
+  requestId       String    @unique
+  state           String    @default("STARTING")
+  destinationHost String
+  videoTrackId    String
+  audioTrackId    String
+  egressId        String?   @unique
+  requestedAt     DateTime  @default(now())
+  stopRequestedAt DateTime?
+  startedAt       DateTime?
+  endedAt         DateTime?
+  streamStartedAt DateTime?
+  streamEndedAt   DateTime?
+  providerVersion BigInt    @default(0)
+  transport       String    @default("starting")
+  show            LiveShow  @relation(fields: [showId], references: [id], onDelete: Cascade)
+  events          LiveOutputEvent[]
+}
+
+model LiveOutputEvent {
+  id         String   @id
+  showId     String
+  state      String
+  receivedAt DateTime @default(now())
+  output     LiveOutput @relation(fields: [showId], references: [showId], onDelete: Cascade)
 }
