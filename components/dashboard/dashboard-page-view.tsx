@@ -247,6 +247,10 @@ export async function DashboardPageView({ activeTab }: Props) {
             <span className="ms">qr_code_2</span>
             QR
           </Link>
+          <Link href="/live" className="mini-btn" prefetch={false}>
+            <span className="ms">videocam</span>
+            Live
+          </Link>
           <Link href="/settings" className="mini-btn" prefetch={false}>
             <span className="ms">settings</span>
             {lang === "th" ? "ตั้งค่า" : "Settings"}
