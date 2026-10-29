@@ -3,7 +3,8 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { isAdmin } from "@/lib/admin";
 import { PLAN_MRR } from "@/lib/funnel";
-import { rateLimit, clientIp } from "@/lib/rate-limit";
+import { bangkokDayKey, reportingWindow } from "@/lib/reporting-time";
+import { clientIp } from "@/lib/rate-limit";
 import { recordSecurityAttempt } from "@/lib/security";
 
 const DAY = 86400_000;
@@ -25,7 +26,7 @@ export type Metrics = {
     clicks: number;
     clicksDeltaPct: number | null;
   };
-  series: { date: string; mrr: number; clicks: number; signups: number }[];
+  series: { date: string; mrr: number | null; clicks: number; signups: number }[];
   funnel: {
     views: number;
     uniqueViews: number;
@@ -54,7 +55,8 @@ export async function GET(req: Request) {
   }
 
   const now = Date.now();
-  const start = now - DAYS * DAY;
+  const window = reportingWindow(DAYS, now);
+  const start = window.since;
   const priorStart = start - DAYS * DAY;
 
   const [subs, planGroups, usersCreated, clickEvents] = await Promise.all([
@@ -63,9 +65,9 @@ export async function GET(req: Request) {
       select: { plan: true, startedAt: true },
     }),
     prisma.user.groupBy({ by: ["plan"], _count: { _all: true } }),
-    prisma.user.findMany({ select: { createdAt: true, _count: { select: { events: true } } } }),
+    prisma.user.findMany({ select: { createdAt: true } }),
     prisma.linkEvent.findMany({
-      where: { type: "CLICK", createdAt: { gte: new Date(priorStart) } },
+      where: { type: "CLICK", createdAt: { gte: new Date(priorStart), lte: new Date(now) } },
       select: { createdAt: true },
     }),
   ]);
@@ -77,15 +79,11 @@ export async function GET(req: Request) {
   const arpu = paidUsers > 0 ? Math.round((mrr / paidUsers) * 100) / 100 : 0;
 
   const newSubs = subs.filter((s) => s.startedAt.getTime() >= start);
-  const prevSubs = subs.filter((s) => s.startedAt.getTime() < start);
-  const newMrr = newSubs.reduce((n, s) => n + (PLAN_MRR[s.plan] ?? 0), 0);
-  const prevMrr = mrr - newMrr;
-  const mrrDeltaPct = prevMrr > 0 ? Math.round(((mrr - prevMrr) / prevMrr) * 1000) / 10 : null;
-  const mrrIsNew = prevMrr === 0 && mrr > 0;
+  // Current ACTIVE rows cannot reconstruct churn, historical MRR or net growth.
+  const mrrDeltaPct = null;
+  const mrrIsNew = false;
   const paidDelta = newSubs.length;
-
-  const arpuPrev = prevSubs.length > 0 ? Math.round((prevMrr / prevSubs.length) * 100) / 100 : null;
-  const arpuDeltaPct = arpuPrev != null && arpuPrev > 0 ? Math.round(((arpu - arpuPrev) / arpuPrev) * 1000) / 10 : null;
+  const arpuDeltaPct = null;
 
   const signupsNow = usersCreated.filter((u) => u.createdAt.getTime() >= start).length;
   const signupsPrior = usersCreated.filter(
@@ -101,32 +99,20 @@ export async function GET(req: Request) {
   const clicksDeltaPct =
     clicksPrior > 0 ? Math.round(((clicksNow - clicksPrior) / clicksPrior) * 1000) / 10 : null;
 
-  const clicksTotal = clickEvents.length;
+  const clicksTotal = clicksNow;
 
   const daily: {
     date: string;
-    mrr: number;
+    mrr: number | null;
     clicks: number;
     signups: number;
   }[] = [];
   for (let i = DAYS - 1; i >= 0; i--) {
-    const d = now - i * DAY;
-    daily.push({ date: new Date(d).toISOString().slice(0, 10), mrr: 0, clicks: 0, signups: 0 });
+    const date = window.dates[DAYS - 1 - i]!;
+    daily.push({ date, mrr: null, clicks: 0, signups: 0 });
   }
 
-  const subsSorted = [...subs].sort((a, b) => a.startedAt.getTime() - b.startedAt.getTime());
-  let subIdx = 0;
-  let cumMrr = 0;
-  for (const day of daily) {
-    const dayStart = new Date(`${day.date}T00:00:00Z`).getTime() + DAY;
-    while (subIdx < subsSorted.length && subsSorted[subIdx]!.startedAt.getTime() < dayStart) {
-      cumMrr += PLAN_MRR[subsSorted[subIdx]!.plan] ?? 0;
-      subIdx += 1;
-    }
-    day.mrr = cumMrr;
-  }
-
-  const dayKey = (t: number) => new Date(t).toISOString().slice(0, 10);
+  const dayKey = (t: number) => bangkokDayKey(t);
   const byDay = (t: number) => daily.find((d) => d.date === dayKey(t));
   for (const e of clickEvents) {
     const d = byDay(e.createdAt.getTime());
@@ -159,16 +145,12 @@ export async function GET(req: Request) {
     };
   });
 
-  const cohort = (minAge: number) => {
-    const eligible = usersCreated.filter((u) => now - u.createdAt.getTime() >= minAge * DAY);
-    const active = eligible.filter((u) => u._count.events > 0).length;
-    return {
-      active,
-      total: eligible.length,
-      pct: eligible.length > 0 ? Math.round((active / eligible.length) * 1000) / 10 : null,
-    };
+  // LinkEvent records visitor traffic, not the creator returning to the product.
+  // Do not manufacture D7/D30 retention from lifetime visitor clicks.
+  const retention = {
+    d7: { active: 0, total: 0, pct: null },
+    d30: { active: 0, total: 0, pct: null },
   };
-  const retention = { d7: cohort(7), d30: cohort(30) };
 
   const body: Metrics = {
     periodDays: DAYS,
@@ -193,7 +175,7 @@ export async function GET(req: Request) {
       clicks: clicksTotal,
       purchases: paidUsers,
       convViewClick: null,
-      convClickPurchase: clicksTotal > 0 ? Math.round((paidUsers / clicksTotal) * 1000) / 10 : null,
+      convClickPurchase: null, // Subscriptions are not attributed to link visitors.
     },
     planMix,
     revenueMix,

@@ -58,6 +58,7 @@ const POLL_MS = 6000;
 function fmtTime(iso: string) {
   try {
     return new Date(iso).toLocaleString("th-TH", {
+      timeZone: "Asia/Bangkok",
       day: "numeric",
       month: "short",
       hour: "2-digit",
@@ -110,7 +111,7 @@ const bubbleMeta: Record<Sender, { label: string; icon: string; color: string; b
     badgeBg: "rgba(255, 79, 216, 0.14)",
   },
   AUTO: {
-    label: "VibeLink AI Bot",
+    label: "VibeLink Auto-reply",
     icon: "smart_toy",
     color: "#b9ff2c",
     badgeBg: "rgba(185, 255, 44, 0.14)",
@@ -118,9 +119,9 @@ const bubbleMeta: Record<Sender, { label: string; icon: string; color: string; b
 };
 
 const DEFAULT_SUGGESTIONS = [
-  { icon: "bolt", textTh: "วิธีสร้าง Dynamic QR Code ที่เปลี่ยนปลายทางได้", textEn: "How to create an editable Dynamic QR Code" },
-  { icon: "link", textTh: "วิธีรวมปุ่ม TikTok Shop & Shopee ใน Bio Link", textEn: "How to add TikTok Shop & Shopee in Bio Link" },
-  { icon: "calendar_month", textTh: "ระบบจองคิว 1:1 VibeBook ใช้งานอย่างไร", textEn: "How to use VibeBook 1:1 Booking Calendar" },
+  { icon: "bolt", textTh: "วิธีสร้าง Static QR และทดสอบไฟล์ก่อนใช้", textEn: "How to create and test a Static QR Code" },
+  { icon: "link", textTh: "การใส่ URL ร้านค้าเป็นปลายทาง QR", textEn: "Use your shop URL as a QR destination" },
+  { icon: "calendar_month", textTh: "วิธีตรวจปลายทางของลิงก์สั้น", textEn: "How to check a short-link destination" },
   { icon: "workspace_premium", textTh: "แพ็กเกจ Creator มีฟีเจอร์อะไรบ้าง ราคาเท่าไหร่", textEn: "What features are included in Creator plan" },
 ];
 
@@ -271,7 +272,7 @@ export function SupportChat({ lang }: { lang: Lang }) {
               </div>
               <div style={{ fontSize: 15, color: "#94a3b8", marginTop: 3 }}>
                 {s?.autoReplyOn
-                  ? t("ตอบอัตโนมัติทันทีใน 0.04 วินาที · ส่งต่อทีมงานเมื่อต้องการความช่วยเหลือเชิงลึก", "Instant 0.04s auto-reply · team escalates when needed")
+                  ? t("ระบบตอบตามหัวข้อ · ส่งต่อทีมงานเมื่อไม่พบคำตอบ", "Topic-based auto-reply · contact our team if needed")
                   : t("ช่องทางสนทนากับฝ่ายบริการลูกค้า", "Direct customer support channel")}
               </div>
             </div>
@@ -293,7 +294,7 @@ export function SupportChat({ lang }: { lang: Lang }) {
               }}
             >
               <span className="ms" style={{ fontSize: 16, color: "var(--primary, #b9ff2c)" }}>bolt</span>
-              {t("ตอบไวใน 0.04s", "Instant 0.04s")}
+              {t("ระบบตอบตามหัวข้อ", "Topic-based replies")}
             </span>
           </div>
         </div>

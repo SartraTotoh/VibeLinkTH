@@ -3,6 +3,7 @@ type SendArgs = {
   subject: string;
   html: string;
   text: string;
+  idempotencyKey?: string;
 };
 
 const FROM = process.env.EMAIL_FROM ?? "VibeLink <no-reply@vibelinkth.com>";
@@ -12,7 +13,7 @@ export function emailConfigured() {
   return Boolean(process.env.RESEND_API_KEY);
 }
 
-export async function sendEmail({ to, subject, html, text }: SendArgs): Promise<boolean> {
+export async function sendEmail({ to, subject, html, text, idempotencyKey }: SendArgs): Promise<boolean> {
   const key = process.env.RESEND_API_KEY;
   if (!key) {
     console.log(`[email:dev] to=${to}\nsubject=${subject}\n${text}`);
@@ -25,6 +26,7 @@ export async function sendEmail({ to, subject, html, text }: SendArgs): Promise<
       headers: {
         Authorization: `Bearer ${key}`,
         "Content-Type": "application/json",
+        ...(idempotencyKey ? { "Idempotency-Key": idempotencyKey } : {}),
       },
       body: JSON.stringify({
         from: FROM,

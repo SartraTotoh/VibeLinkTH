@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import styles from "./support-chat.module.css";
 
 type Sender = "MEMBER" | "ADMIN" | "AUTO";
 type TicketStatus = "OPEN" | "RESOLVED";
@@ -55,6 +56,7 @@ const POLL_MS = 8000;
 function fmtTime(iso: string) {
   try {
     return new Date(iso).toLocaleString("th-TH", {
+      timeZone: "Asia/Bangkok",
       day: "numeric",
       month: "short",
       hour: "2-digit",
@@ -77,50 +79,69 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const bottomRef = useRef<HTMLDivElement | null>(null);
+  const messagesRef = useRef<HTMLDivElement | null>(null);
+  const requestRef = useRef(0);
+  const detailRequestRef = useRef(0);
+  const [feedError, setFeedError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const loadFeed = useCallback(async () => {
+  const loadFeed = useCallback(async (signal?: AbortSignal) => {
+    const request = ++requestRef.current;
     try {
-      const res = await fetch(`/api/dev/support?view=${view}`, { cache: "no-store" });
-      if (!res.ok) return;
+      const res = await fetch(`/api/dev/support?view=${view}`, { cache: "no-store", signal });
+      if (!res.ok) throw new Error(res.status === 401 || res.status === 403 || res.status === 404
+        ? "เซสชันหมดอายุหรือไม่มีสิทธิ์ Admin กรุณาเข้าสู่ระบบอีกครั้ง"
+        : `โหลด Inbox ไม่สำเร็จ (${res.status})`);
       const data = (await res.json()) as Feed;
+      if (!Array.isArray(data.tickets)) throw new Error("ข้อมูล Inbox ไม่ถูกต้อง");
+      if (request !== requestRef.current || signal?.aborted) return;
       setFeed(data);
-      if (ticket) {
-        const still = data.tickets.find((t) => t.id === ticket.id);
-        if (!still && view !== "resolved") {
-          setTicket(null);
-        }
+      setFeedError(null);
+    } catch (err) {
+      if (request === requestRef.current && !signal?.aborted) {
+        setFeedError(err instanceof Error ? err.message : "โหลด Inbox ไม่สำเร็จ กรุณาลองใหม่");
       }
-    } catch {
-      // transient
+    } finally {
+      if (request === requestRef.current && !signal?.aborted) setLoading(false);
     }
-  }, [view, ticket]);
+  }, [view]);
 
   useEffect(() => {
-    loadFeed();
-    const timer = setInterval(loadFeed, POLL_MS);
-    return () => clearInterval(timer);
+    const controller = new AbortController();
+    setLoading(true);
+    setFeed(null);
+    setFeedError(null);
+    void loadFeed(controller.signal);
+    const timer = setInterval(() => void loadFeed(controller.signal), POLL_MS);
+    return () => {
+      controller.abort();
+      clearInterval(timer);
+    };
   }, [loadFeed]);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
-  }, [ticket?.messages.length]);
+    const el = messagesRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [ticket?.id, ticket?.messages.length]);
 
   async function openTicket(id: string) {
+    const request = ++detailRequestRef.current;
     setBusy(true);
     setError(null);
     try {
       const res = await fetch(`/api/dev/support/tickets/${id}`, { cache: "no-store" });
       const data = await res.json().catch(() => null);
+      if (request !== detailRequestRef.current) return;
       if (!res.ok) {
         setError(data?.error ?? "เปิดเธรดไม่สำเร็จ");
         return;
       }
+      setDraft("");
       setTicket(data.ticket as TicketDetail);
     } catch {
-      setError("เกิดข้อผิดพลาด");
+      if (request === detailRequestRef.current) setError("เกิดข้อผิดพลาด");
     } finally {
-      setBusy(false);
+      if (request === detailRequestRef.current) setBusy(false);
     }
   }
 
@@ -180,6 +201,8 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
 
   return (
     <div
+      className={styles.desk}
+      data-testid="admin-support-desk"
       style={{
         borderRadius: 24,
         background: "radial-gradient(130% 130% at 50% 0%, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%), rgba(14, 17, 24, 0.85)",
@@ -208,10 +231,10 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
               color: "var(--primary, #b9ff2c)",
             }}
           >
-            <span className="ms" style={{ fontSize: 154 }}>support_agent</span>
+            <span className="ms" style={{ fontSize: 24 }}>support_agent</span>
           </div>
           <div>
-            <h2 style={{ margin: 0, fontSize: 150, fontWeight: 700, color: "#ffffff" }}>
+            <h2 style={{ margin: 0, fontSize: 20, fontWeight: 700, color: "#ffffff" }}>
               ศูนย์ควบคุมการตอบคำถาม (Admin Desk)
             </h2>
             <div style={{ fontSize: 15, color: "#94a3b8", marginTop: 2 }}>
@@ -239,7 +262,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
             fontFamily: "inherit",
           }}
         >
-          <span className="ms" style={{ fontSize: 158, color: "var(--primary, #b9ff2c)" }}>tune</span>
+          <span className="ms" style={{ fontSize: 18, color: "var(--primary, #b9ff2c)" }}>tune</span>
           <span>{settingsOpen ? "ปิดการตั้งค่า" : "ตั้งค่าบอทอัตโนมัติ"}</span>
         </button>
       </div>
@@ -258,7 +281,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
         >
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14, flexWrap: "wrap" }}>
             <div>
-              <b style={{ fontSize: 155, color: "#ffffff" }}>Auto-reply Bot</b>
+              <b style={{ fontSize: 15, color: "#ffffff" }}>Auto-reply Bot</b>
               <div style={{ fontSize: 15, color: "#94a3b8" }}>ตอบอัตโนมัติทันทีเมื่อข้อความของสมาชิกตรงกับคีย์เวิร์ด</div>
             </div>
             <button
@@ -285,7 +308,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
 
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14, flexWrap: "wrap" }}>
             <div>
-              <b style={{ fontSize: 155, color: "#ffffff" }}>แสดงคำถามยอดฮิต (FAQ) บนหน้า /support</b>
+              <b style={{ fontSize: 15, color: "#ffffff" }}>แสดงคำถามยอดฮิต (FAQ) บนหน้า /support</b>
               <div style={{ fontSize: 15, color: "#94a3b8" }}>คำถามที่สมาชิกสามารถคลิกเพื่อถามระบบได้ทันที</div>
             </div>
             <button
@@ -312,25 +335,18 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
         </div>
       ) : null}
 
-      {/* 2 Columns: Inbox List & Thread View */}
-      <div style={{ display: "grid", gridTemplateColumns: "minmax(320px, 1fr) minmax(360px, 1.4fr)", gap: 20 }}>
+      {feedError ? <p className={styles.notice} role="alert">{feedError}<button type="button" onClick={() => void loadFeed()}>ลองใหม่</button></p> : null}
+      {error ? <p className={styles.notice} role="alert">{error}</p> : null}
+      {loading ? <p role="status">กำลังโหลด Inbox…</p> : null}
+      {/* Inbox and conversation share the same responsive layout on Support and CEO. */}
+      <div className={styles.columns}>
         {/* Left Column: Tickets Queue */}
         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
           {/* View Filter Switcher */}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(3, 1fr)",
-              padding: 4,
-              borderRadius: 14,
-              background: "rgba(255, 255, 255, 0.04)",
-              boxShadow: "inset 0 1px 1px rgba(255, 255, 255, 0.08)",
-              gap: 4,
-            }}
-          >
+          <div className={styles.filters} aria-label="ตัวกรองเธรด">
             <button
               type="button"
-              onClick={() => { setView("inbox"); setTicket(null); }}
+              onClick={() => { ++detailRequestRef.current; setBusy(false); setView("inbox"); setTicket(null); }}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -348,13 +364,13 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                 fontFamily: "inherit",
               }}
             >
-              <span className="ms" style={{ fontSize: 156 }}>inbox</span>
+              <span className="ms" style={{ fontSize: 16 }}>inbox</span>
               <span>รอตอบ ({feed ? feed.inboxCount : "…"})</span>
             </button>
 
             <button
               type="button"
-              onClick={() => { setView("all"); setTicket(null); }}
+              onClick={() => { ++detailRequestRef.current; setBusy(false); setView("all"); setTicket(null); }}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -372,13 +388,13 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                 fontFamily: "inherit",
               }}
             >
-              <span className="ms" style={{ fontSize: 156 }}>chat</span>
+              <span className="ms" style={{ fontSize: 16 }}>chat</span>
               <span>ทั้งหมด</span>
             </button>
 
             <button
               type="button"
-              onClick={() => { setView("resolved"); setTicket(null); }}
+              onClick={() => { ++detailRequestRef.current; setBusy(false); setView("resolved"); setTicket(null); }}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -396,7 +412,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                 fontFamily: "inherit",
               }}
             >
-              <span className="ms" style={{ fontSize: 156 }}>task_alt</span>
+              <span className="ms" style={{ fontSize: 16 }}>task_alt</span>
               <span>ปิดแล้ว</span>
             </button>
           </div>
@@ -439,7 +455,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                   }}
                 >
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
-                    <b style={{ fontSize: 155, color: isSelected ? "var(--primary, #b9ff2c)" : "#ffffff" }}>
+                    <b style={{ fontSize: 15, color: isSelected ? "var(--primary, #b9ff2c)" : "#ffffff" }}>
                       {tk.user.displayName?.trim() ? tk.user.displayName : tk.user.email}
                     </b>
                     <span
@@ -471,7 +487,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
               );
             })}
 
-            {showTickets.length === 0 ? (
+            {feed && !loading && !feedError && showTickets.length === 0 ? (
               <div style={{ padding: "32px 20px", textAlign: "center", color: "#94a3b8", fontSize: 15 }}>
                 {view === "resolved" ? "ยังไม่มีเธรดที่ปิดแล้ว" : "ไม่มีงานใน Inbox — ทุกเธรดได้รับการดูแลแล้ว"}
               </div>
@@ -496,7 +512,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
               {/* Thread Info Header */}
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
                 <div>
-                  <h3 style={{ margin: 0, fontSize: 158, fontWeight: 700, color: "#ffffff" }}>
+                  <h3 style={{ margin: 0, fontSize: 18, fontWeight: 700, color: "#ffffff" }}>
                     {ticket.user.displayName?.trim() ? ticket.user.displayName : ticket.user.email}
                   </h3>
                   <div style={{ fontSize: 15, color: "#94a3b8", marginTop: 2 }}>
@@ -526,7 +542,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                         fontFamily: "inherit",
                       }}
                     >
-                      <span className="ms" style={{ fontSize: 156 }}>check</span>
+                      <span className="ms" style={{ fontSize: 16 }}>check</span>
                       <span>ปิดงาน</span>
                     </button>
                   ) : (
@@ -550,7 +566,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                         fontFamily: "inherit",
                       }}
                     >
-                      <span className="ms" style={{ fontSize: 156 }}>replay</span>
+                      <span className="ms" style={{ fontSize: 16 }}>replay</span>
                       <span>เปิดใหม่</span>
                     </button>
                   )}
@@ -559,6 +575,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
 
               {/* Message List */}
               <div
+                ref={messagesRef}
                 style={{
                   maxHeight: 340,
                   overflowY: "auto",
@@ -590,14 +607,14 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                     }}
                   >
                     <div style={{ fontSize: 15, opacity: 0.7, marginBottom: 4, display: "flex", alignItems: "center", gap: 6 }}>
-                      <span>{m.sender === "ADMIN" ? "ทีมงาน" : m.sender === "MEMBER" ? "สมาชิก" : "VibeLink AI Bot"}</span>
+                      <span>{m.sender === "ADMIN" ? "ทีมงาน" : m.sender === "MEMBER" ? "สมาชิก" : "VibeLink Auto-reply"}</span>
                       <span>·</span>
                       <span>{fmtTime(m.createdAt)}</span>
                     </div>
                     <div>{m.body}</div>
                   </div>
                 ))}
-                <div ref={bottomRef} />
+
               </div>
 
               {/* Reply Box */}
@@ -616,6 +633,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                     }}
                     style={{
                       flex: 1,
+                      minWidth: 0,
                       background: "rgba(10, 13, 20, 0.8)",
                       borderRadius: 12,
                       border: "none",
@@ -649,13 +667,13 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                       fontFamily: "inherit",
                     }}
                   >
-                    <span className="ms" style={{ fontSize: 156 }}>send</span>
+                    <span className="ms" style={{ fontSize: 16 }}>send</span>
                     <span>ส่ง</span>
                   </button>
                 </div>
               ) : null}
 
-              {error ? <p style={{ margin: 0, color: "#fca5a5", fontSize: 15 }}>{error}</p> : null}
+
             </div>
           ) : (
             <div
@@ -666,7 +684,7 @@ export function SupportChatModule({ initialUnread: _initialUnread }: SupportChat
                 padding: "48px 24px",
                 textAlign: "center",
                 color: "#94a3b8",
-                fontSize: 155,
+                fontSize: 15,
               }}
             >
               เลือกเธรดจากคอลัมน์ซ้ายเพื่อเริ่มอ่านและตอบกลับคำถาม

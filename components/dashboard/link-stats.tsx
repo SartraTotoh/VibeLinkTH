@@ -10,6 +10,9 @@ type StatsData = {
   requested: string;
   limited: boolean;
   total: number;
+  truncated: boolean;
+  timeZone: string;
+  partialToday: boolean;
   perDay: { date: string; clicks: number }[];
   byDevice: Breakdown[];
   byBrowser: Breakdown[];
@@ -76,6 +79,7 @@ export function LinkStats({
     let cancelled = false;
     setLoading(true);
     setError(null);
+    setData(null);
     fetch(`/api/links/${linkId}/stats?range=${range}`)
       .then((res) => res.json().then((j) => ({ res, j })).catch(() => ({ res, j: null })))
       .then(({ res, j }) => {
@@ -131,6 +135,8 @@ export function LinkStats({
 
       {data ? (
         <>
+          <p className="panel-sub">{lang === "th" ? "เขตเวลา Asia/Bangkok · วันนี้ยังไม่ครบวัน · คลิกไม่เท่ากับคนหรือยอดขาย" : "Asia/Bangkok · today is partial · clicks are not people or sales"}</p>
+          {data.truncated ? <div className="notice" role="status">{lang === "th" ? "แสดงเพียง 20,000 เหตุการณ์แรก ยอดรวมและกราฟไม่ครบ กรุณาเลือกช่วงวันที่สั้นลง" : "Only the first 20,000 events are shown. Totals and charts are incomplete; choose a shorter range."}</div> : null}
           {data.limited ? <div className="notice">{t(lang, "st.limited")}</div> : null}
           <div className="stats-total">
             <span>{t(lang, "st.total")}</span>

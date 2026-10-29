@@ -1,61 +1,26 @@
-export type CampaignRef = {
-  id: string;
-  name: string;
-};
-
-export type CampaignAttribution = {
-  campaignId: string | null;
-  matchedName: string | null;
-};
+export type CampaignRef = { id: string; name: string };
+export type CampaignAttribution = { campaignId: string | null; matchedName: string | null };
 
 export function campaignSlugify(raw: string) {
-  return raw
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+  return raw.normalize("NFC").toLowerCase().trim().replace(/[^\p{L}\p{M}\p{N}]+/gu, "-").replace(/^-+|-+$/g, "");
 }
 
-function digitsOf(raw: string) {
-  return (raw.match(/[0-9]/g) || []).join("");
-}
-
-export function findCampaignFor(
-  url: string,
-  campaigns: CampaignRef[],
-): CampaignAttribution {
-  if (campaigns.length === 0) return { campaignId: null, matchedName: null };
-
-  let utmCampaign: string | null = null;
+export function findCampaignFor(url: string, campaigns: CampaignRef[]): CampaignAttribution {
+  let value: string | null;
   try {
-    const parsed = new URL(url);
-    utmCampaign = parsed.searchParams.get("utm_campaign");
+    const values = new URL(url).searchParams.getAll("utm_campaign");
+    if (values.length !== 1 || !values[0]?.trim()) return { campaignId: null, matchedName: null };
+    value = values[0].trim();
   } catch {
-    utmCampaign = null;
+    return { campaignId: null, matchedName: null };
   }
-
-  if (utmCampaign) {
-    const param = utmCampaign.trim();
-    if (param) {
-      const paramSlug = campaignSlugify(param);
-      const paramDigits = digitsOf(param);
-      const match = campaigns.find((c) => {
-        const name = c.name.trim().toLowerCase();
-        const p = param.toLowerCase();
-        if (name === p) return true;
-        const nameSlug = campaignSlugify(c.name);
-        if (nameSlug && paramSlug && nameSlug === paramSlug) return true;
-        const nameDigits = digitsOf(c.name);
-        if (nameDigits && paramDigits && nameDigits === paramDigits) return true;
-        return false;
-      });
-      if (match) return { campaignId: match.id, matchedName: match.name };
-      return { campaignId: null, matchedName: utmCampaign };
-    }
-  }
-
-  if (campaigns.length === 1) {
-    return { campaignId: campaigns[0]!.id, matchedName: campaigns[0]!.name };
-  }
-
-  return { campaignId: null, matchedName: null };
+  // Prefer stable IDs, then exact normalized names, then unambiguous slugs.
+  // Never infer attribution from digits or the existence of a single campaign.
+  const byId = campaigns.filter((c) => c.id === value);
+  const normalized = value.normalize("NFC").toLowerCase();
+  const exact = campaigns.filter((c) => c.name.trim().normalize("NFC").toLowerCase() === normalized);
+  const matches = byId.length ? byId : exact.length ? exact : campaigns.filter((c) => campaignSlugify(c.name) === campaignSlugify(value!));
+  return matches.length === 1
+    ? { campaignId: matches[0]!.id, matchedName: matches[0]!.name }
+    : { campaignId: null, matchedName: value };
 }

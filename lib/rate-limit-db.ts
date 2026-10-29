@@ -56,10 +56,10 @@ export async function rateLimitDb(
   }
 }
 
-/** ล้างแถวนับเก่าเกิน 1 ชม. */
+/** Keep at least two days so cleanup cannot reset daily delivery quotas. */
 export async function cleanupRateLimitTable(): Promise<number> {
   try {
-    const cutoff = Date.now() - 3_600_000;
+    const cutoff = Date.now() - 2 * 24 * 3_600_000;
     return await prisma.$executeRawUnsafe(
       "DELETE FROM _rate_limit WHERE window_start < $1",
       cutoff,

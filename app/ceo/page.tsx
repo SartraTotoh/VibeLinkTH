@@ -151,9 +151,9 @@ export default async function DevPage() {
 
   const vaultItems = SECRET_DEFS.map((s) => ({
     ...s,
-    value: process.env[s.key] ?? "",
+    configured: Boolean(process.env[s.key]),
   }));
-  const vaultReady = vaultItems.filter((v) => v.value).length;
+  const vaultReady = vaultItems.filter((v) => v.configured).length;
   const vaultMissing = vaultItems.length - vaultReady;
 
   const records = resend.records ?? [];

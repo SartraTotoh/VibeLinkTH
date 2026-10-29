@@ -49,27 +49,31 @@ export async function GET(req: Request, { params }: { params: Promise<{ slug: st
     return NextResponse.redirect(`${appUrl}/?link=not-found`, 302);
   }
 
-  const campaigns = await prisma.campaign.findMany({
-    where: { userId: link.userId, linkId: link.id },
-    select: { id: true, name: true },
-    take: 5,
-  });
-  const attributed = findCampaignFor(link.destinationUrl, campaigns);
-
-  const ua = parseUA(req.headers.get("user-agent"));
-  await prisma.linkEvent.create({
-    data: {
-      type: "CLICK",
-      userId: link.userId,
-      linkId: link.id,
-      campaignId: attributed.campaignId,
-      referrer: req.headers.get("referer"),
-      device: ua.device,
-      browser: ua.browser,
-      os: ua.os,
-      country: req.headers.get("cf-ipcountry"),
-    },
-  });
+  try {
+    const campaigns = await prisma.campaign.findMany({
+      where: { userId: link.userId, linkId: link.id },
+      select: { id: true, name: true },
+    });
+    const attributed = findCampaignFor(link.destinationUrl, campaigns);
+    const ua = parseUA(req.headers.get("user-agent"));
+    await prisma.linkEvent.create({
+      data: {
+        type: "CLICK",
+        userId: link.userId,
+        linkId: link.id,
+        campaignId: attributed.campaignId,
+        referrer: req.headers.get("referer"),
+        device: ua.device,
+        browser: ua.browser,
+        os: ua.os,
+        country: req.headers.get("cf-ipcountry"),
+      },
+    });
+  } catch {
+    // A reporting outage must not break an otherwise valid destination.
+    // Do not log the destination URL, referrer, or user identifiers.
+    console.error("[redirect] click event write failed");
+  }
 
   return NextResponse.redirect(link.destinationUrl, 302);
 }
