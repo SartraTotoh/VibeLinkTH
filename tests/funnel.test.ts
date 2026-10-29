@@ -47,7 +47,7 @@ describe("computeFunnel", () => {
     expect(f.mrr).toBe(199);
     expect(f.convUnique).toBeCloseTo(53.3, 1);
     expect(f.convClick).toBeCloseTo(8.8, 1);
-    expect(f.convPurchase).toBeCloseTo(1.4, 1);
+    expect(f.convPurchase).toBeNull();
   });
 
   it("ignores expired/canceled subscriptions for purchases", () => {
@@ -70,11 +70,11 @@ describe("computeFunnel", () => {
     expect(f.retentionD30).toEqual({ active: 1, total: 2, pct: 50 });
   });
 
-  it("derives real-user activity from clicks when flags are absent", () => {
+  it("does not infer creator retention from visitor clicks", () => {
     const rows = [user({ id: "r", createdAt: iso(45), clickCount: 7 })];
     const f = computeFunnel(rows, NOW);
-    expect(f.retentionD7.active).toBe(1);
-    expect(f.retentionD30.active).toBe(1);
+    expect(f.retentionD7).toEqual({ active: 0, total: 0, pct: null });
+    expect(f.retentionD30).toEqual({ active: 0, total: 0, pct: null });
   });
 
   it("handles empty input", () => {
@@ -87,9 +87,9 @@ describe("computeFunnel", () => {
       mrr: 0,
       convUnique: 0,
       convClick: 0,
-      convPurchase: 0,
-      retentionD7: { active: 0, total: 0, pct: 0 },
-      retentionD30: { active: 0, total: 0, pct: 0 },
+      convPurchase: null,
+      retentionD7: { active: 0, total: 0, pct: null },
+      retentionD30: { active: 0, total: 0, pct: null },
     });
   });
 });

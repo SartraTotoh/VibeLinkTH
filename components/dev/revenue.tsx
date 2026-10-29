@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import styles from "@/app/ceo/dev-console.module.css";
@@ -8,30 +8,9 @@ function fmtMoney(n: number) {
   return n.toLocaleString("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-function Spark({ values, w = 132, h = 30 }: { values: number[]; w?: number; h?: number }) {
-  if (values.length < 2 || values.every((v) => v === 0)) {
-    return <span className={styles.sparkEmpty}>—</span>;
-  }
-  const min = Math.min(...values);
-  const max = Math.max(...values);
-  const span = max - min || 1;
-  const pts = values
-    .map((v, i) => {
-      const x = (i / (values.length - 1)) * w;
-      const y = h - 4 - ((v - min) / span) * (h - 10);
-      return `${x.toFixed(1)},${y.toFixed(1)}`;
-    })
-    .join(" ");
-  return (
-    <svg className={styles.spark} width={w} height={h} viewBox={`0 0 ${w} ${h}`} aria-hidden focusable="false">
-      <polyline points={pts} fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
-    </svg>
-  );
-}
-
 function Trend({ deltaPct, isNew }: { deltaPct: number | null; isNew?: boolean }) {
   if (isNew) return <span className={`${styles.trend} ${styles.trendGood}`}>เพิ่มใน 30 วันนี้</span>;
-  if (deltaPct == null) return <span className={styles.trendMuted}>— ยังไม่มีช่วงก่อนหน้า</span>;
+  if (deltaPct == null) return <span className={styles.trendMuted}>— ยังไม่มีประวัติสำหรับเทียบช่วงก่อนหน้า</span>;
   const up = deltaPct >= 0;
   return (
     <span className={up ? styles.trendGood : styles.trendBad}>
@@ -147,19 +126,17 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
           <span className={styles.revTrendRow}>
             <Trend deltaPct={k.mrrDeltaPct} isNew={k.mrrIsNew} />
           </span>
-          <Spark values={m.series.map((d) => d.mrr)} />
         </div>
         <div className={styles.revKpi}>
           <small>Paid Users</small>
           <b>{k.paidUsers.toLocaleString("th-TH")}</b>
           <span className={styles.revTrendRow}>
             {k.paidDelta > 0 ? (
-              <span className={styles.trendGood}>+{k.paidDelta} เพิ่มใน 30 วันนี้</span>
+              <span className={styles.trendGood}>{k.paidDelta} แพ็กเกจที่ยัง ACTIVE เริ่มในช่วงนี้</span>
             ) : (
-              <span className={styles.trendMuted}>{k.paidUsers > 0 ? "ไม่มีเพิ่มใน 30 วัน" : "ยังไม่มีผู้จ่าย"}</span>
+              <span className={styles.trendMuted}>{k.paidUsers > 0 ? "ไม่มีแพ็กเกจ ACTIVE ที่เริ่มในช่วงนี้" : "ยังไม่มีผู้จ่าย"}</span>
             )}
           </span>
-          <Spark values={m.series.map((d) => d.mrr)} />
         </div>
         <div className={styles.revKpi}>
           <small>ARPU</small>
@@ -167,7 +144,6 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
           <span className={styles.revTrendRow}>
             <Trend deltaPct={k.arpuDeltaPct} />
           </span>
-          <Spark values={m.series.map((d) => d.mrr)} />
         </div>
       </div>
 
@@ -177,8 +153,8 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
           <div className={styles.funnelRow}>
             <div className={styles.fstep}>
               <b>View</b>
-              <strong>{f.views.toLocaleString("th-TH")}</strong>
-              <small>{f.uniqueViews.toLocaleString("th-TH")} unique</small>
+              <strong>—</strong>
+              <small>ยังไม่มีข้อมูล page view</small>
             </div>
             <div className={styles.fconn}>
               <span className={styles.farrow}>→</span>
@@ -194,13 +170,13 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
               <small>{f.convClickPurchase != null ? `${f.convClickPurchase}%` : "—"}</small>
             </div>
             <div className={styles.fstep}>
-              <b>Purchase</b>
+              <b>Active plans</b>
               <strong>{f.purchases.toLocaleString("th-TH")}</strong>
               <small>แพ็กเกจ ACTIVE</small>
             </div>
           </div>
           <p className={styles.revNote}>
-            Funnel สะสมทั้งหมด · อัปเดต {fetchedAt}
+            คลิกในช่วงรายงาน · แพ็กเกจ ACTIVE ปัจจุบันไม่ใช่ยอดซื้อที่ attributed จากคลิก · {m.periodDays} วันตาม Asia/Bangkok · วันนี้ยังไม่ครบวัน · อัปเดต {fetchedAt}
           </p>
         </section>
 
@@ -213,8 +189,8 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
                   <span className="ms">check_circle</span>
                 </span>
                 <span className={styles.insightBody}>
-                  <b>ไม่มีจุดติดขัด</b>
-                  <small>ทุกสถานะอยู่ในเกณฑ์ที่คาดไว้</small>
+                  <b>ยังสรุปไม่ได้</b>
+                  <small>ข้อมูลที่วัดได้ยังไม่เพียงพอสำหรับสรุปจุดติดขัด</small>
                 </span>
               </li>
             ) : (
@@ -315,15 +291,15 @@ export function RevenueModule({ fetchedAt }: { fetchedAt: string }) {
             <div className={styles.retBlock}>
               <b>{m.retention.d7.pct != null ? `${m.retention.d7.pct}%` : "—"}</b>
               <small>D7</small>
-              <span>{m.retention.d7.total > 0 ? `${m.retention.d7.active} ใน ${m.retention.d7.total} กลับมา` : "Not enough data"}</span>
+              <span>{m.retention.d7.total > 0 ? `${m.retention.d7.active} ใน ${m.retention.d7.total} กลับมา` : "ยังไม่ได้วัดกิจกรรมกลับมาใช้"}</span>
             </div>
             <div className={styles.retBlock}>
               <b>{m.retention.d30.pct != null ? `${m.retention.d30.pct}%` : "—"}</b>
               <small>D30</small>
-              <span>{m.retention.d30.total > 0 ? `${m.retention.d30.active} ใน ${m.retention.d30.total} กลับมา` : "Not enough data"}</span>
+              <span>{m.retention.d30.total > 0 ? `${m.retention.d30.active} ใน ${m.retention.d30.total} กลับมา` : "ยังไม่ได้วัดกิจกรรมกลับมาใช้"}</span>
             </div>
           </div>
-          <p className={styles.revNote}>cohort ตามอายุบัญชี · ยังไม่มี cohort ครบเกณฑ์จนกว่ามีผู้ใช้เกิน 7/30 วัน</p>
+          <p className={styles.revNote}>ยังไม่มีข้อมูลกิจกรรมกลับมาใช้ผลิตภัณฑ์สำหรับวัด D7/D30 · ไม่นำคลิกของผู้ชมมาแทน retention</p>
         </section>
       </div>
 

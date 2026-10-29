@@ -2145,6 +2145,63 @@
   white-space: nowrap;
 }
 
+@media (max-width: 860px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .revGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .revKpis {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .revKpi + .revKpi {
+    padding-left: 14px;
+  }
+  .funnelRow {
+    grid-template-columns: 1fr 34px 1fr 34px 1fr;
+  }
+  .timeline {
+    grid-template-columns: 1fr;
+  }
+  .connector,
+  .connectorIdle {
+    width: 2px;
+    height: 18px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, rgba(98, 255, 179, 0.7), rgba(56, 189, 248, 0.7));
+  }
+  .vaultRow {
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "dot meta"
+      "value value"
+      "actions actions";
+  }
+  .vaultRow .dot {
+    grid-area: dot;
+  }
+  .vaultMeta {
+    grid-area: meta;
+  }
+  .secretValue {
+    grid-area: value;
+  }
+  .vaultActions {
+    grid-area: actions;
+    justify-content: flex-end;
+  }
+  .linkGrid {
+    grid-template-columns: 1fr;
+  }
+  .page {
+    padding: 0 16px 64px;
+  }
+}
+
+
 @media (max-width: 480px) {
   .topnav {
     gap: 8px;
@@ -2501,62 +2558,6 @@
   }
   .barRow {
     grid-template-columns: 72px 1fr auto;
-  }
-}
-
-@media (max-width: 860px) {
-  .stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .revGrid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  .revKpis {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-  }
-  .revKpi + .revKpi {
-    padding-left: 14px;
-  }
-  .funnelRow {
-    grid-template-columns: 1fr 34px 1fr 34px 1fr;
-  }
-  .timeline {
-    grid-template-columns: 1fr;
-  }
-  .connector,
-  .connectorIdle {
-    width: 2px;
-    height: 18px;
-    margin: 0 auto;
-    background: linear-gradient(180deg, rgba(98, 255, 179, 0.7), rgba(56, 189, 248, 0.7));
-  }
-  .vaultRow {
-    grid-template-columns: auto 1fr;
-    grid-template-areas:
-      "dot meta"
-      "value value"
-      "actions actions";
-  }
-  .vaultRow .dot {
-    grid-area: dot;
-  }
-  .vaultMeta {
-    grid-area: meta;
-  }
-  .secretValue {
-    grid-area: value;
-  }
-  .vaultActions {
-    grid-area: actions;
-    justify-content: flex-end;
-  }
-  .linkGrid {
-    grid-template-columns: 1fr;
-  }
-  .page {
-    padding: 0 16px 64px;
   }
 }
 

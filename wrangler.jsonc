@@ -20,6 +20,7 @@
   ],
   "vars": {
     "APP_URL": "https://app.vibelinkth.com",
+    "PITCH_EMAIL_ENABLED": "false",
     "SHORT_LINK_URL": "https://vibelinkth.com/go",
     "AUTH_TRUST_HOST": "true",
     "NEXT_PUBLIC_SITE_URL": "https://app.vibelinkth.com",

@@ -3,6 +3,7 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { limitsOf } from "@/lib/plans";
 import { getActivePlan } from "@/lib/subscription";
+import { bangkokDayKey, reportingWindow, REPORT_TIME_ZONE } from "@/lib/reporting-time";
 
 type Params = { params: Promise<{ id: string }> };
 
@@ -16,7 +17,7 @@ const RANGE_DAYS: Record<string, number> = {
 const MAX_EVENTS = 20000;
 
 function dayKey(d: Date) {
-  return d.toISOString().slice(0, 10);
+  return bangkokDayKey(d);
 }
 
 function hostOf(raw: string | null) {
@@ -73,9 +74,10 @@ export async function GET(req: Request, { params }: Params) {
     limited = true;
   }
 
-  const since = new Date(Date.now() - days * 86400_000);
-  const events = await prisma.linkEvent.findMany({
-    where: { linkId: link.id, type: "CLICK", createdAt: { gte: since } },
+  const window = reportingWindow(days);
+  const since = new Date(window.since);
+  const fetched = await prisma.linkEvent.findMany({
+    where: { linkId: link.id, type: "CLICK", createdAt: { gte: since, lte: new Date(window.until) } },
     select: {
       createdAt: true,
       device: true,
@@ -85,14 +87,12 @@ export async function GET(req: Request, { params }: Params) {
       referrer: true,
     },
     orderBy: { createdAt: "asc" },
-    take: MAX_EVENTS,
+    take: MAX_EVENTS + 1,
   });
 
-  const perDay: { date: string; clicks: number }[] = [];
-  for (let i = days - 1; i >= 0; i--) {
-    const d = new Date(Date.now() - i * 86400_000);
-    perDay.push({ date: dayKey(d), clicks: 0 });
-  }
+  const truncated = fetched.length > MAX_EVENTS;
+  const events = fetched.slice(0, MAX_EVENTS);
+  const perDay = window.dates.map((date) => ({ date, clicks: 0 }));
   const dayIndex = new Map(perDay.map((p, i) => [p.date, i]));
   for (const e of events) {
     const idx = dayIndex.get(dayKey(e.createdAt));
@@ -106,12 +106,16 @@ export async function GET(req: Request, { params }: Params) {
   const topReferrers = countBy(events, (e) => hostOf(e.referrer)).slice(0, 10);
 
   if (format === "csv") {
+    if (truncated) {
+      return NextResponse.json({ error: "ข้อมูลเกินขอบเขต export กรุณาเลือกช่วงวันที่สั้นลง" }, { status: 422 });
+    }
     const lines = ["date,clicks", ...perDay.map((p) => `${p.date},${p.clicks}`)];
     return new NextResponse(lines.join("\n"), {
       headers: {
         "Content-Type": "text/csv; charset=utf-8",
         "Content-Disposition": `attachment; filename="vibelink-${link.slug}-${days}d.csv"`,
         "Cache-Control": "no-store",
+        "X-Report-Timezone": REPORT_TIME_ZONE,
       },
     });
   }
@@ -122,12 +126,14 @@ export async function GET(req: Request, { params }: Params) {
     requested,
     limited,
     total: events.length,
+    timeZone: REPORT_TIME_ZONE,
+    partialToday: true,
     perDay,
     byDevice,
     byBrowser,
     byOS,
     byCountry,
     topReferrers,
-    truncated: events.length >= MAX_EVENTS,
+    truncated,
   });
 }

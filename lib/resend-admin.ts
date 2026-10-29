@@ -28,6 +28,7 @@ export async function getResendDomainStatus(): Promise<ResendDomainStatus> {
   try {
     const listRes = await fetch("https://api.resend.com/domains", {
       headers: { Authorization: `Bearer ${key}` },
+      signal: AbortSignal.timeout(5000),
     });
     if (!listRes.ok) {
       const body = await listRes.text().catch(() => "");
@@ -46,6 +47,7 @@ export async function getResendDomainStatus(): Promise<ResendDomainStatus> {
 
     const oneRes = await fetch(`https://api.resend.com/domains/${domain.id}`, {
       headers: { Authorization: `Bearer ${key}` },
+      signal: AbortSignal.timeout(5000),
     });
     if (!oneRes.ok) {
       return {

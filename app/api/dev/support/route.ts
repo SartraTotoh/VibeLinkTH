@@ -6,6 +6,7 @@ import { rateLimit, clientIp } from "@/lib/rate-limit";
 import { recordSecurityAttempt } from "@/lib/security";
 import { hasHardSig, sanitizeValue } from "@/lib/charset";
 import { matchRule, ticketPreview, DEFAULT_SETTINGS } from "@/lib/support";
+import { writeAdminReply } from "@/lib/support-writes";
 import { writeAudit } from "@/lib/audit";
 
 const TICKET_MAX = 500;
@@ -52,16 +53,11 @@ export async function GET(req: Request) {
   if (view === "inbox") {
     where.status = "OPEN";
     where.needsAdmin = true;
-  } else if (view === "all") {
-    where.OR = [
-      { status: "OPEN" },
-      { createdAt: { gte: new Date(Date.now() - 7 * 86400_000) } },
-    ];
   } else if (view === "resolved") {
     where.status = "RESOLVED";
   }
 
-  const [tickets, settings, openCount] = await Promise.all([
+  const [tickets, settings, openCount, inboxCount] = await Promise.all([
     prisma.supportTicket.findMany({
       where,
       orderBy: { lastMessageAt: "desc" },
@@ -73,6 +69,7 @@ export async function GET(req: Request) {
     }),
     prisma.supportSettings.findUnique({ where: { id: "singleton" } }),
     prisma.supportTicket.count({ where: { status: "OPEN" } }),
+    prisma.supportTicket.count({ where: { status: "OPEN", needsAdmin: true } }),
   ]);
 
   let filtered = tickets;
@@ -87,7 +84,7 @@ export async function GET(req: Request) {
 
   return NextResponse.json({
     openCount,
-    inboxCount: tickets.filter((t) => t.needsAdmin && t.status === "OPEN").length,
+    inboxCount,
     tickets: filtered.map((t) => ({
       id: t.id,
       status: t.status,
@@ -191,21 +188,7 @@ export async function POST(req: Request) {
       );
     }
 
-    await prisma.$transaction([
-      prisma.supportMessage.create({
-        data: { ticketId: ticket.id, sender: "ADMIN", body },
-      }),
-      prisma.supportTicket.update({
-        where: { id: ticket.id },
-        data: {
-          status: "OPEN",
-          needsAdmin: false,
-          lastSender: "ADMIN",
-          lastMessageAt: new Date(),
-          adminSeenAt: new Date(),
-        },
-      }),
-    ]);
+    await writeAdminReply(ticket.id, body);
 
     await writeAudit({
       actorEmail: session.user?.email ?? undefined,
@@ -289,8 +272,8 @@ export async function PUT(req: Request) {
       greetingEn: typeof cleaned.greetingEn === "string" ? cleaned.greetingEn : undefined,
       noMatchTh: typeof cleaned.noMatchTh === "string" ? cleaned.noMatchTh : undefined,
       noMatchEn: typeof cleaned.noMatchEn === "string" ? cleaned.noMatchEn : undefined,
-      hoursTh: typeof cleaned.hoursTh === "string" || cleaned.hoursTh == null ? (cleaned.hoursTh ?? null) : undefined,
-      hoursEn: typeof cleaned.hoursEn === "string" || cleaned.hoursEn == null ? (cleaned.hoursEn ?? null) : undefined,
+      hoursTh: typeof cleaned.hoursTh === "string" || cleaned.hoursTh === null ? cleaned.hoursTh : undefined,
+      hoursEn: typeof cleaned.hoursEn === "string" || cleaned.hoursEn === null ? cleaned.hoursEn : undefined,
       emailNotify: typeof cleaned.emailNotify === "boolean" ? cleaned.emailNotify : undefined,
     },
   });

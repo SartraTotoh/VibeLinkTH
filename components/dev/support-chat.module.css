@@ -1,0 +1,12 @@
+.desk { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
+.columns { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 20px; }
+.columns > * { min-width: 0; }
+.filters { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px; border-radius: 14px; background: rgba(255,255,255,.04); }
+.filters button { flex: 1 1 90px; min-width: 0; }
+.notice { margin: 0; padding: 12px; border-radius: 12px; color: #fca5a5; background: rgba(127,29,29,.15); font-size: 15px; }
+.notice button { margin-left: 12px; color: inherit; font: inherit; background: transparent; border: 0; text-decoration: underline; cursor: pointer; }
+@media (max-width: 900px) { .columns { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 480px) { .desk { padding: 16px !important; } }
+
+.desk button:disabled { cursor: wait; opacity: .6; }
+.desk button:focus-visible, .desk textarea:focus-visible { outline: 2px solid #b9ff2c !important; outline-offset: 3px; }

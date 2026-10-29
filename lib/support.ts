@@ -35,7 +35,7 @@ export const DEFAULT_RULES: SupportRuleSeed[] = [
     faqTh: "ลิงก์ของฉันเปิดไม่ได้ / คลิกไม่ขึ้น",
     faqEn: "My link is broken / not opening",
     replyTh:
-      "ลองเช็ค 3 อย่างก่อนครับ: (1) สถานะลิงก์ต้องเป็น “กำลังทำงาน” ไม่ใช่หยุดชั่วคราว (2) Destination URL ต้องเว้น http:// หรือ https:// ไว้หน้าแรก (3) ถ้าลิงก์หมดอายุ (มีวันหมดอายุ) ต้องอัปเดตครับ — ถ้ายังไม่ได้สแกนกรณีนี้ แอดมินจะช่วยนะครับ",
+      "ลองเช็ค 3 อย่างก่อนครับ: (1) สถานะลิงก์ต้องเป็น “กำลังทำงาน” ไม่ใช่หยุดชั่วคราว (2) Destination URL ต้องมี http:// หรือ https:// ไว้หน้าแรก (3) ถ้าลิงก์หมดอายุ (มีวันหมดอายุ) ต้องอัปเดตครับ — ถ้ายังไม่ได้สแกนกรณีนี้ แอดมินจะช่วยนะครับ",
     replyEn:
       "Check 3 things: (1) the link status must be Active, not Paused (2) the destination URL should start with http:// or https:// (3) an expired link (with an expiry date) needs updating — if none of these fit, our team will pick this up.",
   },
@@ -46,9 +46,9 @@ export const DEFAULT_RULES: SupportRuleSeed[] = [
     faqTh: "แพ็กเกจมีอะไรบ้าง ราคาเท่าไหร่?",
     faqEn: "What plans do you have and how much do they cost?",
     replyTh:
-      "ปัจจุบันมี 3 แพ็กเกจครับ: Free (ฟรี 10 ลิงก์ สถิติ 7 วัน), Creator ฿199/เดือน (500 ลิงก์ สถิติ 90 วัน ตั้ง slug เอง โอเพ่นแอปทุกแพลตฟอร์ม) และ Creator Plus (ยังไม่เปิดขาย) — อัปเกรดได้จากปุ่มในหน้าควบคุมลิงก์ ชำระผ่าน Stripe ยกเลิกได้ทุกเมื่อ",
+      "ปัจจุบันมี 3 แพ็กเกจครับ: Free (ฟรี 10 ลิงก์ สถิติ 7 วัน), Creator ฿199/เดือน (500 ลิงก์ สถิติ 90 วัน ตั้ง slug เอง การเปิดแอปขึ้นอยู่กับปลายทางและอุปกรณ์) และ Creator Plus (ยังไม่เปิดขาย) — อัปเกรดได้จากปุ่มในหน้าควบคุมลิงก์ ชำระผ่าน Stripe ยกเลิกได้ทุกเมื่อ",
     replyEn:
-      "We have 3 plans: Free (10 links, 7-day stats), Creator ฿199/mo (500 links, 90-day stats, custom slugs, in-app deep links), and Creator Plus (coming soon). Upgrade from your dashboard — payment is via Stripe and you can cancel anytime.",
+      "We have 3 plans: Free (10 links, 7-day stats), Creator ฿199/mo (500 links, 90-day stats, custom slugs, app opening depends on destination and device), and Creator Plus (coming soon). Upgrade from your dashboard — payment is via Stripe and you can cancel anytime.",
   },
   {
     priority: 40,
@@ -68,7 +68,7 @@ export const DEFAULT_RULES: SupportRuleSeed[] = [
     faqTh: "ยกเลิกสมาชิก / ต่ออายุอัตโนมัติอย่างไร?",
     faqEn: "How do I cancel my subscription / auto-renewal?",
     replyTh:
-      "ยกเลิกได้เองตลอด 24 ชม. ครับ ผ่าน “จัดการการชำระเงิน” ที่หน้า ตั้งค่า → Stripe (ไม่ต้องติดต่อทีมงาน) — สิทธิ์จะอยู่จนครบระยะเวลาที่จ่ายไว้ แล้วตัดต่อไปอัตโนมัติเมื่อเดินหน้า",
+      "ยกเลิกได้เองตลอด 24 ชม. ครับ ผ่าน “จัดการการชำระเงิน” ที่หน้า ตั้งค่า → Stripe (ไม่ต้องติดต่อทีมงาน) — สิทธิ์จะอยู่จนครบระยะเวลาที่จ่ายไว้ จากนั้นหยุดต่ออายุอัตโนมัติ",
     replyEn:
       "You can cancel anytime from “Manage billing” in Settings (via Stripe) — no need to contact us. You keep access until the paid period ends, then auto-renewal stops.",
   },
@@ -123,9 +123,9 @@ export const DEFAULT_RULES: SupportRuleSeed[] = [
     faqTh: "ทำไมยอดคลิก / สถิติไม่เพิ่ม",
     faqEn: "Why aren't my clicks / stats updating?",
     replyTh:
-      "สถิติจะอัปเดตแบบเรียลไทม์ในหน้าควบคุมลิงก์ครับ แต่ Free จะดูย้อนหลังได้ 7 วัน (Creator 90 วัน) — ตรวจช่วงวันที่ในตัวกรองด้วยนะครับ คลิกใหม่มักปรากฏภายในไม่กี่วินาที",
+      "สถิติแสดงเหตุการณ์คลิกที่บันทึกได้ในหน้าควบคุมลิงก์ครับ แต่ Free จะดูย้อนหลังได้ 7 วัน (Creator 90 วัน) — ตรวจช่วงวันที่ในตัวกรองด้วยนะครับ ช่วงวันที่รายงานใช้เวลาไทย ไม่ใช่จำนวนคนหรือยอดขาย และระยะดูย้อนหลังไม่ใช่นโยบายลบข้อมูล",
     replyEn:
-      "Stats update in real time on your dashboard. Free shows 7 days back, Creator 90 days — check the date range filter. New clicks usually appear within seconds.",
+      "Stats show recorded click events in your dashboard. Free shows 7 days back, Creator 90 days — check the date range filter. Reports use Bangkok time. Clicks are not people or sales; report access windows are not a deletion policy.",
   },
   {
     priority: 110,

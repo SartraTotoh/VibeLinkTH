@@ -12,7 +12,7 @@ import styles from "./support.module.css";
 export const dynamic = "force-dynamic";
 export const metadata = {
   title: "ศูนย์ช่วยเหลือ — VibeLink",
-  description: "ปรึกษาผู้ช่วย AI อัจฉริยะ ตอบไว 24 ชั่วโมง และติดต่อฝ่ายสนับสนุน",
+  description: "ค้นหาคำตอบจากระบบตอบคำถามตามหัวข้อและติดต่อฝ่ายสนับสนุน",
   robots: { index: false, follow: false },
 };
 
@@ -57,23 +57,23 @@ export default async function SupportPage() {
         <div className={styles.hero}>
           <div className={styles.kicker}>
             <span className={styles.pulseDot} />
-            <span>AI SMART ASSISTANT · 24/7 ONLINE</span>
+            <span>HELP CENTER · AUTO REPLY</span>
           </div>
           <h1 className={styles.heroTitle}>
             {lang === "th" ? (
               <>
-                ศูนย์ช่วยเหลือ <em>และ AI Assistant</em>
+                ศูนย์ช่วยเหลือ <em>และระบบตอบคำถาม</em>
               </>
             ) : (
               <>
-                Help Center <em>&amp; AI Assistant</em>
+                Help Center <em>&amp; Auto-reply</em>
               </>
             )}
           </h1>
           <p className={styles.heroSubtitle}>
             {lang === "th"
-              ? "ถามตอบข้อสงสัยได้ทันที AI ตอบอัตโนมัติใน 0.04 วินาที หรือติดต่อทีมงาน Support ได้ตลอดเวลา"
-              : "Instant answers from our 24/7 AI assistant in 0.04s, or chat directly with our support team."}
+              ? "ค้นหาคำตอบจากระบบตอบคำถามตามหัวข้อ หรือส่งข้อความให้ทีมงาน Support"
+              : "Find answers from our topic-based auto-reply or send a message to our support team."}
           </p>
         </div>
 

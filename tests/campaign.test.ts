@@ -11,8 +11,8 @@ describe("campaignSlugify", () => {
     expect(campaignSlugify("  Flash Sale TikTok ")).toBe("flash-sale-tiktok");
   });
 
-  it("keeps numeric promo codes from thai names", () => {
-    expect(campaignSlugify("โปรโมชัน 9.9")).toBe("9-9");
+  it("preserves Thai letters and numeric codes", () => {
+    expect(campaignSlugify("โปรโมชัน 9.9")).toBe("โปรโมชัน-9-9");
   });
 });
 
@@ -22,9 +22,9 @@ describe("findCampaignFor", () => {
     expect(findCampaignFor(url, camps)).toEqual({ campaignId: "c2", matchedName: "Flash Sale TikTok" });
   });
 
-  it("falls back to numeric code matching (thai promo + latin utm)", () => {
+  it("does not infer attribution from shared numeric codes", () => {
     const url = "https://lazada.co.th/x?utm_campaign=Promo-9-9";
-    expect(findCampaignFor(url, camps)).toEqual({ campaignId: "c1", matchedName: "โปรโมชัน 9.9" });
+    expect(findCampaignFor(url, camps)).toEqual({ campaignId: null, matchedName: "Promo-9-9" });
   });
 
   it("matches slugified latin names", () => {
@@ -34,11 +34,11 @@ describe("findCampaignFor", () => {
     });
   });
 
-  it("attributes to the only bound campaign when no utm param", () => {
+  it("does not invent attribution without a UTM even for a single campaign", () => {
     const url = "https://shopee.co.th/x";
     expect(findCampaignFor(url, [{ id: "only", name: "bio" }])).toEqual({
-      campaignId: "only",
-      matchedName: "bio",
+      campaignId: null,
+      matchedName: null,
     });
   });
 
@@ -61,5 +61,17 @@ describe("findCampaignFor", () => {
       campaignId: null,
       matchedName: null,
     });
+  });
+});
+
+describe("attribution ambiguity", () => {
+  it("matches stable IDs", () => {
+    expect(findCampaignFor("https://example.com/?utm_campaign=c1", camps).campaignId).toBe("c1");
+  });
+  it("rejects duplicate parameters", () => {
+    expect(findCampaignFor("https://example.com/?utm_campaign=c1&utm_campaign=c2", camps).campaignId).toBeNull();
+  });
+  it("rejects colliding names and slugs", () => {
+    expect(findCampaignFor("https://example.com/?utm_campaign=sale-now", [{id:"a",name:"Sale Now"},{id:"b",name:"sale-now"},{id:"c",name:"sale-now"}]).campaignId).toBeNull();
   });
 });

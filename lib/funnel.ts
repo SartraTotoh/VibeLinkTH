@@ -17,14 +17,14 @@ export type Funnel = {
   mrr: number;
   convUnique: number;
   convClick: number;
-  convPurchase: number;
-  retentionD7: { active: number; total: number; pct: number };
-  retentionD30: { active: number; total: number; pct: number };
+  convPurchase: number | null;
+  retentionD7: { active: number; total: number; pct: number | null };
+  retentionD30: { active: number; total: number; pct: number | null };
 };
 
 function isActive(u: CrmUser, flag: "d7" | "d30"): boolean {
   if (typeof u[flag] === "boolean") return u[flag] as boolean;
-  return u.clickCount > 0;
+  return false;
 }
 
 export function computeFunnel(rows: CrmUser[], now = Date.now()): Funnel {
@@ -53,11 +53,11 @@ export function computeFunnel(rows: CrmUser[], now = Date.now()): Funnel {
   for (const u of rows) {
     const age = now - new Date(u.createdAt).getTime();
     if (Number.isNaN(age) || age < 0) continue;
-    if (age >= 7 * DAY) {
+    if (age >= 7 * DAY && typeof u.d7 === "boolean") {
       d7t += 1;
       if (isActive(u, "d7")) d7a += 1;
     }
-    if (age >= 30 * DAY) {
+    if (age >= 30 * DAY && typeof u.d30 === "boolean") {
       d30t += 1;
       if (isActive(u, "d30")) d30a += 1;
     }
@@ -71,8 +71,8 @@ export function computeFunnel(rows: CrmUser[], now = Date.now()): Funnel {
     mrr,
     convUnique: pct(uniqueViews, views),
     convClick: pct(clicks, uniqueViews),
-    convPurchase: pct(purchases, clicks),
-    retentionD7: { active: d7a, total: d7t, pct: pct(d7a, d7t) },
-    retentionD30: { active: d30a, total: d30t, pct: pct(d30a, d30t) },
+    convPurchase: null, // Current subscriptions have no visitor-level attribution.
+    retentionD7: { active: d7a, total: d7t, pct: d7t ? pct(d7a, d7t) : null },
+    retentionD30: { active: d30a, total: d30t, pct: d30t ? pct(d30a, d30t) : null },
   };
 }
