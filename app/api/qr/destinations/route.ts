@@ -20,8 +20,9 @@ type ShortLinkOption = {
 };
 
 /**
- * Reads only the signed-in user's own Vibe Page, published Booking Page and
- * active Short Links. There is no workspace model in this repo, so user scoping
+ * Reads only the signed-in user's own bio link page and active links.
+ * Booking is intentionally unavailable in this schema snapshot.
+ * There is no workspace model in this repo, so user scoping
  * is the boundary (see docs/qr-studio/inspection.md).
  */
 export async function GET() {
@@ -53,14 +54,14 @@ export async function GET() {
   if (user.vibeSlug) {
     destinations.push({
       type: "vibe",
-      label: user.vibeTitle || user.displayName || `Vibe ${user.vibeEmoji ?? ""}`.trim(),
+      label: user.vibeTitle || user.displayName || `หน้ารวมลิงก์ ${user.vibeEmoji ?? ""}`.trim(),
       url: `${base}/vibe/${user.vibeSlug}`,
     });
   }
 
-  // Booking/VibeBook destinations are intentionally omitted in this release
+  // Booking destinations are intentionally omitted in this release
   // because the ServicePage model is not available in this codebase snapshot.
-  // Re-enable when VibeBook is integrated into the deployed schema.
+  // Re-enable only when Booking is integrated into the deployed schema.
 
   const shortBase = (process.env.SHORT_LINK_URL ?? `${base}/go`).replace(/\/$/, "");
   const shortLinks: ShortLinkOption[] = links.map((l) => ({

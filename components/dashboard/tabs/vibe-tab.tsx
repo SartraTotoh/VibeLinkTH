@@ -42,7 +42,7 @@ export function VibeTab({ vibe, activeLinks, lang }: Props) {
         return;
       }
       setSlug(data.vibe.vibeSlug ?? "");
-      setOk(previewUrl ? "บันทึกแล้ว — หน้า Vibe เปิดใช้งาน" : "บันทึกแล้ว — ยังไม่ได้ตั้ง slug");
+      setOk(previewUrl ? "บันทึกแล้ว — หน้ารวมลิงก์เปิดใช้งาน" : "บันทึกแล้ว — ยังไม่ได้ตั้ง slug");
       router.refresh();
     } catch {
       setErr("เกิดข้อผิดพลาด ลองอีกครั้ง");
@@ -76,7 +76,7 @@ export function VibeTab({ vibe, activeLinks, lang }: Props) {
         <div className="panel" style={{ flex: 1, minWidth: 280 }}>
           <div className="panel-head">
             <span className="ms">auto_awesome</span>
-            <h2>{lang === "th" ? "ตั้งค่าหน้า Vibe" : "Vibe Page setup"}</h2>
+            <h2>{lang === "th" ? "ตั้งค่าหน้ารวมลิงก์" : "Bio link page setup"}</h2>
           </div>
           <div className="field" style={{ marginTop: 12 }}>
             <span>{lang === "th" ? "slug (ใช้เปิดหน้า — พิมพ์เล็ก/ตัวเลข/-)" : "slug (that opens the page)"}</span>

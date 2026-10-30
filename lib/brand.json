@@ -1,0 +1,111 @@
+{
+  "name": "VibeLinkTH",
+  "tagline": "Your vibe. Level up your life. Grow your business.",
+  "marketingUrl": "https://www.vibelinkth.com/",
+  "appUrl": "https://app.vibelinkth.com",
+  "seo": {
+    "title": "VibeLinkTH | สร้าง QR Code ฟรี และจัดการลิงก์",
+    "description": "สร้าง QR Code ฟรี ปรับสี ใส่โลโก้ โหลด PNG / SVG และจัดการลิงก์ด้วย VibeLinkTH Links พร้อมหน้ารวมลิงก์ UTM และสถิติคลิกตามสิทธิ์บัญชี",
+    "keywords": [
+      "สร้าง QR Code ฟรี",
+      "ย่อลิงก์",
+      "ลิงก์สั้น",
+      "short link",
+      "Static QR",
+      "PNG",
+      "SVG",
+      "UTM",
+      "ครีเอเตอร์",
+      "VibeLinkTH QR",
+      "VibeLinkTH Links"
+    ]
+  },
+  "bioLink": {
+    "th": "หน้ารวมลิงก์",
+    "en": "Bio link page",
+    "editorRoute": "/dashboard/vibepage",
+    "publicRoutePrefix": "/vibe/"
+  },
+  "products": {
+    "links": {
+      "name": "VibeLinkTH Links",
+      "label": "Links",
+      "icon": "link",
+      "route": "/dashboard/links",
+      "anchor": "product-links",
+      "status": "account",
+      "statusLabel": {
+        "th": "ใช้ผ่านบัญชี",
+        "en": "Account required"
+      },
+      "description": {
+        "th": "สร้างลิงก์สั้น แชร์หน้ารวมลิงก์ และดูสถิติคลิกพร้อม UTM ตามสิทธิ์บัญชี",
+        "en": "Create short links, share a bio link page, and view click statistics with UTM within your account limits."
+      },
+      "cta": {
+        "th": "เปิด Links",
+        "en": "Open Links"
+      }
+    },
+    "qr": {
+      "name": "VibeLinkTH QR",
+      "label": "QR",
+      "icon": "qr_code_2",
+      "route": "/qr",
+      "anchor": "product-qr",
+      "status": "free",
+      "statusLabel": {
+        "th": "สร้าง QR พื้นฐานฟรี",
+        "en": "Free basic QR"
+      },
+      "description": {
+        "th": "สร้าง QR Code ฟรีสำหรับ URL ปรับสี ใส่โลโก้ ตรวจการสแกน และดาวน์โหลด PNG / SVG",
+        "en": "Create a free QR code for a URL, customize colors and logo, check decoding, and download PNG / SVG."
+      },
+      "cta": {
+        "th": "สร้าง QR ฟรี",
+        "en": "Create free QR"
+      }
+    },
+    "booking": {
+      "name": "VibeLinkTH Booking",
+      "label": "Booking",
+      "icon": "calendar_month",
+      "route": null,
+      "anchor": "product-booking",
+      "status": "development",
+      "statusLabel": {
+        "th": "กำลังพัฒนา",
+        "en": "In development"
+      },
+      "description": {
+        "th": "บริการรับจองและจัดการเวลาอยู่ระหว่างพัฒนา ยังไม่เปิดปฏิทินหรือรับมัดจำ ใช้ QR ชี้ไปยังระบบจองเดิมของคุณได้",
+        "en": "Booking and scheduling are in development. Built-in calendars and deposits are not available; QR can link to your existing booking service."
+      },
+      "cta": {
+        "th": "ยังไม่เปิดบริการ",
+        "en": "Not available yet"
+      }
+    },
+    "live": {
+      "name": "VibeLinkTH Live",
+      "label": "Live",
+      "icon": "videocam",
+      "route": "/live",
+      "anchor": "product-live",
+      "status": "alpha",
+      "statusLabel": {
+        "th": "สตูดิโอทดลอง",
+        "en": "Experimental studio"
+      },
+      "description": {
+        "th": "เตรียมรายการด้วยภาพสูงสุด 2 Source และบันทึกซ้อมในเครื่อง การส่งออกไลฟ์ยังไม่เปิดทั่วไป",
+        "en": "Prepare a show with up to two video sources and record rehearsals locally. Live output is not generally available."
+      },
+      "cta": {
+        "th": "เปิดสตูดิโอทดลอง",
+        "en": "Open experimental studio"
+      }
+    }
+  }
+}

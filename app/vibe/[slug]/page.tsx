@@ -22,13 +22,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     where: { vibeSlug: slug.toLowerCase() },
     select: { displayName: true, vibeTitle: true, vibeBio: true, vibeEmoji: true },
   });
-  if (!user) return { title: "Vibe Page | VibeLink" };
+  if (!user) return { title: "หน้ารวมลิงก์ | VibeLinkTH Links" };
   const name = user.displayName || "Vibe";
   return {
-    title: `${user.vibeTitle ? `${user.vibeTitle} — ` : ""}${name} | VibeLink`,
+    title: `${user.vibeTitle ? `${user.vibeTitle} — ` : ""}${name} | VibeLinkTH Links`,
     description: user.vibeBio ?? undefined,
     openGraph: {
-      title: `${name} | VibeLink`,
+      title: `${name} | VibeLinkTH Links`,
       description: user.vibeBio ?? undefined,
       type: "profile",
     },
@@ -55,8 +55,8 @@ export default async function VibePage({ params }: Params) {
       <main className={styles.page}>
         <div className={styles.card}>
           <div className={styles.avatar}>⚡</div>
-          <h1 className={styles.name}>ไม่พบหน้า Vibe นี้</h1>
-          <p className={styles.bio}>ถ้าคุณเป็นเจ้าของหน้า ลองเช็ก slug ใน Dashboard → Vibe Page อีกครั้ง</p>
+          <h1 className={styles.name}>ไม่พบหน้ารวมลิงก์นี้</h1>
+          <p className={styles.bio}>ถ้าคุณเป็นเจ้าของหน้า ลองเช็ก slug ใน Links → หน้ารวมลิงก์ อีกครั้ง</p>
         </div>
       </main>
     );
@@ -80,7 +80,7 @@ export default async function VibePage({ params }: Params) {
     <main className={styles.page}>
       <div className={styles.card}>
         <Link href="/" className={styles.logoRow}>
-          Vibe<em>Link</em> ⚡
+          Vibe<em>Link</em>TH ⚡
         </Link>
         <div className={styles.avatar}>{user.vibeEmoji || "⚡"}</div>
         <h1 className={styles.name}>{user.displayName || "คุณ"}</h1>
@@ -105,7 +105,7 @@ export default async function VibePage({ params }: Params) {
           )}
         </div>
         <p className={styles.foot}>
-          สร้างด้วย <a href="https://vibelinkth.com">VibeLink</a> · สำหรับครีเอเตอร์สายวาร์ป
+          สร้างด้วย <a href="https://vibelinkth.com">VibeLinkTH Links</a> · สำหรับครีเอเตอร์สายวาร์ป
         </p>
       </div>
     </main>

@@ -19,6 +19,8 @@ import { UpgradeCard } from "@/components/dashboard/upgrade-card";
 import { SignOutButton } from "@/components/dashboard/sign-out-button";
 import { VerifyEmailBanner } from "@/components/dashboard/verify-email-banner";
 import { NavLangSwitcher } from "@/components/i18n/language";
+import { ProductNavigation } from "@/components/products/product-navigation";
+import { PRODUCTS } from "@/lib/products";
 
 const MAX_EVENTS = 20000;
 
@@ -227,10 +229,10 @@ export async function DashboardPageView({ activeTab }: Props) {
 
   return (
     <main className="shell">
-      <nav className="nav">
+      <header className="nav">
         <Link href="/" className="brand" prefetch={false}>
           <img src="/logo.png" alt="" />
-          Vibe<span>Link</span>
+          Vibe<span>Link</span>TH
         </Link>
         <div className="dash-actions">
           <span className="nav-user" style={{ color: "var(--muted)", fontWeight: 700, fontSize: 15 }}>
@@ -243,14 +245,6 @@ export async function DashboardPageView({ activeTab }: Props) {
               Dev
             </Link>
           ) : null}
-          <Link href="/qr" className="mini-btn" prefetch={false}>
-            <span className="ms">qr_code_2</span>
-            QR
-          </Link>
-          <Link href="/live" className="mini-btn" prefetch={false}>
-            <span className="ms">videocam</span>
-            Live
-          </Link>
           <Link href="/settings" className="mini-btn" prefetch={false}>
             <span className="ms">settings</span>
             {lang === "th" ? "ตั้งค่า" : "Settings"}
@@ -261,10 +255,12 @@ export async function DashboardPageView({ activeTab }: Props) {
           </Link>
           <SignOutButton label={lang === "th" ? "ออก" : "Sign out"} />
         </div>
-      </nav>
+      </header>
+      <ProductNavigation active="links" lang={lang} />
 
       <div className="dash-head">
         <div>
+          <div className="eyebrow">{PRODUCTS.links.name}</div>
           <h1>{t(lang, "dash.title")}</h1>
           <p className="greet">{session.user.email}</p>
         </div>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { BRAND } from "@/lib/products";
 import { CookieBanner } from "@/components/consent/cookie-banner";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://app.vibelinkth.com";
@@ -7,28 +8,28 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://app.vibelinkth.com"
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "VibeLink — ย่อลิงก์ วัดคลิก โตไปด้วยกัน",
-    template: "%s · VibeLink",
+    default: BRAND.seo.title,
+    template: "%s · VibeLinkTH",
   },
   description:
-    "ย่อลิงก์สำหรับครีเอเตอร์ไทย วัดคลิกแบบเรียลไทม์ — สมัครฟรี ลองใช้ 10 ลิงก์และสถิติ 7 วันตั้งแต่วันแรก",
-  applicationName: "VibeLink",
-  keywords: ["ย่อลิงก์", "ลิงก์", "short link", "analytics", "ครีเอเตอร์", "VibeLink"],
+    BRAND.seo.description,
+  applicationName: BRAND.name,
+  keywords: BRAND.seo.keywords,
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    siteName: "VibeLink",
-    title: "VibeLink — ย่อลิงก์ วัดคลิก โตไปด้วยกัน",
-    description: "ย่อลิงก์สำหรับครีเอเตอร์ไทย วัดคลิกแบบเรียลไทม์",
+    siteName: BRAND.name,
+    title: BRAND.seo.title,
+    description: BRAND.seo.description,
     url: siteUrl,
     locale: "th_TH",
-    images: [{ url: "/og-cover.png", width: 1200, height: 630, alt: "VibeLink" }],
+    images: [{ url: "/og-products.png", width: 1200, height: 630, alt: BRAND.name }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "VibeLink — ย่อลิงก์ วัดคลิก โตไปด้วยกัน",
-    description: "ย่อลิงก์สำหรับครีเอเตอร์ไทย วัดคลิกแบบเรียลไทม์",
-    images: ["/og-cover.png"],
+    title: BRAND.seo.title,
+    description: BRAND.seo.description,
+    images: ["/og-products.png"],
   },
   icons: {
     icon: [

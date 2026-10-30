@@ -1,21 +1,22 @@
 import type { Lang } from "@/lib/i18n";
+import { BRAND, PRODUCTS } from "@/lib/products";
 
 const th = {
-  "meta.title": "Vibe QR Studio — สร้าง QR ที่ดูเป็นคุณ",
-  "meta.sub": "URL, Vibe Page, Booking Page และ Short Link พร้อม UTM — ตรวจ decode ก่อนโหลด",
+  "meta.title": `${PRODUCTS.qr.name} — สร้าง QR Code ฟรี`,
+  "meta.sub": "URL, Links และหน้ารวมลิงก์ พร้อม UTM — ตรวจการสแกนก่อนโหลด",
 
   "nav.dashboard": "หน้าควบคุม",
   "nav.login": "เข้าสู่ระบบ",
   "nav.signup": "สมัครฟรี",
 
   "hero.title": "สร้าง QR Code ฟรี",
-  "hero.sub": "QR ที่มี Vibe · ลิงก์ที่ไปต่อ — แต่งสี ใส่โลโก้ เช็กก่อนแชร์ แล้วโหลด PNG / SVG",
+  "hero.sub": "แต่งสี ใส่โลโก้ เช็กก่อนแชร์ แล้วโหลด PNG / SVG",
 
   "step1.title": "แปะลิงก์ให้พร้อม",
   "mode.url": "URL",
-  "mode.vibe": "Vibe Page",
+  "mode.vibe": BRAND.bioLink.th,
   "mode.booking": "Booking",
-  "mode.short": "Short Link",
+  "mode.short": PRODUCTS.links.label,
 
   "field.url": "ลิงก์ปลายทาง",
   "field.urlPh": "https://example.com/your-page",
@@ -29,10 +30,10 @@ const th = {
   "utm.note": "เติม ref=vibelink อัตโนมัติ",
 
   "dest.loading": "กำลังโหลด…",
-  "dest.emptyVibe": "ยังไม่มี Vibe Page — สร้างใน Dashboard",
-  "dest.emptyBooking": "ยังไม่มีหน้าเปิดจอง — เปิดใน Dashboard",
-  "dest.emptyShort": "ยังไม่มี Short Link — สร้างจาก URL ด้านบน",
-  "dest.login": "ล็อกอินเพื่อใช้ Vibe / Booking / Short Link",
+  "dest.emptyVibe": "ยังไม่มีหน้ารวมลิงก์ — สร้างใน Links",
+  "dest.emptyBooking": "Booking กำลังพัฒนา — ใช้ URL ระบบจองเดิมได้",
+  "dest.emptyShort": "ยังไม่มีลิงก์ใน Links — สร้างจาก URL ด้านบน",
+  "dest.login": "ล็อกอินเพื่อใช้ Links และหน้ารวมลิงก์",
   "dest.error": "โหลดบัญชีไม่สำเร็จ — ใช้ URL ตรงได้",
   "dest.pick": "เลือก",
   "dest.shortNote": "นับคลิกที่ /go ตามเดิม",
@@ -101,16 +102,16 @@ const th = {
   "actions.shortCreating": "กำลังสร้าง…",
   "actions.shortSlug": "Slug",
   "actions.shortSlugPh": "my-campaign",
-  "actions.shortDone": "สร้าง Short Link แล้ว",
-  "actions.shortError": "สร้าง Short Link ไม่สำเร็จ",
+  "actions.shortDone": "สร้างลิงก์ใน Links แล้ว",
+  "actions.shortError": "สร้างลิงก์ใน Links ไม่สำเร็จ",
   "actions.useShort": "ให้ QR ชี้ลิงก์นี้",
-  "actions.relation": "QR → Short → ปลายทาง",
+  "actions.relation": "QR → Links → ปลายทาง",
   "actions.exported": "ดาวน์โหลดแล้ว",
   "actions.exportError": "สร้างไฟล์ไม่สำเร็จ",
   "actions.blocked": "แก้ข้อที่ไม่ผ่านก่อน",
   "actions.serverChecking": "กำลังตรวจ URL กับ server…",
   "actions.serverError": "URL ไม่ผ่านการตรวจจาก server",
-  "actions.login": "ล็อกอินเพื่อสร้าง Short Link",
+  "actions.login": "ล็อกอินเพื่อใช้ Links",
   "actions.noThirdParty": "ไม่ส่งข้อมูลออกนอกเครื่อง",
 
   "error.fileType": "รับเฉพาะ PNG, JPEG หรือ WebP",
@@ -125,21 +126,21 @@ const th = {
 export type QrTextKey = keyof typeof th;
 
 const en: Record<QrTextKey, string> = {
-  "meta.title": "Vibe QR Studio — a QR that looks like you",
-  "meta.sub": "URL, Vibe Page, Booking Page and Short Link with UTM — decode checked before download",
+  "meta.title": `${PRODUCTS.qr.name} — Free QR Code Generator`,
+  "meta.sub": "URL, Links and bio link pages with UTM — decode checked before download",
 
   "nav.dashboard": "Dashboard",
   "nav.login": "Log in",
   "nav.signup": "Sign up free",
 
   "hero.title": "Free QR Code Generator",
-  "hero.sub": "QR with Vibe. Links that go further — style, scan-check, and download PNG / SVG",
+  "hero.sub": "Customize, scan-check, and download PNG / SVG",
 
   "step1.title": "Destination",
   "mode.url": "URL",
-  "mode.vibe": "Vibe Page",
+  "mode.vibe": BRAND.bioLink.en,
   "mode.booking": "Booking",
-  "mode.short": "Short Link",
+  "mode.short": PRODUCTS.links.label,
 
   "field.url": "Destination URL",
   "field.urlPh": "https://example.com/your-page",
@@ -153,10 +154,10 @@ const en: Record<QrTextKey, string> = {
   "utm.note": "Adds ref=vibelink automatically",
 
   "dest.loading": "Loading…",
-  "dest.emptyVibe": "No Vibe Page yet — create one in Dashboard",
-  "dest.emptyBooking": "No booking page yet — open one in Dashboard",
-  "dest.emptyShort": "No Short Link yet — create one from the URL above",
-  "dest.login": "Log in for Vibe / Booking / Short Link",
+  "dest.emptyVibe": "No bio link page yet — create one in Links",
+  "dest.emptyBooking": "Booking is in development — use an existing booking URL",
+  "dest.emptyShort": "No links in Links yet — create one from the URL above",
+  "dest.login": "Log in for Links and your bio link page",
   "dest.error": "Could not load your account — direct URLs still work",
   "dest.pick": "Pick",
   "dest.shortNote": "Clicks still counted at /go",
@@ -225,16 +226,16 @@ const en: Record<QrTextKey, string> = {
   "actions.shortCreating": "Creating…",
   "actions.shortSlug": "Slug",
   "actions.shortSlugPh": "my-campaign",
-  "actions.shortDone": "Short Link created",
-  "actions.shortError": "Could not create the Short Link",
+  "actions.shortDone": "Link created in Links",
+  "actions.shortError": "Could not create the link in Links",
   "actions.useShort": "Point the QR at this link",
-  "actions.relation": "QR → Short → destination",
+  "actions.relation": "QR → Links → destination",
   "actions.exported": "Downloaded",
   "actions.exportError": "Could not build the file",
   "actions.blocked": "Fix the failing checks first",
   "actions.serverChecking": "Checking the URL with the server…",
   "actions.serverError": "The server rejected this URL",
-  "actions.login": "Log in to create a Short Link",
+  "actions.login": "Log in to use Links",
   "actions.noThirdParty": "Nothing leaves this device",
 
   "error.fileType": "PNG, JPEG or WebP only",

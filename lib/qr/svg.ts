@@ -55,9 +55,9 @@ export function renderQrSvg({ matrix, style: rawStyle, exportSize, logoDataUrl }
   const parts: string[] = [];
   parts.push('<?xml version="1.0" encoding="UTF-8"?>');
   parts.push(
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${widthPx}" height="${heightPx}" viewBox="0 0 ${cardW} ${cardH}" role="img" aria-label="VibeLink QR">`,
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${widthPx}" height="${heightPx}" viewBox="0 0 ${cardW} ${cardH}" role="img" aria-label="VibeLinkTH QR">`,
   );
-  parts.push(`<title>VibeLink QR</title>`);
+  parts.push(`<title>VibeLinkTH QR</title>`);
   parts.push(`<rect width="${cardW}" height="${cardH}" rx="4" fill="${bg}"/>`);
   parts.push(`<g transform="translate(${cardPad} ${cardPad})">`);
 

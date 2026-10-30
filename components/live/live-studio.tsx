@@ -1,4 +1,6 @@
 "use client";
+import { ProductNavigation } from "@/components/products/product-navigation";
+import { PRODUCTS } from "@/lib/products";
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -127,7 +129,7 @@ export function LiveStudio({ ownerId }: { ownerId: string }) {
         } else { ctx.fillStyle = "#bfc6d4"; ctx.font = "28px sans-serif"; ctx.textAlign = "center"; ctx.fillText("รอภาพพร้อมใช้จาก Source ที่เลือก", w / 2, h / 2, w - 60); }
       } else if (v.scene === "waiting") {
         ctx.fillStyle = "#b9ff2c"; ctx.font = "bold 28px sans-serif"; ctx.textAlign = "center";
-        ctx.fillText("VibeLinkTH Live", w / 2, h / 2 - 60);
+        ctx.fillText(PRODUCTS.live.name, w / 2, h / 2 - 60);
         ctx.fillStyle = "#ffffff"; ctx.font = "bold 42px sans-serif";
         ctx.fillText("กำลังเตรียมรายการ", w / 2, h / 2 + 10, w - 60);
         ctx.fillStyle = "#bfc6d4"; ctx.font = "24px sans-serif";
@@ -250,7 +252,8 @@ export function LiveStudio({ ownerId }: { ownerId: string }) {
       <Link href="/dashboard" className={s.brand}>Vibe<span>LinkTH</span> <small>Live</small></Link>
       <div className={s.row}><span className={s.badge}>2 SOURCES · ALPHA</span><Link className={s.link} href="/dashboard">กลับ Dashboard</Link></div>
     </header>
-    <section className={s.intro}><div className={s.eyebrow}>YOUR VIBE. ON SCREEN.</div><h1>จัดซีนให้พร้อม แล้วลองรายการของคุณ</h1><p className={s.muted}>เตรียมกล้อง สลับฉาก และโชว์สินค้าจากเว็บเดียว</p></section>
+    <ProductNavigation active="live" />
+    <section className={s.intro}><div className={s.eyebrow}>{PRODUCTS.live.name}</div><h1>จัดซีนให้พร้อม แล้วลองรายการของคุณ</h1><p className={s.muted}>เตรียมกล้อง สลับฉาก และโชว์สินค้าจากเว็บเดียว</p></section>
     <div className={s.notice}>รับภาพสูงสุด 2 Source — เลือกกล้อง, USB Capture/Switcher หรือ Virtual Camera ที่ระบบมองเห็นเป็นกล้องได้ ภาพที่จัดจากอุปกรณ์ภายนอกใช้เต็มจอได้ทันที การส่งออกคลาวด์เปิดเฉพาะบัญชีทดสอบเมื่อบริการพร้อม</div>
     <div className={s.grid}>
       <aside className={s.stack}>

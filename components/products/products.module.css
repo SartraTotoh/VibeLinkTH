@@ -1,0 +1,14 @@
+.navigation { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 24px; }
+.navigation a { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px; min-height: 44px; padding: 10px 16px; border: 1px solid var(--border, #343a48); border-radius: 999px; color: var(--text, #f4f4f5); background: var(--panel, #111827); text-decoration: none; font-size: 15px; font-weight: 700; }
+.navigation a[aria-current="page"] { border-color: var(--primary, #b9ff2c); color: var(--primary, #b9ff2c); }
+.navigation small, .card small, .unavailable { color: var(--muted, #aeb8cb); font-size: 13px; }
+.navigation a:focus-visible, .card a:focus-visible { outline: 2px solid var(--primary, #b9ff2c); outline-offset: 4px; }
+.cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin: 28px 0; text-align: left; }
+.card { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; min-width: 0; padding: 24px 20px; border: 1px solid var(--border, #343a48); border-radius: 20px; background: var(--panel, #111827); scroll-margin-top: 100px; }
+.card > span:first-child { color: var(--primary, #b9ff2c); }
+.card h2 { font-size: 19px; margin: 0; overflow-wrap: anywhere; }
+.card p { color: var(--muted, #aeb8cb); font-size: 15px; line-height: 1.8; margin: 0; }
+.card a, .unavailable { margin-top: auto; padding-top: 10px; font-size: 15px; }
+.card a { color: var(--primary, #b9ff2c); font-weight: 700; }
+@media (max-width: 1000px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .cards { grid-template-columns: 1fr; } .navigation a { padding: 9px 12px; } }

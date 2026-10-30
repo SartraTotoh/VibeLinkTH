@@ -120,7 +120,7 @@ export default function SignupPage() {
         <Link href="/" className="brand" prefetch={false}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo.png" alt="" />
-          Vibe<span>Link</span>
+          Vibe<span>Link</span>TH
         </Link>
         <div className="dash-actions">
           <LangSwitcher />
@@ -175,7 +175,7 @@ export default function SignupPage() {
                 </label>
 
                 <label className="field">
-                  <span>จองชื่อ Vibe Link (Slug)</span>
+                  <span>ชื่อหน้ารวมลิงก์ (Slug)</span>
                   <div style={{ position: "relative" }}>
                     <input
                       type="text"
@@ -256,7 +256,7 @@ export default function SignupPage() {
             <>
               <h1>เชื่อมต่อโซเชียล</h1>
               <p className="auth-sub">
-                ใส่เบอร์โทรหรือโซเชียลเพื่อสร้างปุ่มบน Vibe Page อัตโนมัติ (แก้ไขได้ตลอดเวลาใน Settings)
+                ใส่เบอร์โทรหรือโซเชียลเพื่อสร้างปุ่มบน หน้ารวมลิงก์ อัตโนมัติ (แก้ไขได้ตลอดเวลาใน Settings)
               </p>
 
               <div className="auth-form">
