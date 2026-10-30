@@ -1,8 +1,10 @@
 import { LegalDoc } from "@/components/legal/legal-doc";
+import { appPublicUrl } from "@/lib/seo";
 
 export const metadata = {
   title: "นโยบายคุกกี้ — VibeLink",
   description: "นโยบายการใช้คุกกี้และเทคโนโลยีจัดเก็บข้อมูลของ VibeLink",
+  alternates: { canonical: appPublicUrl("/cookies") },
 };
 
 const contact = process.env.COMPANY_CONTACT_EMAIL ?? "hello@vibelinkth.com";

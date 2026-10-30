@@ -559,7 +559,7 @@ export function QrStudio() {
           </Link>
         </div>
       </header>
-      <ProductNavigation active="qr" lang={lang} />
+      <ProductNavigation active="qr" lang={lang} discovery />
 
       <header className={styles.hero}>
         <span className={styles.brandKicker}>{PRODUCTS.qr.name}</span>

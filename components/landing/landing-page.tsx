@@ -7,7 +7,7 @@ export function LandingPage() {
   return (
     <main className="shell">
       <header className="nav">
-        <Link className="brand" href="/" prefetch={false}>
+        <Link className="brand" href={BRAND.marketingUrl} prefetch={false}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo.png" alt="" />
           Vibe<span>Link</span>TH
@@ -25,7 +25,7 @@ export function LandingPage() {
           </Link>
         </div>
       </header>
-      <ProductNavigation />
+      <ProductNavigation discovery />
       <section className="hero heroMotion">
         <div className="eyebrow">{BRAND.name} · Links / QR / Booking / Live</div>
         <h1>สร้าง QR Code ฟรี <span>ให้ทุกลิงก์มี Vibe</span></h1>

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { BRAND } from "@/lib/products";
+import { appPublicUrl } from "@/lib/seo";
 import { CookieBanner } from "@/components/consent/cookie-banner";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://app.vibelinkth.com";
+const siteUrl = appPublicUrl("/");
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -15,7 +16,6 @@ export const metadata: Metadata = {
     BRAND.seo.description,
   applicationName: BRAND.name,
   keywords: BRAND.seo.keywords,
-  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     siteName: BRAND.name,

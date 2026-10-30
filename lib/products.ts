@@ -13,6 +13,15 @@ export function productHref(id: ProductId, surface: "app" | "marketing" = "app")
   return surface === "marketing" ? `${BRAND.appUrl}${product.route}` : product.route;
 }
 
+// Public product information is separate from the account's working tools.
+export function productDiscoveryHref(id: ProductId, surface: "app" | "marketing" = "app") {
+  const product = PRODUCTS[id];
+  if ("discoveryRoute" in product) {
+    return surface === "marketing" ? `${BRAND.appUrl}${product.discoveryRoute}` : product.discoveryRoute;
+  }
+  return productHref(id, surface);
+}
+
 export function websiteStructuredData(url: string, lang: Lang = "th") {
   return {
     "@context": "https://schema.org",
