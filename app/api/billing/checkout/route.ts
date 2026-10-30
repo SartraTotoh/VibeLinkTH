@@ -32,6 +32,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ url });
   } catch (err) {
     const msg = String(err instanceof Error ? err.message : "");
+    if (msg === "BILLING_SUBSCRIPTION_EXISTS") {
+      return NextResponse.json(
+        { error: "มี Subscription อยู่แล้ว กรุณาจัดการผ่านหน้าการเรียกเก็บเงิน" },
+        { status: 409 },
+      );
+    }
     if (msg.includes("PLAN_NOT_AVAILABLE")) {
       return NextResponse.json(
         { error: "ยังไม่ได้ผูกราคาแผนนี้ใน Stripe (ตั้ง STRIPE_PRICE_CREATOR ก่อน)" },

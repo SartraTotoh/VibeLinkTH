@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",
+    "@electric-sql/pglite": "^0.5.13",
     "@opennextjs/cloudflare": "^1.20.6",
     "@playwright/test": "^1.63.0",
     "@types/bcryptjs": "^2.4.6",

@@ -67,6 +67,7 @@ model User {
   campaigns     Campaign[]
   events        LinkEvent[]
   subscription  Subscription?
+  billingSyncLease BillingSyncLease?
   accounts      Account[]
   sessions      Session[]
   emailTokens   EmailToken[]
@@ -182,9 +183,38 @@ model Subscription {
   status      SubscriptionStatus @default(ACTIVE)
   startedAt   DateTime           @default(now())
   expiresAt   DateTime?
-  providerRef String?
-  customerRef String?
+  providerRef String?            @unique
+  customerRef String?            @unique
+  stripeStatus String?
+  priceRef     String?
+  latestInvoiceRef String?
+  cancelAtPeriodEnd Boolean      @default(false)
+  syncedAt     DateTime?
+  lastEventId  String?
+  pendingReason String?
   user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Acquire before reading Stripe; the token fences late workers.
+model BillingSyncLease {
+  userId    String   @id
+  token     String
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Receipts contain no raw payload, email, payment data or signing secret.
+model BillingWebhookEvent {
+  id                String   @id
+  type              String
+  providerRef       String
+  livemode          Boolean
+  providerCreatedAt DateTime
+  receivedAt        DateTime @default(now())
+  processedAt       DateTime?
+  outcome           String?
+
+  @@index([processedAt, receivedAt])
 }
 
 model AuditLog {

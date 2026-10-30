@@ -9,19 +9,23 @@ export async function POST(req: Request) {
   const sig = req.headers.get("stripe-signature");
   const secret = process.env.STRIPE_WEBHOOK_SECRET;
 
-  if (!sig || !secret) {
+  if (!secret) {
+    return NextResponse.json({ error: "billing unavailable" }, { status: 503 });
+  }
+  if (!sig) {
     return NextResponse.json(
-      { error: "missing stripe-signature หรือ STRIPE_WEBHOOK_SECRET" },
+      { error: "missing stripe-signature" },
       { status: 400 },
     );
   }
 
   let event: Stripe.Event;
   try {
-    event = stripe.webhooks.constructEvent(body, sig, secret);
-  } catch (err) {
+    event = await stripe.webhooks.constructEventAsync(body, sig, secret,
+      undefined, Stripe.createSubtleCryptoProvider());
+  } catch {
     return NextResponse.json(
-      { error: `webhook signature invalid: ${String(err)}` },
+      { error: "webhook signature invalid" },
       { status: 400 },
     );
   }
@@ -29,7 +33,11 @@ export async function POST(req: Request) {
   try {
     await handleBillingEvent(event);
   } catch (err) {
-    return NextResponse.json({ error: String(err) }, { status: 500 });
+    // Never return Stripe/DB messages, connection strings or raw payloads.
+    const code = err instanceof Error && /^BILLING_[A-Z_]+$/.test(err.message)
+      ? err.message : "BILLING_PROCESSING_FAILED";
+    console.error("[billing-webhook]", { eventId: event.id, type: event.type, code });
+    return NextResponse.json({ error: "billing processing failed; retry delivery" }, { status: 500 });
   }
 
   return NextResponse.json({ received: true });

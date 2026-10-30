@@ -4,6 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { getActivePlan } from "@/lib/subscription";
 
 class EmailNotVerified extends CredentialsSignin {
   code = "EmailNotVerified";
@@ -56,12 +57,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async jwt({ token, user }) {
       if (user?.id) {
         token.id = user.id;
-        const dbUser = await prisma.user.findUnique({
-          where: { id: user.id },
-          select: { plan: true },
-        });
-        token.plan = dbUser?.plan ?? "FREE";
       }
+      if (token.id) token.plan = await getActivePlan(token.id as string);
       return token;
     },
     session({ session, token }) {

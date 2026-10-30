@@ -1,7 +1,7 @@
 // Post-opennext-build patch: make the inlined Prisma client load its query
 // compiler WASM as a pre-compiled workerd module instead of reading the file
-// from disk (`require("fs").readFileSync(...)`), which is both unavailable and
-// disallowed in Cloudflare Workers.
+// from disk (`require("fs").readFileSync(...)`) or a machine-specific dynamic
+// WASM import. Prisma's worker-loader variant also needs a relocatable import.
 //
 // Steps:
 //   1. Copy `query_compiler_bg.wasm` next to the inlined client in the staging
@@ -37,13 +37,21 @@ let js = handler;
 
 const importLine = 'import __prismaWasmModule from "./node_modules/.prisma/client/query_compiler_bg.wasm";';
 const desired = "getQueryCompilerWasmModule:async()=>__prismaWasmModule";
-if (!js.includes(desired)) {
+const workerModule = "Promise.resolve({default:__prismaWasmModule})";
+if (!js.includes(desired) && !js.includes(workerModule)) {
   const reBlock = /getQueryCompilerWasmModule:async\(\)=>\{[^}]*?query_compiler_bg\.wasm[^}]*\}/;
-  if (!reBlock.test(js)) {
-    console.error("[prisma-patch] could not locate the inlined getQueryCompilerWasmModule (fs.readFileSync) block");
+  // Prisma 6's edge condition imports wasm-worker-loader.mjs. Its default is a
+  // promise of a WASM module namespace, so preserve that shape for the getter.
+  const reWorkerImport = /(\b[\w$]+\s*=\s*)import\((["'])[^"']*query_compiler_bg\.wasm\2\)/g;
+  if (reBlock.test(js)) {
+    js = js.replace(reBlock, desired);
+  } else if (js.includes("wasm-worker-loader") && reWorkerImport.test(js)) {
+    reWorkerImport.lastIndex = 0;
+    js = js.replace(reWorkerImport, (_, assignment) => assignment + workerModule);
+  } else {
+    console.error("[prisma-patch] unsupported query compiler loader; refusing to emit an unverified WASM patch");
     process.exit(1);
   }
-  js = js.replace(reBlock, desired);
 }
 
 // strip any leftover injected helper const (old base64 approach) so the file stays clean
