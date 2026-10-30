@@ -1,0 +1,110 @@
+{
+  "_note": "Synthetic offline fixtures shaped for Stripe API 2026-08-26.dahlia. No real account, event or payment data.",
+  "subscription": {
+    "id": "sub_creator",
+    "object": "subscription",
+    "customer": "cus_alice",
+    "metadata": {
+      "userId": "alice"
+    },
+    "status": "active",
+    "livemode": false,
+    "start_date": 1790812800,
+    "created": 1790812800,
+    "cancel_at_period_end": false,
+    "cancel_at": null,
+    "pause_collection": null,
+    "latest_invoice": "in_creator",
+    "items": {
+      "object": "list",
+      "has_more": false,
+      "data": [
+        {
+          "id": "si_creator",
+          "object": "subscription_item",
+          "quantity": 1,
+          "price": {
+            "id": "price_creator",
+            "object": "price",
+            "active": true,
+            "type": "recurring",
+            "livemode": false,
+            "currency": "thb",
+            "unit_amount": 19900,
+            "billing_scheme": "per_unit",
+            "transform_quantity": null,
+            "recurring": {
+              "interval": "month",
+              "interval_count": 1,
+              "usage_type": "licensed"
+            }
+          },
+          "current_period_start": 1790812800,
+          "current_period_end": 1793491200
+        }
+      ]
+    }
+  },
+  "invoice": {
+    "id": "in_creator",
+    "object": "invoice",
+    "customer": "cus_alice",
+    "livemode": false,
+    "currency": "thb",
+    "status": "paid",
+    "amount_due": 19900,
+    "amount_paid": 19900,
+    "amount_remaining": 0,
+    "parent": {
+      "type": "subscription_details",
+      "subscription_details": {
+        "subscription": "sub_creator"
+      }
+    },
+    "lines": {
+      "object": "list",
+      "has_more": false,
+      "data": [
+        {
+          "id": "il_creator",
+          "object": "line_item",
+          "amount": 19900,
+          "quantity": 1,
+          "pricing": {
+            "type": "price_details",
+            "price_details": {
+              "price": "price_creator"
+            }
+          },
+          "period": {
+            "start": 1790812800,
+            "end": 1793491200
+          },
+          "parent": {
+            "type": "subscription_item_details",
+            "subscription_item_details": {
+              "subscription": "sub_creator",
+              "subscription_item": "si_creator",
+              "proration": false
+            }
+          }
+        }
+      ]
+    }
+  },
+  "session": {
+    "id": "cs_creator",
+    "object": "checkout.session",
+    "mode": "subscription",
+    "status": "complete",
+    "payment_status": "paid",
+    "customer": "cus_alice",
+    "subscription": "sub_creator",
+    "client_reference_id": "alice",
+    "metadata": {
+      "userId": "alice",
+      "plan": "CREATOR"
+    },
+    "livemode": false
+  }
+}
