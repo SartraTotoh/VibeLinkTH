@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PRODUCTS, PRODUCT_IDS, productHref } from "@/lib/products";
+import { PRODUCTS, PRODUCT_IDS, productHref, productDiscoveryHref } from "@/lib/products";
 import styles from "./products.module.css";
 
 export function ProductCards() {
@@ -11,6 +11,7 @@ export function ProductCards() {
         <h2>{product.name}</h2>
         <small>{product.statusLabel.th}</small>
         <p>{product.description.th}</p>
+        {"discoveryRoute" in product && <Link href={productDiscoveryHref(id)} prefetch={false}>รู้จัก {product.label} <span aria-hidden="true">→</span></Link>}
         {product.route
           ? <Link href={productHref(id)} prefetch={false}>{product.cta.th} <span aria-hidden="true">↗</span></Link>
           : <span className={styles.unavailable}>{product.cta.th}</span>}

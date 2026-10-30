@@ -9,6 +9,7 @@ const source = readFileSync(path, "utf8");
 const ids = ["links", "qr", "booking", "live"];
 const escape = value => String(value).replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 const href = product => product.route ? brand.appUrl + product.route : "#" + product.anchor;
+const discoveryHref = product => product.discoveryRoute ? brand.appUrl + product.discoveryRoute : href(product);
 function region(html, name, content) {
   const start = `<!-- ${name}:start -->`; const end = `<!-- ${name}:end -->`;
   const first = html.indexOf(start); const last = html.indexOf(end);
@@ -19,14 +20,15 @@ function navigation(className, label) {
   return `<nav class="${className}" aria-label="${label}">\n` + ids.map(id => {
     const p = brand.products[id];
     const status = ["development", "alpha"].includes(p.status) ? `<small>${escape(p.statusLabel.th)}</small>` : "";
-    return `  <a href="${escape(href(p))}" data-product="${id}" data-product-status="${p.status}">${escape(p.label)}${status}</a>`;
+    return `  <a href="${escape(discoveryHref(p))}" data-product="${id}" data-product-status="${p.status}">${escape(p.label)}${status}</a>`;
   }).join("\n") + "\n</nav>";
 }
 let output = region(source, "product-nav-desktop", navigation("nav-links", "บริการ VibeLinkTH"));
 output = region(output, "product-nav-mobile", navigation("mobile-nav", "บริการ VibeLinkTH บนมือถือ"));
 const cards = '<div class="ecosystem">\n' + ids.map((id, i) => {
   const p = brand.products[id];
-  const cta = p.route ? `<a href="${escape(href(p))}">${escape(p.cta.th)} ↗</a>` : `<span class="product-unavailable">${escape(p.cta.th)}</span>`;
+  const discovery = p.discoveryRoute ? `<a href="${escape(discoveryHref(p))}">รู้จัก ${escape(p.label)} →</a>\n    ` : "";
+  const cta = discovery + (p.route ? `<a href="${escape(href(p))}">${escape(p.cta.th)} ↗</a>` : `<span class="product-unavailable">${escape(p.cta.th)}</span>`);
   return `  <article class="eco-card" id="${p.anchor}" data-product-status="${p.status}">\n    <div class="eco-badge">0${i + 1}</div>\n    <div class="eco-icon"><span class="ms" aria-hidden="true">${p.icon}</span></div>\n    <h3>${escape(p.name)}</h3>\n    <small class="product-status">${escape(p.statusLabel.th)}</small>\n    <p>${escape(p.description.th)}</p>\n    ${cta}\n  </article>`;
 }).join("\n") + "\n</div>";
 output = region(output, "product-cards", cards);
@@ -44,6 +46,7 @@ for (const [attribute, key, value] of [
   output = output.replace(pattern, `<meta ${attribute}="${key}" content="${escape(value)}" />`);
 }
 output = output.replace(/<link rel="canonical" href="[^"]*"\s*\/>/, `<link rel="canonical" href="${brand.marketingUrl}" />`);
+output = output.replace(/<a class="brand" href="[^"]*"/, `<a class="brand" href="${brand.marketingUrl}"`);
 output = output.replace(/<link rel="alternate" href="[^"]*" hreflang="th-TH"\s*\/>/, `<link rel="alternate" href="${brand.marketingUrl}" hreflang="th-TH" />`);
 output = output.replace(/<p class="brandline">[^<]*<\/p>/, `<p class="brandline">${escape(brand.name)} — ${escape(brand.tagline)}</p>`);
 output = output.replace(/<span>© 2026 VibeLinkTH[^<]*<\/span>/, `<span>© 2026 ${escape(brand.name)} — ${escape(brand.tagline)}</span>`);

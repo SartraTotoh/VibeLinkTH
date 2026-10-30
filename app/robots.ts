@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
-
-const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://app.vibelinkth.com";
+import { appPublicUrl } from "@/lib/seo";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -11,7 +10,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/dashboard", "/settings", "/ceo", "/go/"],
       },
     ],
-    sitemap: `${base}/sitemap.xml`,
-    host: base,
+    sitemap: appPublicUrl("/sitemap.xml"),
+    host: new URL(appPublicUrl("/")).origin,
   };
 }

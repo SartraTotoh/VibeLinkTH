@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BRAND, PRODUCTS } from "@/lib/products";
+import { appPublicUrl } from "@/lib/seo";
 import { QrStudio } from "@/components/qr/qr-studio";
 import styles from "./qr-seo.module.css";
 
-const qrUrl = "https://app.vibelinkth.com/qr";
+const qrUrl = appPublicUrl("/qr");
 const marketingUrl = BRAND.marketingUrl;
 
 export const metadata: Metadata = {
@@ -84,6 +85,7 @@ export default function QrPage() {
               แต่ถ้าสร้าง QR ให้ชี้ไปยังลิงก์สั้นใน Links ที่รองรับการแก้ปลายทาง ก็สามารถจัดการลิงก์และวัดผลตามสิทธิ์ที่ใช้งานได้
               นี่คือจุดที่ VibeLinkTH QR เชื่อมต่อกับระบบลิงก์และ Analytics ของ VibeLinkTH
             </p>
+            <Link href="/links">รู้จัก Links: ลิงก์สั้น หน้ารวมลิงก์ และ UTM →</Link>
           </div>
           <div className={styles.funnel}>
             <span>START FREE · GO FURTHER</span>

@@ -1,8 +1,10 @@
 import { LegalDoc } from "@/components/legal/legal-doc";
+import { appPublicUrl } from "@/lib/seo";
 
 export const metadata = {
   title: "นโยบายความเป็นส่วนตัว — VibeLink",
   description: "นโยบายความเป็นส่วนตัวและการคุ้มครองข้อมูลส่วนบุคคลของ VibeLink",
+  alternates: { canonical: appPublicUrl("/privacy") },
 };
 
 const company = process.env.COMPANY_NAME ?? "VibeLink";
