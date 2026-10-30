@@ -62,7 +62,7 @@ export function SocialHubSettings({ lang }: { lang: Lang }) {
         }).catch(() => null);
       }
 
-      setStatus(lang === "th" ? "บันทึกบัญชีโซเชียลและอัปเดตลง Vibe Page สำเร็จ!" : "Saved & synchronized to your Vibe Page!");
+      setStatus(lang === "th" ? "บันทึกบัญชีโซเชียลและอัปเดตลงหน้ารวมลิงก์สำเร็จ!" : "Saved & synchronized to your bio link page!");
     } catch {
       setStatus(lang === "th" ? "เกิดข้อผิดพลาดในการบันทึก" : "Error saving social accounts");
     } finally {
@@ -78,8 +78,8 @@ export function SocialHubSettings({ lang }: { lang: Lang }) {
       </div>
       <p className="panel-sub">
         {lang === "th"
-          ? "กรอกช่องทางโซเชียลเพื่อเชื่อมต่อกับ Vibe Page ของคุณโดยอัตโนมัติ ผู้ชมสามารถกดติดตามได้ในคลิกเดียว"
-          : "Connect your social channels to auto-populate your Vibe Page. Visitors can follow with one click."}
+          ? "กรอกช่องทางโซเชียลเพื่อเชื่อมต่อกับหน้ารวมลิงก์ของคุณโดยอัตโนมัติ ผู้ชมสามารถกดติดตามได้ในคลิกเดียว"
+          : "Connect your social channels to auto-populate your bio link page. Visitors can follow with one click."}
       </p>
 
       <form onSubmit={handleSave} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 14, marginTop: 16 }}>

@@ -3,7 +3,7 @@ export type Lang = "th" | "en";
 export const LANG_COOKIE = "vibelink-lang";
 
 const th = {
-  "nav.links": "หน้าลิงก์",
+  "nav.links": "Links",
   "nav.settings": "ตั้งค่า",
   "nav.dev": "Dev",
   "nav.login": "เข้าสู่ระบบ",
@@ -12,7 +12,7 @@ const th = {
 
   "dash.title": "หน้าควบคุมลิงก์",
   "dash.plan": "แพ็กเกจ",
-  "dash.foot": "© 2026 VibeLink — ตัวช่วยสายแชร์ลิงก์ ให้คลิกเนียนๆ ไม่อ่อม",
+  "dash.foot": "© 2026 VibeLinkTH — Your vibe. Level up your life. Grow your business.",
   "dash.stripeNote": "ชำระเงินปลอดภัยผ่าน Stripe",
   "dash.contact": "ติดต่อทีมงาน",
 
@@ -219,7 +219,7 @@ const th = {
 export type StrKey = keyof typeof th;
 
 const en: Record<StrKey, string> = {
-  "nav.links": "My links",
+  "nav.links": "Links",
   "nav.settings": "Settings",
   "nav.dev": "Dev",
   "nav.login": "Log in",

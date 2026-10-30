@@ -216,6 +216,12 @@
   flex-direction: row;
 }
 
+.segment:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .segment .ms,
 .iconChoice .ms,
 .animBtn .ms {

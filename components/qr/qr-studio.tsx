@@ -27,6 +27,8 @@ import type {
   QrStyleConfig,
 } from "@/lib/qr/types";
 import styles from "./qr-studio.module.css";
+import { BRAND, PRODUCTS } from "@/lib/products";
+import { ProductNavigation } from "@/components/products/product-navigation";
 
 type Mode = "url" | "vibe" | "booking" | "short";
 type Surface = "white" | "dark" | "social";
@@ -539,11 +541,11 @@ export function QrStudio() {
 
   return (
     <main className={`shell ${styles.page}`}>
-      <nav className="nav">
+      <header className="nav">
         <Link href="/" className="brand" prefetch={false}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo.png" alt="" />
-          Vibe<span>Link</span>
+          Vibe<span>Link</span>TH
         </Link>
         <div className="dash-actions">
           <NavLangSwitcher />
@@ -556,12 +558,14 @@ export function QrStudio() {
             {lang === "th" ? "ช่วยเหลือ" : "Support"}
           </Link>
         </div>
-      </nav>
+      </header>
+      <ProductNavigation active="qr" lang={lang} />
 
       <header className={styles.hero}>
-        <span className={styles.brandKicker}>✳ QR STUDIO · VIBELINK</span>
+        <span className={styles.brandKicker}>{PRODUCTS.qr.name}</span>
         <h1>{t("hero.title")}</h1>
         <p>{t("hero.sub")}</p>
+        <p>{BRAND.tagline}</p>
       </header>
 
       <div className={styles.studio}>
@@ -583,6 +587,8 @@ export function QrStudio() {
                     type="button"
                     className={`${styles.segment}${mode === item.id ? ` ${styles.segmentActive}` : ""}`}
                     aria-pressed={mode === item.id}
+                    disabled={item.id === "booking" && PRODUCTS.booking.status === "development"}
+                    title={item.id === "booking" ? PRODUCTS.booking.statusLabel[lang] : undefined}
                     onClick={() => setMode(item.id)}
                   >
                     <span className="ms">{item.icon}</span>
@@ -599,6 +605,7 @@ export function QrStudio() {
                 </Link>
               </div>
             )}
+            {authState === "user" && <p className={styles.hint}>{t("dest.emptyBooking")}</p>}
 
             {mode === "url" ? (
               <div className={styles.formBlock}>

@@ -1,39 +1,40 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BRAND, PRODUCTS } from "@/lib/products";
 import { QrStudio } from "@/components/qr/qr-studio";
 import styles from "./qr-seo.module.css";
 
 const qrUrl = "https://app.vibelinkth.com/qr";
-const marketingUrl = "https://vibelinkth.com/";
+const marketingUrl = BRAND.marketingUrl;
 
 export const metadata: Metadata = {
-  title: "สร้าง QR Code ฟรีออนไลน์ ใส่โลโก้ ดาวน์โหลด PNG / SVG",
+  title: { absolute: "VibeLinkTH QR | สร้าง QR Code ฟรี ใส่โลโก้ PNG / SVG" },
   description:
-    "สร้าง QR Code ฟรีออนไลน์สำหรับลิงก์เว็บไซต์ ปรับสี ใส่โลโก้ เลือกลายและกรอบ ตรวจว่า QR สแกนได้ก่อนดาวน์โหลด PNG หรือ SVG ด้วย Vibe QR Studio",
+    "สร้าง QR Code ฟรีออนไลน์สำหรับลิงก์เว็บไซต์ ปรับสี ใส่โลโก้ เลือกลายและกรอบ ตรวจว่า QR สแกนได้ก่อนดาวน์โหลด PNG หรือ SVG ด้วย VibeLinkTH QR",
   alternates: { canonical: qrUrl },
   robots: { index: true, follow: true },
   openGraph: {
-    title: "สร้าง QR Code ฟรีออนไลน์ ใส่โลโก้ | Vibe QR Studio",
+    title: "สร้าง QR Code ฟรีออนไลน์ ใส่โลโก้ | VibeLinkTH QR",
     description:
       "เครื่องมือสร้างคิวอาร์โค้ดฟรี ปรับสีและโลโก้ ตรวจการสแกน แล้วดาวน์โหลด PNG / SVG ไปใช้ได้ทันที",
     url: qrUrl,
     type: "website",
     locale: "th_TH",
-    siteName: "VibeLinkTH",
-    images: [{ url: "/og-cover.png", width: 1200, height: 630, alt: "Vibe QR Studio by VibeLinkTH" }],
+    siteName: BRAND.name,
+    images: [{ url: "/og-products.png", width: 1200, height: 630, alt: "VibeLinkTH QR — สร้าง QR Code ฟรี" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "สร้าง QR Code ฟรีออนไลน์ | Vibe QR Studio",
+    title: "สร้าง QR Code ฟรีออนไลน์ | VibeLinkTH QR",
     description: "ออกแบบ QR Code ใส่โลโก้ ปรับสี โหลด PNG / SVG และทดสอบสแกนก่อนใช้",
-    images: ["/og-cover.png"],
+    images: ["/og-products.png"],
   },
 };
 
 const structuredData = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  name: "Vibe QR Studio",
+  name: PRODUCTS.qr.name,
   alternateName: "VibeLinkTH QR Code Generator",
   url: qrUrl,
   description: "เครื่องมือสร้าง QR Code สำหรับ URL ฟรี ปรับสี ใส่โลโก้ ตรวจการสแกน และดาวน์โหลด PNG / SVG",
@@ -51,10 +52,10 @@ export default function QrPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: structuredData }} />
       <QrStudio />
       <section className={styles.guide} aria-labelledby="qr-seo-guide-title">
-        <div className={styles.kicker}>✳ QR WITH VIBE · THE QUICK GUIDE</div>
+        <div className={styles.kicker}>VibeLinkTH QR · คู่มือใช้งาน</div>
         <h2 id="qr-seo-guide-title">สร้าง QR Code ฟรี แบบมี Vibe — แต่งให้เป็นคุณ</h2>
         <p className={styles.lead}>
-          ใช้ Vibe QR Studio สร้างคิวอาร์โค้ด (QR Code) สำหรับเว็บไซต์ โปรไฟล์ หรือหน้าจองบริการ
+          ใช้ VibeLinkTH QR สร้างคิวอาร์โค้ด (QR Code) สำหรับเว็บไซต์ โปรไฟล์ หรือหน้าจองบริการ
           เริ่มจาก URL ปลายทาง ออกแบบลายและสีตามต้องการ แล้วตรวจ Scan Health ก่อนบันทึกไฟล์
           โดยไม่จำเป็นต้องสมัครแพ็กเกจชำระเงินเพื่อสร้าง QR พื้นฐาน
         </p>
@@ -77,25 +78,25 @@ export default function QrPage() {
         </div>
         <div className={styles.knowledge}>
           <div>
-            <h2>Static QR กับ Short Link ต่างกันอย่างไร?</h2>
+            <h2>Static QR กับลิงก์สั้นใน Links ต่างกันอย่างไร?</h2>
             <p>
               QR Code แบบ Static เก็บ URL ไว้ในภาพโดยตรง หากเปลี่ยนปลายทางต้องสร้างภาพใหม่
-              แต่ถ้าสร้าง QR ให้ชี้ไปยัง Short Link ที่รองรับการแก้ปลายทาง ก็สามารถจัดการลิงก์และวัดผลตามสิทธิ์ที่ใช้งานได้
-              นี่คือจุดที่ QR Studio เชื่อมต่อกับระบบลิงก์และ Analytics ของ VibeLinkTH
+              แต่ถ้าสร้าง QR ให้ชี้ไปยังลิงก์สั้นใน Links ที่รองรับการแก้ปลายทาง ก็สามารถจัดการลิงก์และวัดผลตามสิทธิ์ที่ใช้งานได้
+              นี่คือจุดที่ VibeLinkTH QR เชื่อมต่อกับระบบลิงก์และ Analytics ของ VibeLinkTH
             </p>
           </div>
           <div className={styles.funnel}>
             <span>START FREE · GO FURTHER</span>
             <strong>สร้าง QR ให้มี Vibe → แชร์ให้สุด → ดูผลลัพธ์เมื่อพร้อมโต</strong>
             <p>เหมาะสำหรับ Creator, ผู้รับจองบริการ และธุรกิจขนาดเล็กที่อยากให้คนเข้าถึงบริการผ่าน QR ได้สะดวกขึ้น</p>
-            <Link href="https://vibelinkth.com/#growth-cases">ดูว่า VibeLink พา QR ไปต่อยังไง ↗</Link>
+            <Link href="https://www.vibelinkth.com/#cases">ดูการใช้งาน VibeLinkTH QR และ Links ↗</Link>
           </div>
         </div>
         <div className={styles.faq} id="qr-guide-faq">
           <h2>คำถามที่พบบ่อยเกี่ยวกับการสร้าง QR Code</h2>
           <details>
             <summary>QR Code ฟรีนี้สร้างจากอะไรได้บ้าง?</summary>
-            <p>โหมดฟรีเริ่มได้จาก URL เว็บไซต์ ส่วน Vibe Page, Booking Page และ Short Link สามารถใช้กับบัญชีและสิทธิ์ที่รองรับใน VibeLinkTH</p>
+            <p>โหมดฟรีเริ่มได้จาก URL เว็บไซต์ ส่วน Links และหน้ารวมลิงก์ใช้ผ่านบัญชี ส่วน Booking กำลังพัฒนา ยังไม่เปิดบริการ</p>
           </details>
           <details>
             <summary>QR Code ที่ดาวน์โหลดแล้วหมดอายุไหม?</summary>
@@ -107,15 +108,15 @@ export default function QrPage() {
           </details>
           <details>
             <summary>ถ้าอยากทราบจำนวนคนคลิกจาก QR ต้องทำอย่างไร?</summary>
-            <p>QR แบบ Static ไม่เก็บจำนวนการสแกนเอง สามารถใช้ Short Link หรือ UTM ร่วมกับเครื่องมือติดตามผลของ VibeLinkTH ตามความสามารถและสิทธิ์ของแพ็กเกจ</p>
+            <p>QR แบบ Static ไม่เก็บจำนวนการสแกนเอง สามารถใช้ลิงก์สั้นใน Links หรือ UTM ร่วมกับเครื่องมือติดตามผลของ VibeLinkTH ตามความสามารถและสิทธิ์ของแพ็กเกจ</p>
           </details>
         </div>
         <div className={styles.nextStep}>
-          <div><span className={styles.kicker}>BEYOND QR</span><h2>QR ที่มี Vibe · ลิงก์ที่ไปต่อ</h2>
-            <p>ลองรวมลิงก์บน Vibe Page หรือใช้ VibeBook เพื่อรับจอง และเลือกเครื่องมือวัดผลเมื่อธุรกิจพร้อมเติบโต</p></div>
+          <div><span className={styles.kicker}>BEYOND QR</span><h2>VibeLinkTH — Your vibe. Level up your life. Grow your business.</h2>
+            <p>ใช้ Links รวมลิงก์และดูสถิติคลิกตามสิทธิ์บัญชี ส่วน Booking ยังพัฒนา และ Live เปิดเป็นสตูดิโอทดลอง</p></div>
           <div className={styles.actions}>
-            <Link className={styles.mainLink} href="https://vibelinkth.com/">ไปดู VibeLinkTH เต็ม ๆ ↗</Link>
-            <Link className={styles.altLink} href="https://vibelinkth.com/#growth-plans">ดูแพ็กเกจแบบไม่ต้องรีบตัดสินใจ ↗</Link>
+            <Link className={styles.mainLink} href={marketingUrl}>ไปดู VibeLinkTH เต็ม ๆ ↗</Link>
+            <Link className={styles.altLink} href="https://www.vibelinkth.com/#pricing">ดูแพ็กเกจแบบไม่ต้องรีบตัดสินใจ ↗</Link>
           </div>
         </div>
       </section>

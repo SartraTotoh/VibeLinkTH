@@ -28,9 +28,9 @@ type Props = {
 
 export const DASHBOARD_TABS = [
   { id: "overview", href: "/dashboard/overview", icon: "dashboard", th: "ภาพรวม", en: "Overview" },
-  { id: "links", href: "/dashboard/links", icon: "link", th: "ลิงก์", en: "Links" },
+  { id: "links", href: "/dashboard/links", icon: "link", th: "Links", en: "Links" },
   { id: "result", href: "/dashboard/result", icon: "trending_up", th: "ผลลัพธ์", en: "Result" },
-  { id: "vibepage", href: "/dashboard/vibepage", icon: "auto_awesome", th: "หน้า Vibe", en: "Vibe" },
+  { id: "vibepage", href: "/dashboard/vibepage", icon: "auto_awesome", th: "หน้ารวมลิงก์", en: "Bio link page" },
   { id: "audience", href: "/dashboard/audience", icon: "groups", th: "ผู้เข้าชม", en: "Audience" },
   { id: "utm", href: "/dashboard/utm", icon: "campaign", th: "UTM", en: "UTM" },
 ] as const;

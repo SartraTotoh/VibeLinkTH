@@ -29,5 +29,4 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
-Sitemap: https://vibelinkth.com/sitemap.xml
 Sitemap: https://www.vibelinkth.com/sitemap.xml

@@ -12,7 +12,7 @@ import { NavLangSwitcher } from "@/components/i18n/language";
 import { SocialHubSettings } from "@/components/dashboard/social-hub-settings";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Settings | VibeLink" };
+export const metadata = { title: "Settings | VibeLinkTH" };
 
 export default async function SettingsPage() {
   const session = await auth();
@@ -59,7 +59,7 @@ export default async function SettingsPage() {
       <nav className="nav">
         <Link href="/" className="brand" prefetch={false}>
           <img src="/logo.png" alt="VibeLink Logo" />
-          Vibe<span>Link</span>
+          Vibe<span>Link</span>TH
         </Link>
         <div className="dash-actions">
           <span className="nav-user" style={{ color: "var(--muted)", fontWeight: 700, fontSize: 15 }}>
@@ -115,14 +115,14 @@ export default async function SettingsPage() {
           </div>
           <div className="settings-row" style={{ marginTop: 8 }}>
             <div>
-              <b>Vibe Page Slug (URL ประจำตัว)</b>
+              <b>หน้ารวมลิงก์ · Slug (URL ประจำตัว)</b>
               <small>
                 {user?.vibeSlug ? `vibelinkth.com/vibe/${user.vibeSlug}` : "ยังไม่ได้ตั้งค่า slug"}
               </small>
             </div>
             <Link href="/dashboard/vibepage" className="mini-btn" prefetch={false}>
               <span className="ms">edit</span>
-              แก้ไข Vibe
+              แก้ไขหน้ารวมลิงก์
             </Link>
           </div>
           <div className="settings-row" style={{ marginTop: 8 }}>

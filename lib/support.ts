@@ -24,9 +24,9 @@ export const DEFAULT_RULES: SupportRuleSeed[] = [
     faqTh: "สร้างลิงก์สั้นอย่างไร?",
     faqEn: "How do I create a short link?",
     replyTh:
-      "เข้าไปที่หน้าควบคุมลิงก์ (เมนู หน้าลิงก์) แล้ววาง Destination URL ลงในฟอร์มด้านบน กด “สร้างลิงก์” — ระบบจะย่อให้อัตโนมัติพร้อมคัดลอกลิงก์สั้นใช้แชร์ได้ทันที",
+      "เข้าไปที่หน้าควบคุมลิงก์ (เมนู Links) แล้ววาง Destination URL ลงในฟอร์มด้านบน กด “สร้างลิงก์” — ระบบจะย่อให้อัตโนมัติพร้อมคัดลอกลิงก์สั้นใช้แชร์ได้ทันที",
     replyEn:
-      "Open the link dashboard (My links), paste a Destination URL into the top form, and hit “Create link” — the short link is generated and ready to copy.",
+      "Open the link dashboard (Links), paste a Destination URL into the top form, and hit “Create link” — the short link is generated and ready to copy.",
   },
   {
     priority: 20,

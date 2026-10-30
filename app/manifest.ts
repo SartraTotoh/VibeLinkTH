@@ -1,10 +1,11 @@
 import type { MetadataRoute } from "next";
+import { BRAND } from "@/lib/products";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "VibeLink — ย่อลิงก์ วัดคลิก",
-    short_name: "VibeLink",
-    description: "ย่อลิงก์สำหรับครีเอเตอร์ไทย วัดคลิกแบบเรียลไทม์",
+    name: BRAND.name,
+    short_name: BRAND.name,
+    description: BRAND.seo.description,
     start_url: "/dashboard",
     display: "standalone",
     background_color: "#090b10",
